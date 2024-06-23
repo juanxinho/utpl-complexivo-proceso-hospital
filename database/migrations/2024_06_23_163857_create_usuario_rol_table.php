@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // database/migrations/2024_06_23_163845_create_usuario_rol_table.php
         Schema::create('usuario_rol', function (Blueprint $table) {
             $table->id('idusuario_rol');
-            $table->unsignedBigInteger('idusuario');
+            $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('idrol');
             $table->timestamps();
-            $table->foreign('idusuario')->references('idusuario')->on('usuarios');
+            $table->foreign('id')->references('id')->on('users');
             $table->foreign('idrol')->references('idrol')->on('roles');
         });
     }

@@ -38,7 +38,7 @@ class UserManagement extends Component
     private function resetInputFields()
     {
         $this->persona = [];
-        $this->name = '';
+        //$this->name = '';
         $this->email = '';
         $this->password = '';
         $this->idusuario = '';
@@ -68,7 +68,7 @@ class UserManagement extends Component
         ]);
 
         $usuario = User::updateOrCreate(['id' => $this->idusuario], [
-            'name' => $this->name,
+            //'name' => $this->name,
             'email' => $this->email,
             'password' => bcrypt($this->password),
             'estado' => $this->persona['estado'],
@@ -90,7 +90,7 @@ class UserManagement extends Component
         $usuario = User::with('persona', 'roles')->findOrFail($id);
         $this->idusuario = $id;
         $this->persona = $usuario->persona->toArray();
-        $this->name = $usuario->name;
+        //$this->name = $usuario->name;
         $this->email = $usuario->email;
         $this->password = '';
         $this->idrol = $usuario->roles->pluck('idrol')->toArray();
