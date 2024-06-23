@@ -31,13 +31,13 @@
 
             <div>
                 <x-label for="fecha_nacimiento" value="{{ __('Fecha de nacimiento') }}" />
-                <x-flatpickr::script /><x-flatpickr::style />
-                <x-flatpickr id="fecha_nacimiento" date-format="Y/m/d" :max-date="today()" :value="old('fecha_nacimiento')" />
+                <x-flatpickr::script /><x-flatpickr::style  />
+                <x-flatpickr id="fecha_nacimiento" name="fecha_nacimiento" wire:model.defer="state.fecha_nacimiento" date-format="Y-m-d" :max-date="today()" :value="old('fecha_nacimiento')" />
             </div>
 
             <div>
                 <x-label for="sexo" value="{{ __('Sexo') }}" />
-                <x-input id="sexo" class="block mt-1 w-full" type="dropdown" name="sexo" :value="old('sexo')" required autofocus autocomplete="sexo" />
+                <x-select name="sexo" id="sexo" class="mt-1 block w-full" :options="['M' => 'Masculino', 'F' => 'Femenino']" wire:model.defer="state.sexo" placeholder="Seleccione una opción" />
             </div>
 
             <div class="mt-4">
