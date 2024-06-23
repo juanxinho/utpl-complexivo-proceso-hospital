@@ -20,14 +20,14 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($usuarios as $usuario)
+        @foreach($users as $user)
             <tr>
-                <td>{{ $usuario->persona->nombres }} {{ $usuario->persona->apellidos }}</td>
-                <td>{{ $usuario->correo }}</td>
-                <td>{{ implode(', ', $usuario->roles->pluck('nombre')->toArray()) }}</td>
+                <td>{{ $user->persona->nombres }} {{ $user->persona->apellidos }}</td>
+                <td>{{ $user->correo }}</td>
+                <td>{{ implode(', ', $user->roles->pluck('nombre')->toArray()) }}</td>
                 <td>
-                    <button wire:click="edit({{ $usuario->idusuario }})">Editar</button>
-                    <button wire:click="delete({{ $usuario->idusuario }})">Eliminar</button>
+                    <button wire:click="edit({{ $user->iduser }})">Editar</button>
+                    <button wire:click="delete({{ $user->iduser }})">Eliminar</button>
                 </td>
             </tr>
         @endforeach

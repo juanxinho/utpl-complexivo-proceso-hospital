@@ -9,12 +9,12 @@ use App\Models\Persona;
 
 class UserManagement extends Component
 {
-    public $usuarios, $roles, $persona, $name, $email, $password, $idusuario, $idrol;
+    public $users, $roles, $persona, $name, $email, $password, $idusuario, $idrol;
     public $isOpen = 0;
 
     public function render()
     {
-        $this->usuarios = User::with('roles', 'persona')->get();
+        $this->users = User::with('roles', 'persona')->get();
         $this->roles = Rol::all();
         return view('livewire.user-management')->layout('layouts.app');
     }
@@ -41,7 +41,7 @@ class UserManagement extends Component
         //$this->name = '';
         $this->email = '';
         $this->password = '';
-        $this->idusuario = '';
+        $this->id = '';
         $this->idrol = [];
     }
 
@@ -50,13 +50,13 @@ class UserManagement extends Component
         $this->validate([
             'persona.nombres' => 'required',
             'persona.apellidos' => 'required',
-            'persona.cedula' => 'required|unique:personas,cedula,' . $this->idusuario,
-            'email' => 'required|email|unique:users,email,' . $this->idusuario,
+            'persona.cedula' => 'required|unique:personas,cedula,' . $this->id,
+            'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => 'required|min:6',
             'idrol' => 'required',
         ]);
 
-        $persona = Persona::updateOrCreate(['idpersona' => $this->idusuario], [
+        $persona = Persona::updateOrCreate(['idpersona' => $this->id], [
             'nombres' => $this->persona['nombres'],
             'apellidos' => $this->persona['apellidos'],
             'cedula' => $this->persona['cedula'],
@@ -67,7 +67,7 @@ class UserManagement extends Component
             'usuario_registro' => auth()->user()->id,
         ]);
 
-        $usuario = User::updateOrCreate(['id' => $this->idusuario], [
+        $usuario = User::updateOrCreate(['id' => $this->id], [
             //'name' => $this->name,
             'email' => $this->email,
             'password' => bcrypt($this->password),
@@ -79,7 +79,7 @@ class UserManagement extends Component
         $usuario->roles()->sync($this->idrol);
 
         session()->flash('message',
-            $this->idusuario ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
+            $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
 
         $this->closeModal();
         $this->resetInputFields();
@@ -88,7 +88,7 @@ class UserManagement extends Component
     public function edit($id)
     {
         $usuario = User::with('persona', 'roles')->findOrFail($id);
-        $this->idusuario = $id;
+        $this->id = $id;
         $this->persona = $usuario->persona->toArray();
         //$this->name = $usuario->name;
         $this->email = $usuario->email;

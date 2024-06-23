@@ -52,11 +52,50 @@
             </div>
         @endif
 
-        <!-- Name -->
+        <!-- Nombres -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
-            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="name" />
-            <x-input-error for="name" class="mt-2" />
+            <x-label for="nombres" value="{{ __('Nombres') }}" />
+            <x-input id="nombres" type="text" class="mt-1 block w-full" wire:model.defer="state.nombres" autocomplete="nombres" />
+            <x-input-error for="nombres" class="mt-2" />
+        </div>
+
+        <!-- Apellidos -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="apellidos" value="{{ __('Apellidos') }}" />
+            <x-input id="apellidos" type="text" class="mt-1 block w-full" wire:model.defer="state.apellidos" autocomplete="apellidos" />
+            <x-input-error for="apellidos" class="mt-2" />
+        </div>
+
+        <!-- Cedula -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="cedula" value="{{ __('Cédula') }}" />
+            <x-input id="cedula" type="text" class="mt-1 block w-full" wire:model.defer="state.cedula" autocomplete="cedula" />
+            <x-input-error for="cedula" class="mt-2" />
+        </div>
+
+        <!-- Telefono -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="telefono" value="{{ __('Teléfono') }}" />
+            <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model.defer="state.telefono" autocomplete="telefono" />
+            <x-input-error for="telefono" class="mt-2" />
+        </div>
+
+        <!-- Sexo -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="sexo" value="{{ __('Sexo') }}" />
+            <x-select id="sexo" name="sexo" class="block mt-1 w-full" wire:model.defer="state.sexo">
+                <option value="">{{ __('Seleccione una opción') }}</option>
+                <option value="M">{{ __('Masculino') }}</option>
+                <option value="F">{{ __('Femenino') }}</option>
+            </x-select>
+            <x-input-error for="sexo" class="mt-2" />
+        </div>
+
+        <!-- Fecha de Nacimiento -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="fecha_nacimiento" value="{{ __('Fecha de Nacimiento') }}" />
+            <x-flatpickr id="fecha_nacimiento" wire:model.defer="state.fecha_nacimiento" date-format="Y-m-d" :max-date="today()" class="block mt-1 w-full" />
+            <x-input-error for="fecha_nacimiento" class="mt-2" />
         </div>
 
         <!-- Email -->

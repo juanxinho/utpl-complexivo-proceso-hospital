@@ -26,12 +26,12 @@ class CreateNewUser implements CreatesNewUsers
             'cedula' => ['required', 'string', 'max:13'],
             'telefono' => ['required', 'string', 'max:10'],
             'sexo' => ['required', 'string', 'in:M,F'],
-            //'fecha_nacimiento' => ['required', 'date'],
+            'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
-var_dump($input);
+
         $persona = Persona::create([
             'nombres' => $input['nombres'],
             'apellidos' => $input['apellidos'],
@@ -40,13 +40,14 @@ var_dump($input);
             'sexo' => $input['sexo'],
             'fecha_nacimiento' => $input['fecha_nacimiento'],
             'estado' => 1,
+            'usuario_registro' => 1,
         ]);
 
         return User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'estado' => 1,
-            'usuario_registro' => User::$id,
+            'usuario_registro' => 1,
             'idpersona' => $persona->idpersona,
         ]);
     }

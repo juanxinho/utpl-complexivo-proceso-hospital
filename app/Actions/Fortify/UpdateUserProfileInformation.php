@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Persona;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update(User $user, array $input): void
     {
         Validator::make($input, [
-            //'name' => ['required', 'string', 'max:255'],
+            'nombres' => ['required', 'string', 'max:255'],
+            'apellidos' => ['required', 'string', 'max:255'],
+            'cedula' => ['required', 'string', 'max:13'],
+            'telefono' => ['required', 'string', 'max:10'],
+            'sexo' => ['required', 'string', 'in:M,F'],
+            'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
@@ -36,6 +42,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
             ])->save();
         }
+
+        // Update the related Persona entity
+        $user->persona()->forceFill([
+            'nombres' => $input['nombres'],
+            'apellidos' => $input['apellidos'],
+            'cedula' => $input['cedula'],
+            'telefono' => $input['telefono'],
+            'sexo' => $input['sexo'],
+            'fecha_nacimiento' => $input['fecha_nacimiento'],
+        ])->save();
     }
 
     /**
@@ -46,9 +62,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser(User $user, array $input): void
     {
         $user->forceFill([
-            'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+        ])->save();
+
+        // Update the related Persona entity
+        $user->persona()->forceFill([
+            'nombres' => $input['nombres'],
+            'apellidos' => $input['apellidos'],
+            'cedula' => $input['cedula'],
+            'telefono' => $input['telefono'],
+            'sexo' => $input['sexo'],
+            'fecha_nacimiento' => $input['fecha_nacimiento'],
         ])->save();
 
         $user->sendEmailVerificationNotification();
