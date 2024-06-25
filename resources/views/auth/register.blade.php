@@ -9,33 +9,32 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <div>
+            <div class="mt-4">
                 <x-label for="nombres" value="{{ __('Nombres') }}" />
                 <x-input id="nombres" class="block mt-1 w-full" type="text" name="nombres" :value="old('nombres')" required autofocus autocomplete="nombres" />
             </div>
 
-            <div>
+            <div class="mt-4">
                 <x-label for="apellidos" value="{{ __('Apellidos') }}" />
                 <x-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos" :value="old('apellidos')" required autofocus autocomplete="apellidos" />
             </div>
 
-            <div>
+            <div class="mt-4">
                 <x-label for="cedula" value="{{ __('Cédula') }}" />
                 <x-input id="cedula" class="block mt-1 w-full" type="text" name="cedula" :value="old('cedula')" required autofocus autocomplete="cedula" />
             </div>
 
-            <div>
+            <div class="mt-4">
                 <x-label for="telefono" value="{{ __('Teléfono') }}" />
                 <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus autocomplete="telefono" />
             </div>
 
-            <div>
+            <div class="mt-4">
                 <x-label for="fecha_nacimiento" value="{{ __('Fecha de nacimiento') }}" />
-                <x-flatpickr::script /><x-flatpickr::style  />
                 <x-flatpickr id="fecha_nacimiento" name="fecha_nacimiento" wire:model.defer="state.fecha_nacimiento" date-format="Y-m-d" :max-date="today()" :value="old('fecha_nacimiento')" />
             </div>
 
-            <div>
+            <div class="mt-4">
                 <x-label for="sexo" value="{{ __('Sexo') }}" />
                 <x-select name="sexo" id="sexo" class="mt-1 block w-full" :options="['M' => 'Masculino', 'F' => 'Femenino']" wire:model.defer="state.sexo" placeholder="Seleccione una opción" />
             </div>
