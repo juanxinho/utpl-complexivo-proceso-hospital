@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\UserManagement;
+
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-use App\Http\Livewire\UserManagement;
+Route::view('/help', 'help')->name('help');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/usuarios', UserManagement::class)->name('usuarios');
