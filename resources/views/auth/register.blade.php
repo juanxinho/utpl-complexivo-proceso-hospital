@@ -31,7 +31,12 @@
 
             <div class="mt-4">
                 <x-label for="fecha_nacimiento" value="{{ __('Fecha de nacimiento') }}" />
-                <x-flatpickr id="fecha_nacimiento" name="fecha_nacimiento" wire:model.defer="state.fecha_nacimiento" date-format="Y-m-d" :max-date="today()" :value="old('fecha_nacimiento')" />
+                <x-bladewind::datepicker
+                    id="fecha_nacimiento"
+                    name="fecha_nacimiento"
+                    class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full"
+                    format="dd-mm-yyyy"
+                />
             </div>
 
             <div class="mt-4">

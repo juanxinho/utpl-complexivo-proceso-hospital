@@ -16,28 +16,31 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
+        {{-- <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />--}}
+        <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
     </head>
-    <body class="font-sans antialiased">
+    <body x-data="themeSwitcher()" :class="{ 'dark': switchOn }" class="font-sans antialiased">
         <x-banner />
 
         <div class="min-h-screen bg-light-green">
 
-            @livewire('navigation-menu')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
             <!-- Page Content -->
             <main>
+                @livewire('navigation-menu')
                 @include('layouts.sidebar')
-                {{ $slot }}
+                    <div class="p-4 sm:ml-64">
+                        <div class="p-4 brounded-lg dark:border-gray-700 mt-14">
+                            <!-- Page Heading -->
+                            @if (isset($header))
+                                {{ $header }}
+                            @endif
+                        </div>
+                        {{ $slot }}
+                    </div>
             </main>
+
         </div>
 
         @stack('modals')

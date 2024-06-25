@@ -12,7 +12,12 @@
             <x-slot name="logo">
                 <x-authentication-card-logo />
             </x-slot>
-            <h1>{{ __('Log in') }}</h1>
+
+            <div class="text-center">
+                <h1 class="text-2xl color-green font-bold">Hospital Isidro Ayora</h1>
+                <h3 class="text-lg font-bold">{{ __('Log in') }}</h3>
+            </div>
+
         </div>
 
         <form method="POST" action="{{ route('login') }}">
