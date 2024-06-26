@@ -8,7 +8,7 @@
     <div>
         <div class="mx-auto sm:px-6 lg:px-2">
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                @livewire('profile.update-profile-information-form')
+                @livewire('profile-update-form')
 
                 <x-section-border />
             @endif

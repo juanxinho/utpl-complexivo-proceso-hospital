@@ -13,9 +13,9 @@
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input type="file" id="photo" class="hidden"
-                            wire:model.live="photo"
-                            x-ref="photo"
-                            x-on:change="
+                       wire:model.live="photo"
+                       x-ref="photo"
+                       x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
@@ -25,7 +25,7 @@
                             " />
 
                 <x-label for="photo" value="{{ __('Photo') }}" />
-
+                @php $this->user = Auth::user(); @endphp
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
                     <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
@@ -51,7 +51,7 @@
                 <x-input-error for="photo" class="mt-2" />
             </div>
         @endif
-        {{ var_dump($state) }}
+
         <!-- Nombres -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="nombres" value="{{ __('Name') }}" />
@@ -62,42 +62,44 @@
         <!-- Apellidos -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="apellidos" value="{{ __('Last name') }}" />
-            <x-input id="apellidos" type="text" class="mt-1 block w-full" value="{{$this->user->persona->apellidos}}" autocomplete="apellidos" />
+            <x-input id="apellidos" type="text" class="mt-1 block w-full" wire:model.defer="state.apellidos" autocomplete="apellidos" />
             <x-input-error for="apellidos" class="mt-2" />
         </div>
 
         <!-- Cedula -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="cedula" value="{{ __('ID') }}" />
-            <x-input id="cedula" type="text" class="mt-1 block w-full" value="{{$this->user->persona->cedula}}" autocomplete="cedula" />
+            <x-input id="cedula" type="text" class="mt-1 block w-full" wire:model.defer="state.cedula" autocomplete="cedula" />
             <x-input-error for="cedula" class="mt-2" />
         </div>
 
         <!-- Telefono -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="telefono" value="{{ __('Phone') }}" />
-            <x-input id="telefono" type="text" class="mt-1 block w-full" value="{{$this->user->persona->telefono}}" autocomplete="telefono" />
+            <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model.defer="state.telefono" autocomplete="telefono" />
             <x-input-error for="telefono" class="mt-2" />
         </div>
 
         <!-- Sexo -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="sexo" value="{{ __('Sex') }}" />
-            <x-select id="sexo" name="sexo" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" value="{{$this->user->persona->sexo}}" />
+            <x-select id="sexo" name="sexo" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.sexo" />
             <x-input-error for="sexo" class="mt-2" />
         </div>
 
         <!-- Fecha de Nacimiento -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="fecha_nacimiento" value="{{ __('Date of birth') }}" />
-            <x-bladewind::datepicker required="true"
-                id="fecha_nacimiento"
+            <x-bladewind::datepicker
                 name="fecha_nacimiento"
                 class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full"
                 format="yyyy-mm-dd"
                 default_date="{{$this->user->persona->fecha_nacimiento}}"
+                onblur="copyDate('dtp-fecha_nacimiento', 'fecha_nacimiento')"
             />
             <x-input-error for="fecha_nacimiento" class="mt-2" />
+            <x-input type="hidden" id="fecha_nacimiento" wire:model.defer="state.fecha_nacimiento" />
+
         </div>
 
         <!-- Email -->

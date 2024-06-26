@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('sexo', ['M', 'F']);
             $table->tinyInteger('estado');
             $table->timestamps();
-            $table->unsignedBigInteger('usuario_registro');
+            $table->unsignedBigInteger('usuario_registro')->nullable();
             $table->unsignedBigInteger('usuario_modificacion')->nullable();
         });
     }

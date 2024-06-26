@@ -40,7 +40,6 @@ class CreateNewUser implements CreatesNewUsers
             'sexo' => $input['sexo'],
             'fecha_nacimiento' => $input['fecha_nacimiento'],
             'estado' => 1,
-            'usuario_registro' => 1,
         ]);
 
         return User::create([

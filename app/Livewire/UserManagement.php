@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
-use Livewire\Component;
-use App\Models\User;
-use App\Models\Rol;
 use App\Models\Persona;
+use App\Models\Rol;
+use App\Models\User;
+use Livewire\Component;
 
 class UserManagement extends Component
 {

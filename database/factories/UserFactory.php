@@ -27,7 +27,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'nombres' => $this->faker->firstName,
+            'apellidos' => $this->faker->lastName,
+            'cedula' => $this->faker->unique()->numerify('##########'),
+            'telefono' => $this->faker->phoneNumber,
+            'sexo' => $this->faker->randomElement(['M', 'F']),
+            'fecha_nacimiento' => $this->faker->date,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -68,5 +73,22 @@ class UserFactory extends Factory
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
         );
+    }
+
+    public function withPersonaFields()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'nombres' => $this->faker->firstName,
+                'apellidos' => $this->faker->lastName,
+                'cedula' => $this->faker->unique()->numerify('##########'),
+                'telefono' => $this->faker->phoneNumber,
+                'sexo' => $this->faker->randomElement(['M', 'F']),
+                'fecha_nacimiento' => $this->faker->date,
+                'estado' => 1,
+                'usuario_registro' => 0,
+                'usuario_modificacion' => null,
+            ];
+        });
     }
 }

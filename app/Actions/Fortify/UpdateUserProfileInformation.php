@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Models\User;
 use App\Models\Persona;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -44,14 +45,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         }
 
         // Update the related Persona entity
-        $user->persona()->forceFill([
+        $user->persona()->update([
             'nombres' => $input['nombres'],
             'apellidos' => $input['apellidos'],
             'cedula' => $input['cedula'],
             'telefono' => $input['telefono'],
             'sexo' => $input['sexo'],
             'fecha_nacimiento' => $input['fecha_nacimiento'],
-        ])->save();
+            'estado' => 1,
+            'usuario_modificacion' => $user->id
+        ]);
     }
 
     /**
@@ -67,14 +70,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->save();
 
         // Update the related Persona entity
-        $user->persona()->forceFill([
+        $user->persona()->update([
             'nombres' => $input['nombres'],
             'apellidos' => $input['apellidos'],
             'cedula' => $input['cedula'],
             'telefono' => $input['telefono'],
             'sexo' => $input['sexo'],
             'fecha_nacimiento' => $input['fecha_nacimiento'],
-        ])->save();
+            'estado' => 1,
+            'usuario_modificacion' => $user->id
+        ]);
 
         $user->sendEmailVerificationNotification();
     }
