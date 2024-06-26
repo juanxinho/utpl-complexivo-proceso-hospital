@@ -14,7 +14,8 @@
         "livewire/livewire": "^3.0",
         "mkocansey/bladewind": "^2.6",
         "spatie/laravel-permission": "^6.9",
-        "tanmuhittin/laravel-google-translate": "^2.3"
+        "tanmuhittin/laravel-google-translate": "^2.3",
+        "yajra/laravel-datatables-oracle": "^11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

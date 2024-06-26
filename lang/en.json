@@ -110,5 +110,6 @@
     "Name": "Name",
     "Phone": "Phone",
     "Role": "Role",
-    "Sex": "Sex"
+    "Sex": "Sex",
+    "Users management": "Users management"
 }

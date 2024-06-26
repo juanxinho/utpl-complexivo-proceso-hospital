@@ -110,5 +110,6 @@
     "Close": "Cerca",
     "API Token Permissions": "Permisos de tokens API",
     "Delete API Token": "Eliminar token API",
-    "Are you sure you would like to delete this API token?": "¿Está seguro de que desea eliminar este token de API?"
+    "Are you sure you would like to delete this API token?": "¿Está seguro de que desea eliminar este token de API?",
+    "Users management": "Gestión de usuarios"
 }

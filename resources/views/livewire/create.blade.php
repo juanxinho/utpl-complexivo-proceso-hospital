@@ -29,11 +29,11 @@
         </div>
         <div>
             <label for="idrol">{{ __('Role') }}:</label>
-            <select wire:model="idrol" multiple>
+            {{--<select wire:model="idrol" multiple>
                 @foreach($roles as $rol)
                     <option value="{{ $rol->idrol }}">{{ $rol->nombre }}</option>
                 @endforeach
-            </select>
+            </select>--}}
             @error('idrol') <span>{{ $message }}</span> @enderror
         </div>
         <button type="submit">{{ __('Save') }}</button>

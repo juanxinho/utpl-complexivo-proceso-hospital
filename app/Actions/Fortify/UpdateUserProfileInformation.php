@@ -43,6 +43,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
             ])->save();
         }
+        //$user->assignRole('super-admin');
 
         // Update the related Persona entity
         $user->persona()->update([

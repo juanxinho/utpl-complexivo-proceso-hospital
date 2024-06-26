@@ -2,6 +2,7 @@
 
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 
 Route::get('/', function () {
@@ -26,6 +27,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('roles', RoleController::class);
 });
 
 /*
