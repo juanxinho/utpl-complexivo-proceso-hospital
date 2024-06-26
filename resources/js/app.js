@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'flowbite';
 
 window.themeSwitcher = function () {
     return {
