@@ -41,7 +41,7 @@
 
             <div class="mt-4">
                 <x-label for="sexo" value="{{ __('Sex') }}" />
-                <x-select name="sexo" id="sexo" class="mt-1 block w-full" :options="['M' => 'Masculino', 'F' => 'Femenino']" wire:model.defer="state.sexo" placeholder="Seleccione una opción" />
+                <x-select name="sexo" id="sexo" class="mt-1 block w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.sexo" placeholder="Select an option" />
             </div>
 
             <div class="mt-4">
