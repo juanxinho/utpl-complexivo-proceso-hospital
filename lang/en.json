@@ -1,4 +1,19 @@
 {
     "Email": "Email",
-    "Appointments": "Appointments"
+    "A new verification link has been sent to the email address you provided in your profile settings.": "A new verification link has been sent to the email address you provided in your profile settings.",
+    "Confirm": "Confirm",
+    "Confirm Password": "Confirm Password",
+    "Already registered?": "Already registered?",
+    "Appointments": "Appointments",
+    "Billing": "Billing",
+    "Analytics": "Analytics",
+    "API Tokens": "API Tokens",
+    "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+    "Cancel": "Cancel",
+    "Add additional security to your account using two factor authentication.": "Add additional security to your account using two factor authentication.",
+    "A new verification link has been sent to your email address.": "A new verification link has been sent to your email address.",
+    "Accept Invitation": "Accept Invitation",
+    "API tokens allow third-party services to authenticate with our application on your behalf.": "API tokens allow third-party services to authenticate with our application on your behalf.",
+    "API Token": "API Token",
+    "API Token Permissions": "API Token Permissions"
 }

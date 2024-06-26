@@ -12,7 +12,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0",
-        "mkocansey/bladewind": "^2.6"
+        "mkocansey/bladewind": "^2.6",
+        "tanmuhittin/laravel-google-translate": "^2.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
