@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Persona;
-use App\Models\Rol;
+//use App\Models\Rol;
 use App\Models\User;
 use Livewire\Component;
 
@@ -15,7 +15,7 @@ class UserManagement extends Component
     public function render()
     {
         $this->users = User::with('roles', 'persona')->get();
-        $this->roles = Rol::all();
+        //$this->roles = Rol::all();
         return view('livewire.user-management')->layout('layouts.app');
     }
 

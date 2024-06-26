@@ -27,3 +27,17 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+/*
+Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin', function () {
+            return 'Admin Page';
+        })->name('admin');
+    });
+
+    Route::middleware(['permission:edit articles'])->group(function () {
+        Route::get('/edit-article', function () {
+            return 'Edit Article Page';
+        })->name('edit.article');
+    });
+ * */
