@@ -51,54 +51,51 @@
                 <x-input-error for="photo" class="mt-2" />
             </div>
         @endif
-
+        {{ $this->user->persona }}
         <!-- Nombres -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="nombres" value="{{ __('Nombres') }}" />
-            <x-input id="nombres" type="text" class="mt-1 block w-full" wire:model.defer="state.nombres" autocomplete="nombres" />
+            <x-input id="nombres" type="text" class="mt-1 block w-full" value="{{$this->user->persona->nombres}}" autocomplete="nombres" /> 
             <x-input-error for="nombres" class="mt-2" />
         </div>
 
         <!-- Apellidos -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="apellidos" value="{{ __('Apellidos') }}" />
-            <x-input id="apellidos" type="text" class="mt-1 block w-full" wire:model.defer="state.apellidos" autocomplete="apellidos" />
+            <x-input id="apellidos" type="text" class="mt-1 block w-full" value="{{$this->user->persona->apellidos}}" autocomplete="apellidos" />
             <x-input-error for="apellidos" class="mt-2" />
         </div>
 
         <!-- Cedula -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="cedula" value="{{ __('Cédula') }}" />
-            <x-input id="cedula" type="text" class="mt-1 block w-full" wire:model.defer="state.cedula" autocomplete="cedula" />
+            <x-input id="cedula" type="text" class="mt-1 block w-full" value="{{$this->user->persona->cedula}}" autocomplete="cedula" />
             <x-input-error for="cedula" class="mt-2" />
         </div>
 
         <!-- Telefono -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="telefono" value="{{ __('Teléfono') }}" />
-            <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model.defer="state.telefono" autocomplete="telefono" />
+            <x-input id="telefono" type="text" class="mt-1 block w-full" value="{{$this->user->persona->telefono}}" autocomplete="telefono" />
             <x-input-error for="telefono" class="mt-2" />
         </div>
 
         <!-- Sexo -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="sexo" value="{{ __('Sexo') }}" />
-            <x-select id="sexo" name="sexo" class="block mt-1 w-full" wire:model.defer="state.sexo">
-                <option value="">{{ __('Seleccione una opción') }}</option>
-                <option value="M">{{ __('Masculino') }}</option>
-                <option value="F">{{ __('Femenino') }}</option>
-            </x-select>
+            <x-select id="sexo" name="sexo" class="block mt-1 w-full" :options="['M' => 'Masculino', 'F' => 'Femenino']" value="{{$this->user->persona->sexo}}" />
             <x-input-error for="sexo" class="mt-2" />
         </div>
 
         <!-- Fecha de Nacimiento -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="fecha_nacimiento" value="{{ __('Fecha de Nacimiento') }}" />
-            <x-bladewind::datepicker
+            <x-bladewind::datepicker required="true" 
                 id="fecha_nacimiento"
                 name="fecha_nacimiento"
                 class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full"
                 format="yyyy-mm-dd"
+                default_date="{{$this->user->persona->fecha_nacimiento}}"  
             />
             <x-input-error for="fecha_nacimiento" class="mt-2" />
         </div>
