@@ -98,7 +98,7 @@
                 id="fecha_nacimiento"
                 name="fecha_nacimiento"
                 class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full"
-                format="dd-mm-yyyy"
+                format="yyyy-mm-dd"
             />
             <x-input-error for="fecha_nacimiento" class="mt-2" />
         </div>
