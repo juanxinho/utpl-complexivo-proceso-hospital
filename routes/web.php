@@ -8,6 +8,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/translations', function () {
+    return view('vendor.translation-manager.index');
+});
+
 Route::view('/help', 'help')->name('help');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
