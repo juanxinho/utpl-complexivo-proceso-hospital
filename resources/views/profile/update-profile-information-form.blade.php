@@ -51,11 +51,11 @@
                 <x-input-error for="photo" class="mt-2" />
             </div>
         @endif
-        {{ $this->user->persona }}
+        
         <!-- Nombres -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="nombres" value="{{ __('Nombres') }}" />
-            <x-input id="nombres" type="text" class="mt-1 block w-full" value="{{$this->user->persona->nombres}}" autocomplete="nombres" /> 
+            <x-input id="nombres" type="text" class="mt-1 block w-full" value="{{$this->user->persona->nombres}}" autocomplete="nombres" />
             <x-input-error for="nombres" class="mt-2" />
         </div>
 
@@ -90,12 +90,12 @@
         <!-- Fecha de Nacimiento -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="fecha_nacimiento" value="{{ __('Fecha de Nacimiento') }}" />
-            <x-bladewind::datepicker required="true" 
+            <x-bladewind::datepicker required="true"
                 id="fecha_nacimiento"
                 name="fecha_nacimiento"
                 class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full"
                 format="yyyy-mm-dd"
-                default_date="{{$this->user->persona->fecha_nacimiento}}"  
+                default_date="{{$this->user->persona->fecha_nacimiento}}"
             />
             <x-input-error for="fecha_nacimiento" class="mt-2" />
         </div>
