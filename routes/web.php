@@ -11,7 +11,7 @@ Route::get('/', function () {
 Route::view('/help', 'help')->name('help');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/usuarios', UserManagement::class)->name('usuarios');
+    Route::get('/users', UserManagement::class)->name('users');
 });
 
 Route::middleware([
