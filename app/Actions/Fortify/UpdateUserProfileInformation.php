@@ -3,7 +3,6 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
-use App\Models\Persona;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -39,23 +38,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
-                //'name' => $input['name'],
                 'email' => $input['email'],
             ])->save();
         }
-        //$user->assignRole('super-admin');
-
-        // Update the related Persona entity
-        $user->persona()->update([
-            'nombres' => $input['nombres'],
-            'apellidos' => $input['apellidos'],
-            'cedula' => $input['cedula'],
-            'telefono' => $input['telefono'],
-            'sexo' => $input['sexo'],
-            'fecha_nacimiento' => $input['fecha_nacimiento'],
-            'estado' => 1,
-            'usuario_modificacion' => $user->id
-        ]);
     }
 
     /**
@@ -69,18 +54,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email' => $input['email'],
             'email_verified_at' => null,
         ])->save();
-
-        // Update the related Persona entity
-        $user->persona()->update([
-            'nombres' => $input['nombres'],
-            'apellidos' => $input['apellidos'],
-            'cedula' => $input['cedula'],
-            'telefono' => $input['telefono'],
-            'sexo' => $input['sexo'],
-            'fecha_nacimiento' => $input['fecha_nacimiento'],
-            'estado' => 1,
-            'usuario_modificacion' => $user->id
-        ]);
 
         $user->sendEmailVerificationNotification();
     }

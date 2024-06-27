@@ -90,14 +90,8 @@
         <!-- Fecha de Nacimiento -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="fecha_nacimiento" value="{{ __('Date of birth') }}" />
-            <x-datepicker
-                name="fecha_nacimiento"
-                class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full"
-                format="yyyy-mm-dd"
-                default_date="{{$this->user->persona->fecha_nacimiento}}"
-            />
+            <x-date-picker id="fecha_nacimiento" type="date" name="fecha_nacimiento" class="block mt-1 w-full" defaultdate="{{$this->user->persona->fecha_nacimiento}}" wire:model.defer="state.fecha_nacimiento" />
             <x-input-error for="fecha_nacimiento" class="mt-2" />
-
         </div>
 
         <!-- Email -->
