@@ -9,7 +9,7 @@ use App\Http\Controllers\EspecialidadController;
 // Rutas públicas
 Route::get('/', function () {
     return view('auth.login');
-})->name('login');
+});
 
 Route::get('/translations', function () {
     return view('vendor.translation-manager.index');
