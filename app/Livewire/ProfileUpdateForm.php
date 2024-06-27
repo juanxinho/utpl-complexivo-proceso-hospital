@@ -42,7 +42,7 @@ class ProfileUpdateForm extends Component
             'fecha_nacimiento' => $this->state['fecha_nacimiento'],
         ]);
 
-        session()->flash('success', 'Profile updated successfully.');
+        $this->dispatch('saved');
     }
     protected function updateVerifiedProfileInformation(UpdateUserProfileInformation $updater)
     {
@@ -69,7 +69,7 @@ class ProfileUpdateForm extends Component
             'fecha_nacimiento' => $this->state['fecha_nacimiento'],
         ]);
 
-        session()->flash('success', 'Profile updated successfully.');
+        $this->dispatch('saved');
     }
 
     public function render()

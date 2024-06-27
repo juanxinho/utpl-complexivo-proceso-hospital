@@ -9,13 +9,6 @@
 
     <x-slot name="form">
 
-         @if (session()->has('success'))
-            <!--<div class="alert alert-success">
-                {{ session('success') }}
-            </div>-->
-        @endif 
-        
-
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
@@ -127,6 +120,11 @@
     </x-slot>
 
     <x-slot name="actions">
+        @if (session()->has('success'))
+            <div class="me-3">
+                {{ __('Saved.') }}
+            </div>
+        @endif
         <x-action-message class="me-3" on="saved">
             {{ __('Saved.') }}
         </x-action-message>
