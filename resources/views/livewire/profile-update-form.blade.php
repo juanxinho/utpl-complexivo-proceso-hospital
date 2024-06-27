@@ -8,6 +8,14 @@
     </x-slot>
 
     <x-slot name="form">
+
+         @if (session()->has('success'))
+            <!--<div class="alert alert-success">
+                {{ session('success') }}
+            </div>-->
+        @endif 
+        
+
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
