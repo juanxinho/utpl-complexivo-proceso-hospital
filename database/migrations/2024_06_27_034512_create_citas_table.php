@@ -16,14 +16,12 @@ class CreateCitasTable extends Migration
             $table->timestamp('fecha_modificacion')->nullable();
             $table->string('estado', 45);
             $table->unsignedBigInteger('medico_horario_idmedico_horario');
-            $table->unsignedBigInteger('usuario_rol_idusuario_rol');
             $table->unsignedBigInteger('factura_idfactura')->nullable();
             $table->unsignedBigInteger('historial_clinico_idhistorial_clinico')->nullable();
             $table->dateTime('fecha_atencion');
             $table->timestamps();
 
             $table->foreign('medico_horario_idmedico_horario')->references('idmedico_horario')->on('medico_horario');
-            $table->foreign('usuario_rol_idusuario_rol')->references('idusuario_rol')->on('usuario_rol');
             $table->foreign('factura_idfactura')->references('idfactura')->on('factura');
             $table->foreign('historial_clinico_idhistorial_clinico')->references('idhistorial_clinico')->on('historial_clinico');
         });

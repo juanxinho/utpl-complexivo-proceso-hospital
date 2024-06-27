@@ -21,12 +21,12 @@
                 <form action="{{ route('roles.store') }}" method="POST">
                     @csrf
                     <div class="mb-4">
-                        <x-jet-label for="name" value="{{ __('Role Name') }}" />
-                        <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                        <x-label for="name" value="{{ __('Role Name') }}" />
+                        <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                     </div>
 
                     <div class="mb-4">
-                        <x-jet-label for="permissions" value="{{ __('Permissions') }}" />
+                        <x-label for="permissions" value="{{ __('Permissions') }}" />
                         @foreach ($permissions as $permission)
                             <div>
                                 <label>
@@ -38,9 +38,9 @@
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-                        <x-jet-button class="ml-4">
+                        <x-button class="ml-4">
                             {{ __('Create Role') }}
-                        </x-jet-button>
+                        </x-button>
                     </div>
                 </form>
             </div>

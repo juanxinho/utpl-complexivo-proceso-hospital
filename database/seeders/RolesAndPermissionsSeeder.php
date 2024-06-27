@@ -15,29 +15,84 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Create permissions
         Permission::create(['name' => 'view module']);
+
+        // Appointments
         Permission::create(['name' => 'view appointment']);
-        Permission::create(['name' => 'delete appointment']);
         Permission::create(['name' => 'create appointment']);
+        Permission::create(['name' => 'update appointment']);
+        Permission::create(['name' => 'delete appointment']);
+
+        // Users
         Permission::create(['name' => 'view user']);
-        Permission::create(['name' => 'delete user']);
         Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'update user']);
+        Permission::create(['name' => 'delete user']);
+
+        // Roles
+        Permission::create(['name' => 'view role']);
+        Permission::create(['name' => 'create role']);
+        Permission::create(['name' => 'update role']);
+        Permission::create(['name' => 'delete role']);
+
+        // Specialties
+        Permission::create(['name' => 'view specialty']);
+        Permission::create(['name' => 'create specialty']);
+        Permission::create(['name' => 'update specialty']);
+        Permission::create(['name' => 'delete specialty']);
+
+        // Clinical History
+        Permission::create(['name' => 'view clinical history']);
+        Permission::create(['name' => 'create clinical history']);
+        Permission::create(['name' => 'update clinical history']);
+        Permission::create(['name' => 'delete clinical history']);
+
+        // Invoices
+        Permission::create(['name' => 'view invoice']);
+        Permission::create(['name' => 'create invoice']);
+        Permission::create(['name' => 'update invoice']);
+        Permission::create(['name' => 'delete invoice']);
+
+        // Schedules
+        Permission::create(['name' => 'view schedule']);
+        Permission::create(['name' => 'create schedule']);
+        Permission::create(['name' => 'update schedule']);
+        Permission::create(['name' => 'delete schedule']);
 
         // Create roles and assign created permissions
-        $role = Role::create(['name' => 'patient']);
-        $role->givePermissionTo(['view module', 'view appointment', 'delete appointment', 'create appointment']);
+        $superAdmin = Role::create(['name' => 'super-admin']);
 
-        $role = Role::create(['name' => 'audit']);
-        $role->givePermissionTo(['view module', 'view appointment', 'delete appointment', 'create appointment', 'view user', 'delete user', 'create user']);
+        $admin = Role::create(['name' => 'admin']);
+        $admin->givePermissionTo([
+            'view module', 'view appointment', 'create appointment', 'update appointment', 'delete appointment',
+            'view user', 'create user', 'update user', 'delete user',
+            'view role', 'create role', 'update role', 'delete role',
+            'view specialty', 'create specialty', 'update specialty', 'delete specialty',
+            'view clinical history', 'create clinical history', 'update clinical history', 'delete clinical history',
+            'view invoice', 'create invoice', 'update invoice', 'delete invoice',
+            'view schedule', 'create schedule', 'update schedule', 'delete schedule'
+        ]);
 
-        $role = Role::create(['name' => 'medic']);
-        $role->givePermissionTo(['view module', 'view appointment', 'delete appointment', 'create appointment']);
+        $technician = Role::create(['name' => 'technician']);
+        $technician->givePermissionTo('view module');
 
-        $role = Role::create(['name' => 'technician']);
-        $role->givePermissionTo('view module');
+        $medic = Role::create(['name' => 'medic']);
+        $medic->givePermissionTo([
+            'view module', 'view appointment', 'create appointment', 'update appointment', 'delete appointment',
+            'view clinical history', 'create clinical history', 'update clinical history', 'delete clinical history',
+            'view specialty'
+        ]);
 
-        $role = Role::create(['name' => 'admin']);
-        $role->givePermissionTo(['view module', 'view appointment', 'delete appointment', 'create appointment', 'view user', 'delete user', 'create user']);
+        $audit = Role::create(['name' => 'audit']);
+        $audit->givePermissionTo([
+            'view module', 'view appointment', 'create appointment', 'update appointment', 'delete appointment',
+            'view user', 'create user', 'update user', 'delete user',
+            'view clinical history', 'view invoice', 'view schedule'
+        ]);
 
-        $role = Role::create(['name' => 'super-admin']);
+        $patient = Role::create(['name' => 'patient']);
+        $patient->givePermissionTo([
+            'view module', 'view appointment', 'create appointment', 'delete appointment',
+            'view clinical history'
+        ]);
     }
 }

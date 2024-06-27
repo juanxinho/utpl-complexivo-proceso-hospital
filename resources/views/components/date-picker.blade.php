@@ -8,7 +8,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         let picker = new Pikaday({
             field: document.getElementById('{{ $id }}'),
-            format: 'DD-MM-YYYY',
+            format: 'YYYY-MM-DD',
             maxDate: moment().toDate(),
             defaultDate: '{{ $defaultdate }}'
         });

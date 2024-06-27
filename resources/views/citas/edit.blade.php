@@ -13,35 +13,35 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <x-jet-label for="medico_horario_idmedico_horario" value="{{ __('Select Doctor Schedule') }}" />
+                        <x-label for="medico_horario_idmedico_horario" value="{{ __('Select Doctor Schedule') }}" />
                         <select id="medico_horario_idmedico_horario" name="medico_horario_idmedico_horario" class="block mt-1 w-full">
                             @foreach ($medicosHorarios as $medicoHorario)
                                 <option value="{{ $medicoHorario->idmedico_horario }}" {{ $cita->medico_horario_idmedico_horario == $medicoHorario->idmedico_horario ? 'selected' : '' }}>{{ $medicoHorario->especialidad->nombre }} - {{ $medicoHorario->horario->rango_horario }}</option>
                             @endforeach
                         </select>
-                        <x-jet-input-error for="medico_horario_idmedico_horario" class="mt-2" />
+                        <x-input-error for="medico_horario_idmedico_horario" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
-                        <x-jet-label for="usuario_rol_idusuario_rol" value="{{ __('Select Patient Role') }}" />
+                        <x-label for="usuario_rol_idusuario_rol" value="{{ __('Select Patient Role') }}" />
                         <select id="usuario_rol_idusuario_rol" name="usuario_rol_idusuario_rol" class="block mt-1 w-full">
                             @foreach ($usuariosRoles as $usuarioRol)
                                 <option value="{{ $usuarioRol->idusuario_rol }}" {{ $cita->usuario_rol_idusuario_rol == $usuarioRol->idusuario_rol ? 'selected' : '' }}>{{ $usuarioRol->usuario->nombres }} {{ $usuarioRol->usuario->apellidos }}</option>
                             @endforeach
                         </select>
-                        <x-jet-input-error for="usuario_rol_idusuario_rol" class="mt-2" />
+                        <x-input-error for="usuario_rol_idusuario_rol" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
-                        <x-jet-label for="fecha_atencion" value="{{ __('Appointment Date and Time') }}" />
-                        <x-jet-input id="fecha_atencion" class="block mt-1 w-full" type="datetime-local" name="fecha_atencion" value="{{ $cita->fecha_atencion }}" required />
-                        <x-jet-input-error for="fecha_atencion" class="mt-2" />
+                        <x-label for="fecha_atencion" value="{{ __('Appointment Date and Time') }}" />
+                        <x-input id="fecha_atencion" class="block mt-1 w-full" type="datetime-local" name="fecha_atencion" value="{{ $cita->fecha_atencion }}" required />
+                        <x-input-error for="fecha_atencion" class="mt-2" />
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-                        <x-jet-button class="ml-4">
+                        <x-button class="ml-4">
                             {{ __('Update Appointment') }}
-                        </x-jet-button>
+                        </x-button>
                     </div>
                 </form>
             </div>
