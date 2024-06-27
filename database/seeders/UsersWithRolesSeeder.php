@@ -20,7 +20,7 @@ class UsersWithRolesSeeder extends Seeder
                 'cedula' => '0923717722',
                 'nombres' => 'Juan',
                 'apellidos' => 'Nieto',
-                'fecha_nacimiento' => '1985-04-05',
+                'fecha_nacimiento' => '1986-05-04',
                 'telefono' => '0995767405',
                 'sexo' => 'M',
                 'estado' => 1,
