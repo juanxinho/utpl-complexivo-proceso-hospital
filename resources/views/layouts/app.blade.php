@@ -19,13 +19,16 @@
 
     </head>
     <body x-data="themeSwitcher()" :class="{ 'dark': switchOn }" class="font-sans antialiased">
+    <div class="fixed top-0 z-50 w-full">
         <x-banner />
+        @livewire('navigation-menu')
 
-        <div class="min-h-screen bg-light-green">
+    </div>
+
+        <div class="min-h-screen bg-malachite-50 dark:bg-gray-950">
 
             <!-- Page Content -->
             <main>
-                @livewire('navigation-menu')
                 @include('layouts.sidebar')
                     <div class="p-4 sm:ml-64">
                         <div class="px-0 mt-14 md:p-2">

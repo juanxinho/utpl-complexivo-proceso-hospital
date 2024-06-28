@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Role;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -49,5 +50,8 @@ class CreateNewUser implements CreatesNewUsers
             'usuario_registro' => 1,
             'idpersona' => $persona->idpersona,
         ]);
+
+        $superAdminRole = Role::firstOrCreate(['name' => 'patient']);
+        $this->assignRole('patient');
     }
 }

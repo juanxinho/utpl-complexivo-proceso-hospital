@@ -5,30 +5,3 @@
 [x-cloak] {
     display: none;
 }
-
-.bg-green-800 {
-    background: #0AC60A;
-}
-
-.bg-light-green {
-    background: #EFFBEF;
-}
-
-.color-green {
-    color: #0AC60A;
-}
-
-.text-green-600 {
-    --tw-text-opacity: 1;
-    color: rgb(10 198 10 / var(--tw-text-opacity));
-}
-
-.focus\:ring-green-500:focus {
-    --tw-border-opacity: 1 !important;
-    border-color: rgb(10 198 10 / var(--tw-border-opacity)) !important;
-}
-
-.focus\:border-green-500:focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(10 198 10 / var(--tw-border-opacity));
-}

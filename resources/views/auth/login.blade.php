@@ -3,7 +3,7 @@
         <x-validation-errors class="mb-4" />
 
         @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="mb-4 font-medium text-sm text-malachite-600 dark:text-malachite-300">
                 {{ $value }}
             </div>
         @endsession
@@ -14,7 +14,7 @@
             </x-slot>
 
             <div class="text-center">
-                <h1 class="text-2xl color-green font-bold">Hospital Isidro Ayora</h1>
+                <h1 class="text-2xl text-malachite-600 dark:text-malachite-300 font-bold">Hospital Isidro Ayora</h1>
                 <h3 class="text-lg font-bold">{{ __('Log in') }}</h3>
             </div>
 
@@ -51,7 +51,7 @@
 
                 @if (Route::has('password.request'))
                     <div class="mt-1 w-full">
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" href="{{ route('password.request') }}">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-malachite-500" href="{{ route('password.request') }}">
                             {{ __('Forgot your password?') }}
                         </a>
                     </div>

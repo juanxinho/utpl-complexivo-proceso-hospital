@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col md:flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-light-green">
+<div class="min-h-screen flex flex-col md:flex-row sm:justify-center items-center pt-6 sm:pt-0 bg-malachite-50 dark:bg-gray-950">
 
     <div class="md:flex items-stretch">
         <div class="md:w-full sm:max-w-sm mt-6 mx-5 shadow-md overflow-hidden rounded-lg">

@@ -5,24 +5,22 @@
 
 
 <x-slot name="header">
-    <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+    <h2 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
         {{ __('Users management') }}
     </h2>
 </x-slot>
 
 <div class="py-2 md:py-12">
-    @if($isOpen)
-        @include('livewire.create')
-    @endif
 
-    <button wire:click="create()">Nuevo Usuario</button>
+
+    <a wire:click="create()">Nuevo Usuario</a>
 
         <a href="{{ route('roles.index') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Manage Roles
         </a>
 
     <div class="mx-auto sm:px-6 lg:px-2">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500">
 
 
             @if (session()->has('message'))
@@ -33,19 +31,21 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-{{--                    <th>Roles</th>--}}
-                    <th>Acciones</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Last name') }}</th>
+                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Roles') }}</th>
+                    <th>{{ __('Actions') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->persona->nombres }} {{ $user->persona->apellidos }}</td>
+                        <td>{{ $user->persona->nombres }}</td>
+                        <td>{{ $user->persona->apellidos }}</td>
                         <td>{{ $user->email }}</td>
-{{--                        <td>{{ implode(', ', $user->persona->roles->pluck('name')->toArray()) }}</td>--}}
+                        <td>{{ implode(', ', $user->getRoleNames()->toArray()) }}</td>
                         <td>
                             <button wire:click="edit({{ $user->id }})">Editar</button>
                             <button wire:click="delete({{ $user->id }})">Eliminar</button>

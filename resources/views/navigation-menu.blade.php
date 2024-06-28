@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -8,7 +8,7 @@
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                     </svg>
                 </button>
-                <h1 class="text-2xl color-green font-bold">Hospital Isidro Ayora</h1>
+                <h1 class="text-2xl text-malachite-600 dark:text-malachite-300 font-bold">Hospital Isidro Ayora</h1>
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
@@ -22,7 +22,7 @@
                                     </button>
                                 @else
                                     <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-900 active:bg-gray-50 transition ease-in-out duration-150">
                                         {{ Auth::user()->persona->nombres }}
 
                                         <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -103,7 +103,7 @@
                         x-ref="switchButton"
                         type="button"
                         @click="switchOn = ! switchOn; switchTheme()"
-                        :class="switchOn ? 'bg-blue-600' : 'bg-neutral-200'"
+                        :class="switchOn ? 'bg-blue-600' : 'bg-gray-200'"
                         class="relative inline-flex h-6 py-0.5 ml-4 focus:outline-none rounded-full w-10">
                         <span :class="switchOn ? 'translate-x-[18px]' : 'translate-x-0.5'" class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md"></span>
                     </button>

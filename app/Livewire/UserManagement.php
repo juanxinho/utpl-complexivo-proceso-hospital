@@ -16,7 +16,7 @@ class UserManagement extends Component
     {
         $this->users = User::with('roles', 'persona')->get();
         //$this->roles = Rol::all();
-        return view('livewire.user-management')->layout('layouts.app');
+        return view('users.index')->layout('layouts.app');
     }
 
     public function create()
