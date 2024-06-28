@@ -11,7 +11,7 @@
 
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-            <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+            <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-6">
                 <!-- Profile Photo File Input -->
                 <input type="file" id="photo" class="hidden"
                        wire:model.live="photo"
@@ -54,49 +54,49 @@
         @endif
 
         <!-- Nombres -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="nombres" value="{{ __('Name') }}" />
             <x-input id="nombres" type="text" class="mt-1 block w-full" wire:model.defer="state.nombres" autocomplete="nombres" />
             <x-input-error for="nombres" class="mt-2" />
         </div>
 
         <!-- Apellidos -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="apellidos" value="{{ __('Last name') }}" />
             <x-input id="apellidos" type="text" class="mt-1 block w-full" wire:model.defer="state.apellidos" autocomplete="apellidos" />
             <x-input-error for="apellidos" class="mt-2" />
         </div>
 
         <!-- Cedula -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="cedula" value="{{ __('ID') }}" />
             <x-input id="cedula" type="text" class="mt-1 block w-full" wire:model.defer="state.cedula" autocomplete="cedula" />
             <x-input-error for="cedula" class="mt-2" />
         </div>
 
         <!-- Telefono -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="telefono" value="{{ __('Phone') }}" />
             <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model.defer="state.telefono" autocomplete="telefono" />
             <x-input-error for="telefono" class="mt-2" />
         </div>
 
         <!-- Sexo -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="sexo" value="{{ __('Sex') }}" />
             <x-select id="sexo" name="sexo" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.sexo" />
             <x-input-error for="sexo" class="mt-2" />
         </div>
 
         <!-- Fecha de Nacimiento -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="fecha_nacimiento" value="{{ __('Date of birth') }}" />
             <x-date-picker id="fecha_nacimiento" type="date" name="fecha_nacimiento" class="block mt-1 w-full" defaultdate="{{$this->user->persona->fecha_nacimiento }}" wire:model.defer="state.fecha_nacimiento" />
             <x-input-error for="fecha_nacimiento" class="mt-2" />
         </div>
 
         <!-- Email -->
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6 sm:col-span-3">
             <x-label for="email" value="{{ __('Email') }}" />
             <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email" required autocomplete="username" />
             <x-input-error for="email" class="mt-2" />
