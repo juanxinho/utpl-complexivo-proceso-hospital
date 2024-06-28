@@ -1,25 +1,10 @@
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let picker = new Pikaday({
-            field: document.getElementById('{{ $id }}'),
-            format: 'YYYY-MM-DD',
-            maxDate: moment().toDate(),
-            defaultDate: '{{ $defaultdate }}'
-        });
-    });
-</script>
-
 @props(['id', 'name', 'defaultdate' => '', 'value' => ''])
 
 <div
     x-data="{ value: '{{ $defaultdate }}' }"
     x-init="
         new Pikaday({
-            field: $refs.input,
+            field: document.getElementById('{{ $id }}'),
             format: 'YYYY-MM-DD',
             maxDate: moment().toDate(),
             defaultDate: '{{ $defaultdate }}',
