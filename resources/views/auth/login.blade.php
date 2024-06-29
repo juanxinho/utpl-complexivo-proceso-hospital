@@ -45,9 +45,9 @@
                     {{ __('Log in') }}
                 </x-button>
 
-                <x-button class="mt-1 mb-2 w-full" onclick="window.location='{{ route('register') }}'">
+                <x-secondary-button class="mt-1 mb-2 w-full" onclick="window.location='{{ route('register') }}'">
                     {{ __('Create Account') }}
-                </x-button>
+                </x-secondary-button>
 
                 @if (Route::has('password.request'))
                     <div class="mt-1 w-full">

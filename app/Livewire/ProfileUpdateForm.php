@@ -6,10 +6,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 
 class ProfileUpdateForm extends Component
 {
+    use WithFileUploads;
+
     public $state = [];
+    public $profile_photo;
 
     public function mount()
     {
@@ -29,6 +34,7 @@ class ProfileUpdateForm extends Component
             'sexo' => ['required', 'string', 'in:M,F'],
             'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validate();
 
         $updater->update($user, $this->state);
@@ -56,6 +62,7 @@ class ProfileUpdateForm extends Component
             'sexo' => ['required', 'string', 'in:M,F'],
             'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validate();
 
         $updater->updateVerifiedUser($user, $this->state);
