@@ -54,17 +54,6 @@ class ProfileUpdateForm extends Component
     {
         $user = Auth::user();
 
-        Validator::make($this->state, [
-            'nombres' => ['required', 'string', 'max:255'],
-            'apellidos' => ['required', 'string', 'max:255'],
-            'cedula' => ['required', 'string', 'max:13'],
-            'telefono' => ['required', 'string', 'max:10'],
-            'sexo' => ['required', 'string', 'in:M,F'],
-            'fecha_nacimiento' => ['required', 'date'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-        ])->validate();
-
         $updater->updateVerifiedUser($user, $this->state);
 
         $user->persona->update([
