@@ -6,15 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
+use App\Rules\EcuadorCedulaORuc;
+use App\Rules\EcuadorTelefono;
 
 class ProfileUpdateForm extends Component
 {
-    use WithFileUploads;
-
     public $state = [];
-    public $profile_photo;
 
     public function mount()
     {
@@ -26,11 +23,13 @@ class ProfileUpdateForm extends Component
     {
         $user = Auth::user();
 
+        //var_dump($user);die;
+
         Validator::make($this->state, [
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
-            'cedula' => ['required', 'string', 'max:13'],
-            'telefono' => ['required', 'string', 'max:10'],
+            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaORuc],
+            'telefono' => ['required', 'string', new EcuadorTelefono],
             'sexo' => ['required', 'string', 'in:M,F'],
             'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],

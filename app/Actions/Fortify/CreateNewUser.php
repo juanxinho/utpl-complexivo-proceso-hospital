@@ -4,6 +4,8 @@ namespace App\Actions\Fortify;
 
 use App\Models\Persona;
 use App\Models\User;
+use App\Rules\EcuadorCedulaORuc;
+use App\Rules\EcuadorTelefono;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -24,8 +26,8 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
-            'cedula' => ['required', 'string', 'max:13'],
-            'telefono' => ['required', 'string', 'max:10'],
+            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaORuc],
+            'telefono' => ['required', 'string', new EcuadorTelefono],
             'sexo' => ['required', 'string', 'in:M,F'],
             'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

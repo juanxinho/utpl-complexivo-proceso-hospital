@@ -54,7 +54,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected function defaultProfilePhotoUrl()
+    public function defaultProfilePhotoUrl()
     {
         $name = trim(collect(explode(' ', $this->persona->nombres))->map(function ($segment) {
             return mb_substr($segment, 0, 1);
