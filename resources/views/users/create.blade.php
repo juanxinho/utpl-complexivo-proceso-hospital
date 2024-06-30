@@ -1,5 +1,6 @@
-<!-- resources/views/livewire/create.blade.php -->
 <div>
+    {{var_dump($persona)}}
+
     <form wire:submit.prevent="store">
         <input type="hidden" wire:model="idusuario">
         <div>
@@ -27,22 +28,22 @@
             <input type="password" wire:model="password">
             @error('password') <span>{{ $message }}</span> @enderror
         </div>
-    
+
         <div>
-            <label for="idroles">{{ __('Role') }}:</label>
-            
+            {{--<label for="idroles">{{ __('Role') }}:</label>
             @foreach ($roles as $rol)
-                <label>
-                {{ $rol->name }}
-                <input type="checkbox"  id="idroles[]" name="idroles[]" value="{{ $rol->id }}" wire:model='idroles.{{ $rol->id }}' wire:key="{{ $rol->id }}"
-                    @foreach ($idroles as $id)
-                        @if($id==$rol->id) checked @endif
-                    @endforeach
-                >
-                </label>
+                <div class="flex items-center mb-4">
+                    <input @foreach ($idroles as $id)
+                               @if($id==$rol->id) checked @endif
+                           @endforeach type="checkbox" id="idroles[]" name="idroles[]" value="{{ $rol->id }}"
+                           wire:model='idroles.{{ $rol->id }}' wire:key="{{ $rol->id }}"
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                    <label for="default-checkbox"
+                           class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $rol->name }}</label>
+                </div>
             @endforeach
-           
-            @error('idroles') <span>{{ $message }}</span> @enderror
+
+            @error('idroles') <span>{{ $message }}</span> @enderror--}}
         </div>
         <button type="submit">{{ __('Save') }}</button>
         <button type="button" wire:click="closeModal()">{{ __('Cancel') }}</button>

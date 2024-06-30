@@ -17,12 +17,12 @@ class Persona extends Model
         'cedula', 'nombres', 'apellidos', 'fecha_nacimiento', 'telefono', 'sexo', 'estado', 'usuario_registro', 'usuario_modificacion'
     ];
 
-    public function getEdadAttribute()
+    public function getAgeAttribute()
     {
         return Carbon::parse($this->fecha_nacimiento)->age;
     }
 
-    public function usuario()
+    public function user()
     {
         return $this->hasOne(User::class, 'idpersona', 'idpersona');
     }

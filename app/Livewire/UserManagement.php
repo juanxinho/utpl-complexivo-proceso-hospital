@@ -16,16 +16,6 @@ class UserManagement extends Component
 
     public $users, $roles, $persona, $name, $email, $password, $idusuario, $idroles, $id;
     public $isOpen = 0;
-    /*protected $rules = [
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6',
-        'nombres' => 'required|string|max:255',
-        'apellidos' => 'required|string|max:255',
-        'cedula' => ['required', 'string', 'max:10', new \App\Rules\EcuadorCedulaOrRuc],
-        'telefono' => ['required', 'string', new \App\Rules\EcuadorPhone],
-        'sexo' => 'required|string|in:M,F',
-        'fecha_nacimiento' => 'required|date',
-    ];*/
 
     public function render()
     {
@@ -65,7 +55,17 @@ class UserManagement extends Component
 
     public function store()
     {
-        //$validatedData = $this->validate();
+        $validatedData = $this->validate([
+            'email' => 'required|email|unique:users,email,' . $this->id,
+            'password' => 'required|min:6',
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'cedula' => 'required|string|max:10',
+            'telefono' => 'required|string|max:10',
+            'sexo' => 'required|string|in:M,F',
+            'fecha_nacimiento' => 'required|date',
+            'idroles' => 'required|array|min:1',
+        ]);
 
         $persona = Persona::updateOrCreate(['idpersona' => $this->id], [
             'nombres' => $this->persona['nombres'],
@@ -78,21 +78,22 @@ class UserManagement extends Component
             'usuario_registro' => auth()->user()->id,
         ]);
 
-        $usuario = User::updateOrCreate(['id' => $this->id], [
+        $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
             'password' => bcrypt($this->password),
-            'estado' => $this->persona['estado'],
+            'estado' => $this->estado,
             'idpersona' => $persona->idpersona,
             'usuario_registro' => auth()->user()->id,
         ]);
         //var_dump($this->idroles);die;
-        foreach ($this->idroles as $roleId) {
-            $role = Role::findById($roleId);
-var_dump($role);die;
-            if ($role) {
-                $usuario->assignRole($role);
-            }
-        }
+       // foreach ($this->idroles as $roleId) {
+        //    $role = Role::findById($roleId);
+//var_dump($role);die;
+          //  if ($role) {
+           //     $user->assignRole($role);
+           // }
+        //}
+        $user->syncRoles($this->idroles);
 
         session()->flash('message',
             $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
@@ -103,13 +104,14 @@ var_dump($role);die;
 
     public function edit($id)
     {
-        $usuario = User::with('persona', 'roles')->findOrFail($id);
-        $this->id = $id;
-        $this->persona = $usuario->persona->toArray();
-        $this->email = $usuario->email;
-        $this->password = '';
-        $this->idroles = $usuario->roles->pluck('id')->toArray();
+        $user = User::with('persona', 'roles')->findOrFail($id);
 
+        $this->id = $id;
+        $this->persona = $user->persona->toArray();
+        $this->email = $user->email;
+        $this->password = '';
+        $this->idroles = $user->roles->pluck('id')->toArray();
+        //var_dump($this->persona);die;
         $this->openModal();
     }
 
