@@ -10,26 +10,26 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500 p-6">
                 <div class="mb-4">
                     <x-label value="{{ __('Nombre') }}" />
-                    <p>{{ $especialidad->nombre }}</p>
+                    <p>{{ $specialty->nombre }}</p>
                 </div>
 
                 <div class="mb-4">
                     <x-label value="{{ __('Abreviatura') }}" />
-                    <p>{{ $especialidad->abreviatura }}</p>
+                    <p>{{ $specialty->abreviatura }}</p>
                 </div>
 
                 <div class="mb-4">
                     <x-label value="{{ __('Descripción') }}" />
-                    <p>{{ $especialidad->descripcion }}</p>
+                    <p>{{ $specialty->descripcion }}</p>
                 </div>
 
                 <div class="mb-4">
                     <x-label value="{{ __('Estado') }}" />
-                    <p>{{ $especialidad->estado ? 'Activo' : 'Inactivo' }}</p>
+                    <p>{{ $specialty->estado ? 'Activo' : 'Inactivo' }}</p>
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <a href="{{ route('especialidades.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <a href="{{ route('specialties.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         {{ __('Volver') }}
                     </a>
                 </div>

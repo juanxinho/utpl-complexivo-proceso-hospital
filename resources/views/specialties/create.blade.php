@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500 p-6">
-                <form action="{{ route('especialidades.store') }}" method="POST">
+                <form action="{{ route('specialties.store') }}" method="POST">
                     @csrf
 
                     <div class="mb-4">

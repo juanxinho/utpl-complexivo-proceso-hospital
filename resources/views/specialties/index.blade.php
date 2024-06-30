@@ -16,7 +16,7 @@
                     </div>
                 @endif
 
-                <a href="{{ route('especialidades.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('specialties.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     {{ __('Create New Specialty') }}
                 </a>
 
@@ -32,17 +32,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($especialidades as $especialidad)
+                    @foreach ($specialties as $specialty)
                         <tr>
-                            <td class="border px-4 py-2">{{ $especialidad->idespecialidad }}</td>
-                            <td class="border px-4 py-2">{{ __($especialidad->nombre) }}</td>
-                            <td class="border px-4 py-2">{{ $especialidad->abreviatura }}</td>
-                            <td class="border px-4 py-2">{{ __($especialidad->descripcion) }}</td>
-                            <td class="border px-4 py-2">{{ $especialidad->estado ? __('Activo') : __('Inactivo') }}</td>
+                            <td class="border px-4 py-2">{{ $specialty->idespecialidad }}</td>
+                            <td class="border px-4 py-2">{{ __($specialty->nombre) }}</td>
+                            <td class="border px-4 py-2">{{ $specialty->abreviatura }}</td>
+                            <td class="border px-4 py-2">{{ __($specialty->descripcion) }}</td>
+                            <td class="border px-4 py-2">{{ $specialty->estado ? __('Activo') : __('Inactivo') }}</td>
                             <td class="border px-4 py-2">
-                                <a href="{{ route('especialidades.show', $especialidad->idespecialidad) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">{{ __('Ver') }}</a>
-                                <a href="{{ route('especialidades.edit', $especialidad->idespecialidad) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">{{ __('Editar') }}</a>
-                                <form action="{{ route('especialidades.destroy', $especialidad->idespecialidad) }}" method="POST" style="display:inline">
+                                <a href="{{ route('specialties.show', $specialty->idespecialidad) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">{{ __('Ver') }}</a>
+                                <a href="{{ route('specialties.edit', $specialty->idespecialidad) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">{{ __('Editar') }}</a>
+                                <form action="{{ route('specialties.destroy', $specialty->idespecialidad) }}" method="POST" style="display:inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="return confirm('{{ __('¿Está seguro de que desea eliminar esta especialidad?') }}')">

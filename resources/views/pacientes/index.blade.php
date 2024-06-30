@@ -56,8 +56,12 @@
                     <td class="px-6 py-4">{{ $patient->persona->telefono }}</td>
                     <td class="px-6 py-4">{{ $patient->email }}</td>
                     <td class="px-6 py-4">
-                        <button wire:click="edit({{ $patient->id }})" class="text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
-                        <button wire:click="delete({{ $patient->id }})" class="text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
+                        <button wire:click="edit({{ $patient->id }})" class="text-gray-600 dark:text-gray-300">
+                            <x-monoicon-edit-alt width="20" height="20" />
+                        </button>
+                        <button wire:click="delete({{ $patient->id }})" class="text-red-600 dark:text-red-500">
+                            <x-monoicon-delete-alt width="20" height="20" />
+                        </button>
                     </td>
                 </tr>
             @endforeach

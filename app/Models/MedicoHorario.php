@@ -24,7 +24,7 @@ class MedicoHorario extends Model
 
     public function especialidad()
     {
-        return $this->belongsTo(Especialidad::class, 'especialidad_idespecialidad');
+        return $this->belongsTo(Specialty::class, 'especialidad_idespecialidad');
     }
 
     public function horario()

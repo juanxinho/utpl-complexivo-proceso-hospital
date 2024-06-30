@@ -55,7 +55,7 @@ class CreateNewUser implements CreatesNewUsers
 
         $defaultRole = Role::firstOrCreate(['name' => 'patient']);
         $user->assignRole($defaultRole);
-        
+
         return $user;
     }
 }
