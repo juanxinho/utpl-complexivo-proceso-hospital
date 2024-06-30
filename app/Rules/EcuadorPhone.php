@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class EcuadorTelefono implements Rule
+class EcuadorPhone implements Rule
 {
     /**
      * Determine if the validation rule passes.

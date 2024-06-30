@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Factura extends Model
+class Bill extends Model
 {
     use HasFactory;
 
@@ -16,9 +16,9 @@ class Factura extends Model
         'estado', 'detalle', 'total'
     ];
 
-    public function citas()
+    public function appointments()
     {
-        return $this->hasMany(Cita::class, 'factura_idfactura');
+        return $this->hasMany(Appointment::class, 'factura_idfactura');
     }
 }
 

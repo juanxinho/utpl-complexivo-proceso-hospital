@@ -16,9 +16,9 @@ class HistorialClinico extends Model
         'recomendaciones', 'usuario_registro'
     ];
 
-    public function citas()
+    public function appointments()
     {
-        return $this->hasMany(Cita::class, 'historial_clinico_idhistorial_clinico');
+        return $this->hasMany(Appointment::class, 'historial_clinico_idhistorial_clinico');
     }
 
     public function diagnosticos()

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 
-class EspecialidadesSeeder extends Seeder
+class SpecialtiesSeeder extends Seeder
 {
     /**
      * Run the database seeds.

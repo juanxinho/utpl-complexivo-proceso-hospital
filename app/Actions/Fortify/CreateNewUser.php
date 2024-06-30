@@ -4,8 +4,8 @@ namespace App\Actions\Fortify;
 
 use App\Models\Persona;
 use App\Models\User;
-use App\Rules\EcuadorCedulaORuc;
-use App\Rules\EcuadorTelefono;
+use App\Rules\EcuadorCedulaOrRuc;
+use App\Rules\EcuadorPhone;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -26,8 +26,8 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
-            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaORuc],
-            'telefono' => ['required', 'string', new EcuadorTelefono],
+            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'telefono' => ['required', 'string', new EcuadorPhone],
             'sexo' => ['required', 'string', 'in:M,F'],
             'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -45,7 +45,7 @@ class CreateNewUser implements CreatesNewUsers
             'estado' => 1,
         ]);
 
-        return User::create([
+        $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'estado' => 1,
@@ -53,7 +53,9 @@ class CreateNewUser implements CreatesNewUsers
             'idpersona' => $persona->idpersona,
         ]);
 
-        $superAdminRole = Role::firstOrCreate(['name' => 'patient']);
-        $this->assignRole('patient');
+        $defaultRole = Role::firstOrCreate(['name' => 'patient']);
+        $user->assignRole($defaultRole);
+
+        return $user;
     }
 }

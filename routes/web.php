@@ -3,8 +3,9 @@
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\CitaController;
-use App\Http\Controllers\EspecialidadController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\SpecialtyController;
+use App\Livewire\PatientManagement;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -22,19 +23,20 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/patients', PatientManagement::class)->name('patients');
 });
 
 // Rutas protegidas para roles específicos
 Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
-    Route::resource('roles', RoleController::class);
+    Route::resource('/users/roles', RoleController::class);
     Route::get('/users', UserManagement::class)->name('users');
 });
 
 // Rutas protegidas por autenticación (menos restrictivas)
 Route::middleware(['auth'])->group(function () {
-    Route::resource('citas', CitaController::class);
-    Route::get('medico/citas', [CitaController::class, 'medicoIndex'])->name('medico.citas.index');
-    Route::resource('especialidades', EspecialidadController::class);
+    Route::resource('appointments', AppointmentController::class);
+    Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
+    Route::resource('specialties', SpecialtyController::class);
 });
 
 /*
