@@ -45,7 +45,7 @@ class CreateNewUser implements CreatesNewUsers
             'estado' => 1,
         ]);
 
-        return User::create([
+        $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'estado' => 1,
@@ -53,7 +53,9 @@ class CreateNewUser implements CreatesNewUsers
             'idpersona' => $persona->idpersona,
         ]);
 
-        $superAdminRole = Role::firstOrCreate(['name' => 'patient']);
-        $this->assignRole('patient');
+        $defaultRole = Role::firstOrCreate(['name' => 'patient']);
+        $user->assignRole($defaultRole);
+        
+        return $user;
     }
 }
