@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Livewire\Component;
-use App\Rules\EcuadorCedulaORuc;
-use App\Rules\EcuadorTelefono;
+use App\Rules\EcuadorCedulaOrRuc;
+use App\Rules\EcuadorPhone;
 
 class ProfileUpdateForm extends Component
 {
@@ -28,8 +28,8 @@ class ProfileUpdateForm extends Component
         Validator::make($this->state, [
             'nombres' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
-            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaORuc],
-            'telefono' => ['required', 'string', new EcuadorTelefono],
+            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'telefono' => ['required', 'string', new EcuadorPhone],
             'sexo' => ['required', 'string', 'in:M,F'],
             'fecha_nacimiento' => ['required', 'date'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],

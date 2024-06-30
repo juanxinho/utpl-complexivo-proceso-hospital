@@ -3,7 +3,7 @@
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\CitaController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\SpecialtyController;
 use App\Livewire\PatientManagement;
 
@@ -34,8 +34,8 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 
 // Rutas protegidas por autenticación (menos restrictivas)
 Route::middleware(['auth'])->group(function () {
-    Route::resource('appointments', CitaController::class);
-    Route::get('medico/citas', [CitaController::class, 'medicoIndex'])->name('medico.citas.index');
+    Route::resource('appointments', AppointmentController::class);
+    Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
     Route::resource('specialties', SpecialtyController::class);
 });
 

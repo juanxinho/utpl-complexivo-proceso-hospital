@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cita extends Model
+class Appointment extends Model
 {
     use HasFactory;
 
+    protected $table = 'citas';
     protected $primaryKey = 'idcita';
 
     protected $fillable = [
@@ -29,14 +30,9 @@ class Cita extends Model
         return $this->belongsTo(MedicoHorario::class, 'medico_horario_idmedico_horario');
     }
 
-    public function usuarioRol()
+    public function bill()
     {
-        return $this->belongsTo(UsuarioRol::class, 'usuario_rol_idusuario_rol');
-    }
-
-    public function factura()
-    {
-        return $this->belongsTo(Factura::class, 'factura_idfactura');
+        return $this->belongsTo(Bill::class, 'factura_idfactura');
     }
 
     public function historialClinico()

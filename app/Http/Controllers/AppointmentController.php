@@ -2,33 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cita;
-use App\Models\UsuarioRol;
+use App\Models\Appointment;
 use App\Models\MedicoHorario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CitaController extends Controller
+class AppointmentController extends Controller
 {
     public function index()
     {
-        $citas = Cita::with('medicoHorario', 'usuarioRol')->where('usuario_rol_idusuario_rol', Auth::id())->get();
-        return view('citas.index', compact('citas'));
+        $appointments = Appointment::with('medicoHorario', 'usuarioRol')->where('usuario_rol_idusuario_rol', Auth::id())->get();
+        return view('appointments.index', compact('appointments'));
     }
 
     public function medicoIndex()
     {
-        $citas = Cita::with('usuarioRol')->whereHas('medicoHorario', function ($query) {
+        $appointments = Appointment::with('usuarioRol')->whereHas('medicoHorario', function ($query) {
             $query->where('usuario_rol_idusuario_rol', Auth::id());
         })->get();
-        return view('citas.medico_index', compact('citas'));
+        return view('appointments.medic_index', compact('appointments'));
     }
 
     public function create()
     {
         $medicosHorarios = MedicoHorario::all();
         $usuariosRoles = UsuarioRol::all();
-        return view('citas.create', compact('medicosHorarios', 'usuariosRoles'));
+        return view('appointments.create', compact('medicosHorarios', 'usuariosRoles'));
     }
 
     public function store(Request $request)
@@ -39,7 +38,7 @@ class CitaController extends Controller
             'fecha_atencion' => 'required|date|after:now',
         ]);
 
-        Cita::create([
+        Appointment::create([
             'usuario_registro' => Auth::id(),
             'medico_horario_idmedico_horario' => $request->medico_horario_idmedico_horario,
             'usuario_rol_idusuario_rol' => $request->usuario_rol_idusuario_rol,
@@ -47,26 +46,26 @@ class CitaController extends Controller
             'estado' => 'pendiente',
         ]);
 
-        return redirect()->route('citas.index')->with('success', 'Cita creada exitosamente.');
+        return redirect()->route('appointments.index')->with('success', 'Appointment creada exitosamente.');
     }
 
-    public function show(Cita $cita)
+    public function show(Appointment $appointment)
     {
-        $this->authorize('view', $cita);
-        return view('citas.show', compact('cita'));
+        $this->authorize('view', $appointment);
+        return view('appointments.show', compact('appointment'));
     }
 
-    public function edit(Cita $cita)
+    public function edit(Appointment $appointment)
     {
-        $this->authorize('update', $cita);
+        $this->authorize('update', $appointment);
         $medicosHorarios = MedicoHorario::all();
         $usuariosRoles = UsuarioRol::all();
-        return view('citas.edit', compact('cita', 'medicosHorarios', 'usuariosRoles'));
+        return view('appointments.edit', compact('appointment', 'medicosHorarios', 'usuariosRoles'));
     }
 
-    public function update(Request $request, Cita $cita)
+    public function update(Request $request, Appointment $appointment)
     {
-        $this->authorize('update', $cita);
+        $this->authorize('update', $appointment);
 
         $request->validate([
             'medico_horario_idmedico_horario' => 'required|exists:medico_horario,idmedico_horario',
@@ -74,20 +73,20 @@ class CitaController extends Controller
             'fecha_atencion' => 'required|date|after:now',
         ]);
 
-        $cita->update([
+        $appointment->update([
             'medico_horario_idmedico_horario' => $request->medico_horario_idmedico_horario,
             'usuario_rol_idusuario_rol' => $request->usuario_rol_idusuario_rol,
             'fecha_atencion' => $request->fecha_atencion,
         ]);
 
-        return redirect()->route('citas.index')->with('success', 'Cita actualizada exitosamente.');
+        return redirect()->route('appointments.index')->with('success', 'Appointment actualizada exitosamente.');
     }
 
-    public function destroy(Cita $cita)
+    public function destroy(Appointment $appointment)
     {
-        $this->authorize('delete', $cita);
-        $cita->delete();
+        $this->authorize('delete', $appointment);
+        $appointment->delete();
 
-        return redirect()->route('citas.index')->with('success', 'Cita eliminada exitosamente.');
+        return redirect()->route('appointments.index')->with('success', 'Appointment eliminada exitosamente.');
     }
 }

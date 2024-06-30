@@ -32,8 +32,8 @@ class MedicoHorario extends Model
         return $this->belongsTo(Horario::class, 'horario_idhorario');
     }
 
-    public function citas()
+    public function appointments()
     {
-        return $this->hasMany(Cita::class, 'medico_horario_idmedico_horario');
+        return $this->hasMany(Appointment::class, 'medico_horario_idmedico_horario');
     }
 }

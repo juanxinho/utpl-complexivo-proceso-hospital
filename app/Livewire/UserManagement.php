@@ -22,7 +22,7 @@ class UserManagement extends Component
         'nombres' => 'required|string|max:255',
         'apellidos' => 'required|string|max:255',
         'cedula' => ['required', 'string', 'max:10', new \App\Rules\EcuadorCedulaOrRuc],
-        'telefono' => ['required', 'string', new \App\Rules\EcuadorTelefono],
+        'telefono' => ['required', 'string', new \App\Rules\EcuadorPhone],
         'sexo' => 'required|string|in:M,F',
         'fecha_nacimiento' => 'required|date',
     ];*/

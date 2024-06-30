@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class EcuadorCedulaORuc implements Rule
+class EcuadorCedulaOrRuc implements Rule
 {
     /**
      * Determine if the validation rule passes.

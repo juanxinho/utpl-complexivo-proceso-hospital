@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">
-            {{ __('My Appointments') }}
+            {{ __('Doctor Appointments') }}
         </h2>
     </x-slot>
 
@@ -14,31 +14,27 @@
                     </div>
                 @endif
 
-                <a href="{{ route('citas.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    {{ __('Create New Appointment') }}
-                </a>
-
                 <table class="table-auto w-full">
                     <thead>
                     <tr>
                         <th>No</th>
                         <th>Date and Time</th>
-                        <th>Doctor</th>
+                        <th>Patient</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($citas as $cita)
+                    @foreach ($appointments as $appointment)
                         <tr>
                             <td class="border px-4 py-2">{{ $loop->index + 1 }}</td>
-                            <td class="border px-4 py-2">{{ $cita->fecha_atencion }}</td>
-                            <td class="border px-4 py-2">{{ $cita->medicoHorario->usuarioRol->usuario->nombres }}</td>
-                            <td class="border px-4 py-2">{{ $cita->estado }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->fecha_atencion }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->usuarioRol->usuario->nombres }} {{ $appointment->usuarioRol->usuario->apellidos }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->estado }}</td>
                             <td class="border px-4 py-2">
-                                <a href="{{ route('citas.show', $cita->idcita) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
-                                <a href="{{ route('citas.edit', $cita->idcita) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>
-                                <form action="{{ route('citas.destroy', $cita->idcita) }}" method="POST" class="inline">
+                                <a href="{{ route('appointments.show', $appointment->idappointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
+                                <a href="{{ route('appointments.edit', $appointment->idappointment) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                <form action="{{ route('appointments.destroy', $appointment->idappointment) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
