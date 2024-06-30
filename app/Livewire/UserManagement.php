@@ -14,7 +14,7 @@ class UserManagement extends Component
 {
     use WithPagination;
 
-    public $users, $roles, $persona, $name, $email, $password, $idusuario, $idrol;
+    public $users, $roles, $persona, $name, $email, $password, $idusuario, $idroles, $id;
     public $isOpen = 0;
     /*protected $rules = [
         'email' => 'required|email|unique:users,email',
@@ -30,6 +30,7 @@ class UserManagement extends Component
     public function render()
     {
         $this->users = User::with('roles', 'persona')->get();
+        $this->roles = Role::all();
         return view('users.index')->layout('layouts.app');
     }
 
@@ -59,13 +60,13 @@ class UserManagement extends Component
         $this->telefono = '';
         $this->sexo = '';
         $this->fecha_nacimiento = '';
-        $this->idrol = [];
+        $this->idroles = [];
     }
 
     public function store()
     {
-        $validatedData = $this->validate();
-
+        //$validatedData = $this->validate();
+        var_dump($this->idroles);die;
 
         $persona = Persona::updateOrCreate(['idpersona' => $this->id], [
             'nombres' => $this->persona['nombres'],
@@ -86,7 +87,7 @@ class UserManagement extends Component
             'usuario_registro' => auth()->user()->id,
         ]);
 
-        $usuario->roles()->sync($this->idrol);
+        $usuario->roles()->sync($this->idroles);
 
         session()->flash('message',
             $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
@@ -100,10 +101,9 @@ class UserManagement extends Component
         $usuario = User::with('persona', 'roles')->findOrFail($id);
         $this->id = $id;
         $this->persona = $usuario->persona->toArray();
-        //$this->name = $usuario->name;
         $this->email = $usuario->email;
         $this->password = '';
-        $this->idrol = $usuario->roles->pluck('idrol')->toArray();
+        $this->idroles = $usuario->roles->pluck('id')->toArray();
 
         $this->openModal();
     }

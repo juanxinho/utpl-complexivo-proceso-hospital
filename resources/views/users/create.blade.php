@@ -19,22 +19,30 @@
         </div>
         <div>
             <label for="correo">{{ __('Email') }}:</label>
-            <input type="email" wire:model="correo">
-            @error('correo') <span>{{ $message }}</span> @enderror
+            <input type="email" wire:model="email">
+            @error('email') <span>{{ $message }}</span> @enderror
         </div>
         <div>
             <label for="clave">{{ __('Password') }}:</label>
-            <input type="password" wire:model="clave">
-            @error('clave') <span>{{ $message }}</span> @enderror
+            <input type="password" wire:model="password">
+            @error('password') <span>{{ $message }}</span> @enderror
         </div>
+    
         <div>
-            <label for="idrol">{{ __('Role') }}:</label>
-            {{--<select wire:model="idrol" multiple>
-                @foreach($roles as $rol)
-                    <option value="{{ $rol->idrol }}">{{ $rol->nombre }}</option>
-                @endforeach
-            </select>--}}
-            @error('idrol') <span>{{ $message }}</span> @enderror
+            <label for="idroles">{{ __('Role') }}:</label>
+            
+            @foreach ($roles as $rol)
+                <label>
+                {{ $rol->name }}
+                <input type="checkbox"  id="idroles[]" name="idroles[]" value="{{ $rol->id }}" wire:model='idroles.{{ $rol->id }}' wire:key="{{ $rol->id }}"
+                    @foreach ($idroles as $id)
+                        @if($id==$rol->id) checked @endif
+                    @endforeach
+                >
+                </label>
+            @endforeach
+           
+            @error('idroles') <span>{{ $message }}</span> @enderror
         </div>
         <button type="submit">{{ __('Save') }}</button>
         <button type="button" wire:click="closeModal()">{{ __('Cancel') }}</button>
