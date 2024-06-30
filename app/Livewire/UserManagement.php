@@ -2,14 +2,30 @@
 
 namespace App\Livewire;
 
-use App\Models\Persona;
-use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
+use App\Models\User;
+use App\Models\Persona;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
 
 class UserManagement extends Component
 {
+    use WithPagination;
+
     public $users, $roles, $persona, $name, $email, $password, $idusuario, $idrol;
     public $isOpen = 0;
+    /*protected $rules = [
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6',
+        'nombres' => 'required|string|max:255',
+        'apellidos' => 'required|string|max:255',
+        'cedula' => ['required', 'string', 'max:10', new \App\Rules\EcuadorCedulaOrRuc],
+        'telefono' => ['required', 'string', new \App\Rules\EcuadorTelefono],
+        'sexo' => 'required|string|in:M,F',
+        'fecha_nacimiento' => 'required|date',
+    ];*/
 
     public function render()
     {
@@ -35,24 +51,21 @@ class UserManagement extends Component
 
     private function resetInputFields()
     {
-        $this->persona = [];
-        //$this->name = '';
         $this->email = '';
         $this->password = '';
-        $this->id = '';
+        $this->nombres = '';
+        $this->apellidos = '';
+        $this->cedula = '';
+        $this->telefono = '';
+        $this->sexo = '';
+        $this->fecha_nacimiento = '';
         $this->idrol = [];
     }
 
     public function store()
     {
-        $this->validate([
-            'persona.nombres' => 'required',
-            'persona.apellidos' => 'required',
-            'persona.cedula' => 'required|unique:personas,cedula,' . $this->id,
-            'email' => 'required|email|unique:users,email,' . $this->id,
-            'password' => 'required|min:6',
-            'idrol' => 'required',
-        ]);
+        $validatedData = $this->validate();
+
 
         $persona = Persona::updateOrCreate(['idpersona' => $this->id], [
             'nombres' => $this->persona['nombres'],

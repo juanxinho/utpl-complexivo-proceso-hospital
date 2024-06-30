@@ -1,8 +1,10 @@
-{{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>--}}
+@if($isOpen)
+    @include('users.create')
+@endif
 
+@if (session()->has('message'))
+    <div>{{ session('message') }}</div>
+@endif
 
 <x-slot name="header">
     <h2 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
@@ -72,7 +74,7 @@
                     {{ __('Roles') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Status
+                    {{ __('Date created') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
                     {{ __('Actions') }}
@@ -89,7 +91,7 @@
                         </div>
                     </td>
                     <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="Jese image">
+                        <img class="w-10 h-10 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->nombres }}">
                         <div class="ps-3">
                             <div class="text-base font-semibold">{{ $user->persona->nombres }} {{ $user->persona->apellidos }}</div>
                             <div class="font-normal text-gray-500">{{ $user->email }}</div>
@@ -100,11 +102,10 @@
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex items-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                            {{ $user->created_at }}
                         </div>
                     </td>
                     <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
                         <button wire:click="edit({{ $user->id }})">Editar</button>
                         <button wire:click="delete({{ $user->id }})">Eliminar</button>
                     </td>
@@ -115,19 +116,3 @@
     </div>
 
 </div>
-
-{{--<script type="text/javascript">
-    $(function () {
-        var table = $('.yajra-datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('users') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
-        });
-    });
-</script>--}}
