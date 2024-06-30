@@ -66,7 +66,6 @@ class UserManagement extends Component
     public function store()
     {
         //$validatedData = $this->validate();
-        var_dump($this->idroles);die;
 
         $persona = Persona::updateOrCreate(['idpersona' => $this->id], [
             'nombres' => $this->persona['nombres'],
@@ -86,8 +85,14 @@ class UserManagement extends Component
             'idpersona' => $persona->idpersona,
             'usuario_registro' => auth()->user()->id,
         ]);
-
-        $usuario->roles()->sync($this->idroles);
+        //var_dump($this->idroles);die;
+        foreach ($this->idroles as $roleId) {
+            $role = Role::findById($roleId);
+var_dump($role);die;
+            if ($role) {
+                $usuario->assignRole($role);
+            }
+        }
 
         session()->flash('message',
             $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
