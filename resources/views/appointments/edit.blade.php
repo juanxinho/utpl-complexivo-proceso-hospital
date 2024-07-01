@@ -13,29 +13,29 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <x-label for="medico_horario_idmedico_horario" value="{{ __('Select Doctor Schedule') }}" />
-                        <select id="medico_horario_idmedico_horario" name="medico_horario_idmedico_horario" class="block mt-1 w-full">
-                            @foreach ($medicosHorarios as $medicoHorario)
-                                <option value="{{ $medicoHorario->idmedico_horario }}" {{ $appointment->medico_horario_idmedico_horario == $medicoHorario->idmedico_horario ? 'selected' : '' }}>{{ $medicoHorario->especialidad->nombre }} - {{ $medicoHorario->horario->rango_horario }}</option>
+                        <x-label for="medic_schedule_id_medic_schedule" value="{{ __('Select Doctor Schedule') }}" />
+                        <select id="medic_schedule_id_medic_schedule" name="medic_schedule_id_medic_schedule" class="block mt-1 w-full">
+                            @foreach ($medicosHorarios as $medicSchedule)
+                                <option value="{{ $medicSchedule->id_medic_schedule }}" {{ $appointment->medic_schedule_id_medic_schedule == $medicSchedule->id_medic_schedule ? 'selected' : '' }}>{{ $medicSchedule->specialty->name }} - {{ $medicSchedule->schedule->time_range }}</option>
                             @endforeach
                         </select>
-                        <x-input-error for="medico_horario_idmedico_horario" class="mt-2" />
+                        <x-input-error for="medic_schedule_id_medic_schedule" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
                         <x-label for="usuario_rol_idusuario_rol" value="{{ __('Select Patient Role') }}" />
                         <select id="usuario_rol_idusuario_rol" name="usuario_rol_idusuario_rol" class="block mt-1 w-full">
                             @foreach ($usuariosRoles as $usuarioRol)
-                                <option value="{{ $usuarioRol->idusuario_rol }}" {{ $appointment->usuario_rol_idusuario_rol == $usuarioRol->idusuario_rol ? 'selected' : '' }}>{{ $usuarioRol->usuario->nombres }} {{ $usuarioRol->usuario->apellidos }}</option>
+                                <option value="{{ $usuarioRol->idusuario_rol }}" {{ $appointment->usuario_rol_idusuario_rol == $usuarioRol->idusuario_rol ? 'selected' : '' }}>{{ $usuarioRol->usuario->first_name }} {{ $usuarioRol->usuario->last_name }}</option>
                             @endforeach
                         </select>
                         <x-input-error for="usuario_rol_idusuario_rol" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
-                        <x-label for="fecha_atencion" value="{{ __('Appointment Date and Time') }}" />
-                        <x-input id="fecha_atencion" class="block mt-1 w-full" type="datetime-local" name="fecha_atencion" value="{{ $appointment->fecha_atencion }}" required />
-                        <x-input-error for="fecha_atencion" class="mt-2" />
+                        <x-label for="service_date" value="{{ __('Appointment Date and Time') }}" />
+                        <x-input id="service_date" class="block mt-1 w-full" type="datetime-local" name="service_date" value="{{ $appointment->service_date }}" required />
+                        <x-input-error for="service_date" class="mt-2" />
                     </div>
 
                     <div class="flex items-center justify-end mt-4">

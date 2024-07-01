@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'email', 'password', 'estado', 'usuario_registro', 'usuario_modificacion', 'idpersona'
+        'email', 'password', 'status', 'user_register', 'user_modification', 'id_profile'
     ];
 
     /**
@@ -56,15 +56,15 @@ class User extends Authenticatable
 
     public function defaultProfilePhotoUrl()
     {
-        $name = trim(collect(explode(' ', $this->persona->nombres))->map(function ($segment) {
+        $name = trim(collect(explode(' ', $this->profile->first_name))->map(function ($segment) {
             return mb_substr($segment, 0, 1);
         })->join(' '));
 
         return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=0ac60a&background=effbef';
     }
 
-    public function persona()
+    public function profile()
     {
-        return $this->belongsTo(Persona::class, 'idpersona', 'idpersona');
+        return $this->belongsTo(Profile::class, 'id_profile', 'id_profile');
     }
 }

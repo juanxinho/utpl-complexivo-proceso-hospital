@@ -28,9 +28,9 @@
                     @foreach ($appointments as $appointment)
                         <tr>
                             <td class="border px-4 py-2">{{ $loop->index + 1 }}</td>
-                            <td class="border px-4 py-2">{{ $appointment->fecha_atencion }}</td>
-                            <td class="border px-4 py-2">{{ $appointment->usuarioRol->usuario->nombres }} {{ $appointment->usuarioRol->usuario->apellidos }}</td>
-                            <td class="border px-4 py-2">{{ $appointment->estado }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->service_date }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->usuarioRol->usuario->first_name }} {{ $appointment->usuarioRol->usuario->last_name }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->status }}</td>
                             <td class="border px-4 py-2">
                                 <a href="{{ route('appointments.show', $appointment->idappointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
                                 <a href="{{ route('appointments.edit', $appointment->idappointment) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>

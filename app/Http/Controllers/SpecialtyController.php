@@ -21,10 +21,10 @@ class SpecialtyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:45',
-            'abreviatura' => 'nullable|string|max:45',
-            'descripcion' => 'nullable|string|max:45',
-            'estado' => 'required|boolean',
+            'name' => 'required|string|max:45',
+            'abbreviation' => 'nullable|string|max:45',
+            'description' => 'nullable|string|max:45',
+            'status' => 'required|boolean',
         ]);
 
         Specialty::create($request->all());
@@ -45,10 +45,10 @@ class SpecialtyController extends Controller
     public function update(Request $request, Specialty $specialty)
     {
         $request->validate([
-            'nombre' => 'required|string|max:45',
-            'abreviatura' => 'nullable|string|max:45',
-            'descripcion' => 'nullable|string|max:45',
-            'estado' => 'required|boolean',
+            'name' => 'required|string|max:45',
+            'abbreviation' => 'nullable|string|max:45',
+            'description' => 'nullable|string|max:45',
+            'status' => 'required|boolean',
         ]);
 
         $specialty->update($request->all());

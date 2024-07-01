@@ -91,9 +91,9 @@
                         </div>
                     </td>
                     <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-10 h-10 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->nombres }}">
+                        <img class="w-10 h-10 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->first_name }}">
                         <div class="ps-3">
-                            <div class="text-base font-semibold">{{ $user->persona->nombres }} {{ $user->persona->apellidos }}</div>
+                            <div class="text-base font-semibold">{{ $user->profile->first_name }} {{ $user->profile->last_name }}</div>
                             <div class="font-normal text-gray-500">{{ $user->email }}</div>
                         </div>
                     </th>

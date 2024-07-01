@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Persona;
+use App\Models\Profile;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -20,15 +20,15 @@ class PatientSeeder extends Seeder
             $roles = Role::all()->pluck('name')->toArray();
 
             foreach (range(1, 25) as $index) {
-                $persona = Persona::create([
-                    'cedula' => $faker->unique()->numerify('##########'),
-                    'nombres' => $faker->firstName,
-                    'apellidos' => $faker->lastName,
-                    'fecha_nacimiento' => $faker->date(),
-                    'telefono' => $faker->unique()->numerify('##########'),//$faker->phoneNumber,
-                    'sexo' => $faker->randomElement(['M', 'F']),
-                    'estado' => 1,
-                    'usuario_registro' => 1, // Ajustar según sea necesario
+                $profile = Profile::create([
+                    'nid' => $faker->unique()->numerify('##########'),
+                    'first_name' => $faker->firstName,
+                    'last_name' => $faker->lastName,
+                    'dob' => $faker->date(),
+                    'phone' => $faker->unique()->numerify('##########'),//$faker->phoneNumber,
+                    'gender' => $faker->randomElement(['M', 'F']),
+                    'status' => 1,
+                    'user_register' => 1, // Ajustar según sea necesario
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -36,9 +36,9 @@ class PatientSeeder extends Seeder
                 $user = User::create([
                     'email' => $faker->unique()->safeEmail,
                     'password' => Hash::make('password'), // Cambiar según sea necesario
-                    'estado' => 1,
-                    'usuario_registro' => 1, // Ajustar según sea necesario
-                    'idpersona' => $persona->idpersona,
+                    'status' => 1,
+                    'user_register' => 1, // Ajustar según sea necesario
+                    'id_profile' => $profile->id_profile,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

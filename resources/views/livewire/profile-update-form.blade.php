@@ -30,7 +30,7 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->nombres }}" class="rounded-full h-20 w-20 object-cover">
+                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->first_name }}" class="rounded-full h-20 w-20 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -54,46 +54,46 @@
             </div>
         @endif
 
-        <!-- Nombres -->
+        <!-- First name -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="nombres" value="{{ __('Name') }}" />
-            <x-input id="nombres" type="text" class="mt-1 block w-full" wire:model.defer="state.nombres" autocomplete="nombres" />
-            <x-input-error for="nombres" class="mt-2" />
+            <x-label for="first_name" value="{{ __('First name') }}" />
+            <x-input id="first_name" type="text" class="mt-1 block w-full" wire:model.defer="state.first_name" autocomplete="first_name" />
+            <x-input-error for="first_name" class="mt-2" />
         </div>
 
-        <!-- Apellidos -->
+        <!-- Last name -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="apellidos" value="{{ __('Last name') }}" />
-            <x-input id="apellidos" type="text" class="mt-1 block w-full" wire:model.defer="state.apellidos" autocomplete="apellidos" />
-            <x-input-error for="apellidos" class="mt-2" />
+            <x-label for="last_name" value="{{ __('Last name') }}" />
+            <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model.defer="state.last_name" autocomplete="last_name" />
+            <x-input-error for="last_name" class="mt-2" />
         </div>
 
-        <!-- Cedula -->
+        <!-- NID -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="cedula" value="{{ __('ID') }}" />
-            <x-input id="cedula" type="text" class="mt-1 block w-full" wire:model.defer="state.cedula" autocomplete="cedula" />
-            <x-input-error for="cedula" class="mt-2" />
+            <x-label for="nid" value="{{ __('nid') }}" />
+            <x-input id="nid" type="text" class="mt-1 block w-full" wire:model.defer="state.nid" autocomplete="nid" />
+            <x-input-error for="nid" class="mt-2" />
         </div>
 
-        <!-- Telefono -->
+        <!-- Phone -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="telefono" value="{{ __('Phone') }}" />
-            <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model.defer="state.telefono" autocomplete="telefono" />
-            <x-input-error for="telefono" class="mt-2" />
+            <x-label for="phone" value="{{ __('Phone') }}" />
+            <x-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
+            <x-input-error for="phone" class="mt-2" />
         </div>
 
-        <!-- Sexo -->
+        <!-- Gender -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="sexo" value="{{ __('Sex') }}" />
-            <x-select id="sexo" name="sexo" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.sexo" />
-            <x-input-error for="sexo" class="mt-2" />
+            <x-label for="gender" value="{{ __('Gender') }}" />
+            <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.gender" />
+            <x-input-error for="gender" class="mt-2" />
         </div>
 
         <!-- Fecha de Nacimiento -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="fecha_nacimiento" value="{{ __('Date of birth') }}" />
-            <x-date-picker id="fecha_nacimiento" type="date" name="fecha_nacimiento" class="block mt-1 w-full" defaultdate="{{$this->user->persona->fecha_nacimiento }}" wire:model.defer="state.fecha_nacimiento" />
-            <x-input-error for="fecha_nacimiento" class="mt-2" />
+            <x-label for="dob" value="{{ __('Date of birth') }}" />
+            <x-date-picker id="dob" type="date" name="dob" class="block mt-1 w-full" defaultdate="{{$this->user->profile->dob }}" wire:model.defer="state.dob" />
+            <x-input-error for="dob" class="mt-2" />
         </div>
 
         <!-- Email -->
@@ -121,14 +121,9 @@
     </x-slot>
 
     <x-slot name="actions">
-        @if (session()->has('success'))
-            <div class="me-3">
-                {{ __('Saved.') }}
-            </div>
-        @endif
-        {{--<x-action-message class="me-3" on="saved">
+        <x-action-message class="me-3" on="saved">
             {{ __('Saved.') }}
-        </x-action-message>--}}
+        </x-action-message>
 
         <x-button wire:loading.attr="disabled" wire:target="photo">
             {{ __('Save') }}

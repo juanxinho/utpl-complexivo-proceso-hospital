@@ -24,11 +24,11 @@ return new class extends Migration
             $table->timestamps(); // Timestamps de creación y actualización
 
             // Campos adicionales
-            $table->tinyInteger('estado'); // Estado del usuario
-            $table->unsignedBigInteger('usuario_registro')->nullable(); // ID del usuario que registró
-            $table->unsignedBigInteger('usuario_modificacion')->nullable(); // ID del usuario que modificó
-            $table->unsignedBigInteger('idpersona')->nullable(); // ID de la persona asociada
-            $table->foreign('idpersona')->references('idpersona')->on('personas'); // Llave foránea a la tabla personas
+            $table->tinyInteger('status'); // Estado del usuario
+            $table->unsignedBigInteger('user_register')->nullable(); // ID del usuario que registró
+            $table->unsignedBigInteger('user_modification')->nullable(); // ID del usuario que modificó
+            $table->unsignedBigInteger('id_profile')->nullable(); // ID de la profile asociada
+            $table->foreign('id_profile')->references('id_profile')->on('profile'); // Llave foránea a la tabla profile
         });
 
         // Crear la tabla de tokens de reseteo de contraseña

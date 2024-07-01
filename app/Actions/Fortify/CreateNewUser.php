@@ -2,7 +2,7 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\Persona;
+use App\Models\Profile;
 use App\Models\User;
 use App\Rules\EcuadorCedulaOrRuc;
 use App\Rules\EcuadorPhone;
@@ -24,33 +24,33 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
-            'nombres' => ['required', 'string', 'max:255'],
-            'apellidos' => ['required', 'string', 'max:255'],
-            'cedula' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
-            'telefono' => ['required', 'string', new EcuadorPhone],
-            'sexo' => ['required', 'string', 'in:M,F'],
-            'fecha_nacimiento' => ['required', 'date'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'nid' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'phone' => ['required', 'string', new EcuadorPhone],
+            'gender' => ['required', 'string', 'in:M,F'],
+            'dob' => ['required', 'date'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        $persona = Persona::create([
-            'nombres' => $input['nombres'],
-            'apellidos' => $input['apellidos'],
-            'cedula' => $input['cedula'],
-            'telefono' => $input['telefono'],
-            'sexo' => $input['sexo'],
-            'fecha_nacimiento' => $input['fecha_nacimiento'],
-            'estado' => 1,
+        $profile = Profile::create([
+            'first_name' => $input['first_name'],
+            'last_name' => $input['last_name'],
+            'nid' => $input['nid'],
+            'phone' => $input['phone'],
+            'gender' => $input['gender'],
+            'dob' => $input['dob'],
+            'status' => 1,
         ]);
 
         $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'estado' => 1,
-            'usuario_registro' => 1,
-            'idpersona' => $persona->idpersona,
+            'status' => 1,
+            'user_register' => 1,
+            'id_profile' => $profile->id_profile,
         ]);
 
         $defaultRole = Role::firstOrCreate(['name' => 'patient']);

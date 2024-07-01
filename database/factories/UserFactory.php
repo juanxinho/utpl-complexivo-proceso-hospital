@@ -27,12 +27,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombres' => $this->faker->firstName,
-            'apellidos' => $this->faker->lastName,
-            'cedula' => $this->faker->unique()->numerify('##########'),
-            'telefono' => $this->faker->phoneNumber,
-            'sexo' => $this->faker->randomElement(['M', 'F']),
-            'fecha_nacimiento' => $this->faker->date,
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'nid' => $this->faker->unique()->numerify('##########'),
+            'phone' => $this->faker->phoneNumber,
+            'gender' => $this->faker->randomElement(['M', 'F']),
+            'dob' => $this->faker->date,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -55,7 +55,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the user should have a personal team.
+     * Indicate that the user should have a profilel team.
      */
     public function withPersonalTeam(callable $callback = null): static
     {
@@ -68,26 +68,26 @@ class UserFactory extends Factory
                 ->state(fn (array $attributes, User $user) => [
                     'name' => $user->name.'\'s Team',
                     'user_id' => $user->id,
-                    'personal_team' => true,
+                    'profilel_team' => true,
                 ])
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
         );
     }
 
-    public function withPersonaFields()
+    public function withProfileFields()
     {
         return $this->state(function (array $attributes) {
             return [
-                'nombres' => $this->faker->firstName,
-                'apellidos' => $this->faker->lastName,
-                'cedula' => $this->faker->unique()->numerify('##########'),
-                'telefono' => $this->faker->phoneNumber,
-                'sexo' => $this->faker->randomElement(['M', 'F']),
-                'fecha_nacimiento' => $this->faker->date,
-                'estado' => 1,
-                'usuario_registro' => 0,
-                'usuario_modificacion' => null,
+                'first_name' => $this->faker->firstName,
+                'last_name' => $this->faker->lastName,
+                'nid' => $this->faker->unique()->numerify('##########'),
+                'phone' => $this->faker->phoneNumber,
+                'gender' => $this->faker->randomElement(['M', 'F']),
+                'dob' => $this->faker->date,
+                'status' => 1,
+                'user_register' => 0,
+                'user_modification' => null,
             ];
         });
     }

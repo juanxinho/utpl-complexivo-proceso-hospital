@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
-use App\Models\Persona;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
@@ -14,25 +14,25 @@ class PatientManagement extends Component
 {
     use WithPagination;
 
-    public $email, $password, $nombres, $apellidos, $cedula, $telefono, $sexo, $fecha_nacimiento;
+    public $email, $password, $first_name, $last_name, $nid, $phone, $gender, $dob;
     public $patientId;
     public $isOpen = false;
 
     /*protected $rules = [
         'email' => 'required|email|unique:users,email',
         'password' => 'required|min:6',
-        'nombres' => 'required|string|max:255',
-        'apellidos' => 'required|string|max:255',
-        'cedula' => ['required', 'string', 'max:10', new \App\Rules\EcuadorianCedulaOrRuc],
-        'telefono' => ['required', 'string', new \App\Rules\EcuadorianPhone],
-        'sexo' => 'required|string|in:M,F',
-        'fecha_nacimiento' => 'required|date',
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'nid' => ['required', 'string', 'max:10', new \App\Rules\EcuadorianCedulaOrRuc],
+        'phone' => ['required', 'string', new \App\Rules\EcuadorianPhone],
+        'gender' => 'required|string|in:M,F',
+        'dob' => 'required|date',
     ];
 */
     public function render()
     {
         return view('patients.index', [
-            'patients' => User::with('persona')->role('patient')->paginate(10),
+            'patients' => User::with('profile')->role('patient')->paginate(10),
         ])->layout('layouts.app');
     }
 
@@ -56,31 +56,31 @@ class PatientManagement extends Component
     {
         $this->email = '';
         $this->password = '';
-        $this->nombres = '';
-        $this->apellidos = '';
-        $this->cedula = '';
-        $this->telefono = '';
-        $this->sexo = '';
-        $this->fecha_nacimiento = '';
+        $this->first_name = '';
+        $this->last_name = '';
+        $this->nid = '';
+        $this->phone = '';
+        $this->gender = '';
+        $this->dob = '';
     }
 
     public function store()
     {
         $validatedData = $this->validate();
 
-        $persona = Persona::create([
-            'nombres' => $this->nombres,
-            'apellidos' => $this->apellidos,
-            'cedula' => $this->cedula,
-            'telefono' => $this->telefono,
-            'sexo' => $this->sexo,
-            'fecha_nacimiento' => $this->fecha_nacimiento,
+        $profile = Profile::create([
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'nid' => $this->nid,
+            'phone' => $this->phone,
+            'gender' => $this->gender,
+            'dob' => $this->dob,
         ]);
 
         $user = User::create([
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'idpersona' => $persona->idpersona,
+            'id_profile' => $profile->id_profile,
         ]);
 
         $user->assignRole('patient');
@@ -97,12 +97,12 @@ class PatientManagement extends Component
         $this->patientId = $id;
         $this->email = $patient->email;
         $this->password = '';
-        $this->nombres = $patient->persona->nombres;
-        $this->apellidos = $patient->persona->apellidos;
-        $this->cedula = $patient->persona->cedula;
-        $this->telefono = $patient->persona->telefono;
-        $this->sexo = $patient->persona->sexo;
-        $this->fecha_nacimiento = $patient->persona->fecha_nacimiento;
+        $this->first_name = $patient->profile->first_name;
+        $this->last_name = $patient->profile->last_name;
+        $this->nid = $patient->profile->nid;
+        $this->phone = $patient->profile->phone;
+        $this->gender = $patient->profile->gender;
+        $this->dob = $patient->profile->dob;
 
         $this->openModal();
     }

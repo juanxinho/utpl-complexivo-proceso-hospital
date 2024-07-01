@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
-use App\Models\MedicoHorario;
+use App\Models\MedicSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,13 +11,13 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::with('medicoHorario', 'usuarioRol')->where('usuario_rol_idusuario_rol', Auth::id())->get();
+        $appointments = Appointment::with('medicSchedule', 'usuarioRol')->where('usuario_rol_idusuario_rol', Auth::id())->get();
         return view('appointments.index', compact('appointments'));
     }
 
     public function medicoIndex()
     {
-        $appointments = Appointment::with('usuarioRol')->whereHas('medicoHorario', function ($query) {
+        $appointments = Appointment::with('usuarioRol')->whereHas('medicSchedule', function ($query) {
             $query->where('usuario_rol_idusuario_rol', Auth::id());
         })->get();
         return view('appointments.medic_index', compact('appointments'));
@@ -25,7 +25,7 @@ class AppointmentController extends Controller
 
     public function create()
     {
-        $medicosHorarios = MedicoHorario::all();
+        $medicosHorarios = MedicSchedule::all();
         $usuariosRoles = UsuarioRol::all();
         return view('appointments.create', compact('medicosHorarios', 'usuariosRoles'));
     }
@@ -33,17 +33,17 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'medico_horario_idmedico_horario' => 'required|exists:medico_horario,idmedico_horario',
+            'medic_schedule_id_medic_schedule' => 'required|exists:medic_schedule,id_medic_schedule',
             'usuario_rol_idusuario_rol' => 'required|exists:usuario_rol,idusuario_rol',
-            'fecha_atencion' => 'required|date|after:now',
+            'service_date' => 'required|date|after:now',
         ]);
 
         Appointment::create([
-            'usuario_registro' => Auth::id(),
-            'medico_horario_idmedico_horario' => $request->medico_horario_idmedico_horario,
+            'user_register' => Auth::id(),
+            'medic_schedule_id_medic_schedule' => $request->medic_schedule_id_medic_schedule,
             'usuario_rol_idusuario_rol' => $request->usuario_rol_idusuario_rol,
-            'fecha_atencion' => $request->fecha_atencion,
-            'estado' => 'pendiente',
+            'service_date' => $request->service_date,
+            'status' => 'pendiente',
         ]);
 
         return redirect()->route('appointments.index')->with('success', 'Appointment creada exitosamente.');
@@ -58,7 +58,7 @@ class AppointmentController extends Controller
     public function edit(Appointment $appointment)
     {
         $this->authorize('update', $appointment);
-        $medicosHorarios = MedicoHorario::all();
+        $medicosHorarios = MedicSchedule::all();
         $usuariosRoles = UsuarioRol::all();
         return view('appointments.edit', compact('appointment', 'medicosHorarios', 'usuariosRoles'));
     }
@@ -68,15 +68,15 @@ class AppointmentController extends Controller
         $this->authorize('update', $appointment);
 
         $request->validate([
-            'medico_horario_idmedico_horario' => 'required|exists:medico_horario,idmedico_horario',
+            'medic_schedule_id_medic_schedule' => 'required|exists:medic_schedule,id_medic_schedule',
             'usuario_rol_idusuario_rol' => 'required|exists:usuario_rol,idusuario_rol',
-            'fecha_atencion' => 'required|date|after:now',
+            'service_date' => 'required|date|after:now',
         ]);
 
         $appointment->update([
-            'medico_horario_idmedico_horario' => $request->medico_horario_idmedico_horario,
+            'medic_schedule_id_medic_schedule' => $request->medic_schedule_id_medic_schedule,
             'usuario_rol_idusuario_rol' => $request->usuario_rol_idusuario_rol,
-            'fecha_atencion' => $request->fecha_atencion,
+            'service_date' => $request->service_date,
         ]);
 
         return redirect()->route('appointments.index')->with('success', 'Appointment actualizada exitosamente.');

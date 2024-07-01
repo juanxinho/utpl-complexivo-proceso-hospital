@@ -8,35 +8,35 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500 p-6">
-                <form action="{{ route('specialties.update', $specialty->idespecialidad) }}" method="POST">
+                <form action="{{ route('specialties.update', $specialty->id_specialty) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-4">
-                        <x-label for="nombre" value="{{ __('Nombre') }}" />
-                        <x-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" value="{{ $specialty->nombre }}" required autofocus />
-                        <x-input-error for="nombre" class="mt-2" />
+                        <x-label for="name" value="{{ __('Nombre') }}" />
+                        <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $specialty->name }}" required autofocus />
+                        <x-input-error for="name" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
-                        <x-label for="abreviatura" value="{{ __('Abreviatura') }}" />
-                        <x-input id="abreviatura" class="block mt-1 w-full" type="text" name="abreviatura" value="{{ $specialty->abreviatura }}" />
-                        <x-input-error for="abreviatura" class="mt-2" />
+                        <x-label for="abbreviation" value="{{ __('Abbreviation') }}" />
+                        <x-input id="abbreviation" class="block mt-1 w-full" type="text" name="abbreviation" value="{{ $specialty->abbreviation }}" />
+                        <x-input-error for="abbreviation" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
-                        <x-label for="descripcion" value="{{ __('Descripción') }}" />
-                        <x-input id="descripcion" class="block mt-1 w-full" type="text" name="descripcion" value="{{ $specialty->descripcion }}" />
-                        <x-input-error for="descripcion" class="mt-2" />
+                        <x-label for="description" value="{{ __('Description') }}" />
+                        <x-input id="description" class="block mt-1 w-full" type="text" name="description" value="{{ $specialty->description }}" />
+                        <x-input-error for="description" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
-                        <x-label for="estado" value="{{ __('Estado') }}" />
-                        <select id="estado" name="estado" class="block mt-1 w-full">
-                            <option value="1" {{ $specialty->estado ? 'selected' : '' }}>Activo</option>
-                            <option value="0" {{ !$specialty->estado ? 'selected' : '' }}>Inactivo</option>
+                        <x-label for="status" value="{{ __('Status') }}" />
+                        <select id="status" name="status" class="block mt-1 w-full">
+                            <option value="1" {{ $specialty->status ? 'selected' : '' }}>Activo</option>
+                            <option value="0" {{ !$specialty->status ? 'selected' : '' }}>Inactivo</option>
                         </select>
-                        <x-input-error for="estado" class="mt-2" />
+                        <x-input-error for="status" class="mt-2" />
                     </div>
 
                     <div class="flex items-center justify-end mt-4">

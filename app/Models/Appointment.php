@@ -9,35 +9,34 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    protected $table = 'citas';
-    protected $primaryKey = 'idcita';
+    protected $table = 'appointment';
+    protected $primaryKey = 'id_appointment';
 
     protected $fillable = [
-        'usuario_registro',
-        'usuario_modificacion',
-        'fecha_registro',
-        'fecha_modificacion',
-        'estado',
-        'medico_horario_idmedico_horario',
-        'usuario_rol_idusuario_rol',
-        'factura_idfactura',
-        'historial_clinico_idhistorial_clinico',
-        'fecha_atencion'
+        'user_register',
+        'user_modification',
+        'record_date',
+        'modification_date',
+        'status',
+        'medic_schedule_id_medic_schedule',
+        'invoice_id_invoice',
+        'clinical_history_id_clinical_history',
+        'service_date'
     ];
 
-    public function medicoHorario()
+    public function medicSchedule()
     {
-        return $this->belongsTo(MedicoHorario::class, 'medico_horario_idmedico_horario');
+        return $this->belongsTo(MedicSchedule::class, 'medic_schedule_id_medic_schedule');
     }
 
-    public function bill()
+    public function invoice()
     {
-        return $this->belongsTo(Bill::class, 'factura_idfactura');
+        return $this->belongsTo(Invoice::class, 'invoice_id_invoice');
     }
 
-    public function historialClinico()
+    public function clinicalHistory()
     {
-        return $this->belongsTo(HistorialClinico::class, 'historial_clinico_idhistorial_clinico');
+        return $this->belongsTo(ClinicalHistory::class, 'clinical_history_id_clinical_history');
     }
 }
 

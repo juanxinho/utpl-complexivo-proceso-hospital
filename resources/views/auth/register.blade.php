@@ -10,33 +10,33 @@
             @csrf
 
             <div class="mt-4">
-                <x-label for="nombres" value="{{ __('Name') }}" />
-                <x-input id="nombres" class="block mt-1 w-full" type="text" name="nombres" :value="old('nombres')" required autofocus autocomplete="nombres" />
+                <x-label for="first_name" value="{{ __('Name') }}" />
+                <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="first_name" />
             </div>
 
             <div class="mt-4">
-                <x-label for="apellidos" value="{{ __('Last name') }}" />
-                <x-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos" :value="old('apellidos')" required autofocus autocomplete="apellidos" />
+                <x-label for="last_name" value="{{ __('Last name') }}" />
+                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="last_name" />
             </div>
 
             <div class="mt-4">
-                <x-label for="cedula" value="{{ __('ID') }}" />
-                <x-input id="cedula" class="block mt-1 w-full" type="text" name="cedula" :value="old('cedula')" required autofocus autocomplete="cedula" />
+                <x-label for="nid" value="{{ __('ID') }}" />
+                <x-input id="nid" class="block mt-1 w-full" type="text" name="nid" :value="old('nid')" required autofocus autocomplete="nid" />
             </div>
 
             <div class="mt-4">
-                <x-label for="telefono" value="{{ __('Phone') }}" />
-                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus autocomplete="telefono" />
+                <x-label for="phone" value="{{ __('Phone') }}" />
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
             </div>
 
             <div class="mt-4">
-                <x-label for="fecha_nacimiento" value="{{ __('Date of birth') }}" />
-                <x-date-picker id="fecha_nacimiento" class="block mt-1 w-full" name="fecha_nacimiento" :value="old('fecha_nacimiento')" required autofocus autocomplete="fecha_nacimiento" />
+                <x-label for="dob" value="{{ __('Date of birth') }}" />
+                <x-date-picker id="dob" class="block mt-1 w-full" name="dob" :value="old('dob')" required autofocus autocomplete="dob" />
             </div>
 
             <div class="mt-4">
-                <x-label for="sexo" value="{{ __('Sex') }}" />
-                <x-select name="sexo" id="sexo" class="mt-1 block w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.sexo" placeholder="Select an option" />
+                <x-label for="gender" value="{{ __('Sex') }}" />
+                <x-select name="gender" id="gender" class="mt-1 block w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.gender" placeholder="Select an option" />
             </div>
 
             <div class="mt-4">

@@ -41,17 +41,17 @@
                 <tbody>
                 @foreach ($specialties as $specialty)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="px-6 py-4">{{ __($specialty->nombre) }}</td>
-                        <td class="px-6 py-4">{{ $specialty->abreviatura }}</td>
-                        <td class="px-6 py-4">{{ __($specialty->descripcion) }}</td>
-                        <td class="px-6 py-4">{{ $specialty->estado ? __('Activo') : __('Inactivo') }}</td>
+                        <td class="px-6 py-4">{{ __($specialty->name) }}</td>
+                        <td class="px-6 py-4">{{ $specialty->abbreviation }}</td>
+                        <td class="px-6 py-4">{{ __($specialty->description) }}</td>
+                        <td class="px-6 py-4">{{ $specialty->status ? __('Activo') : __('Inactivo') }}</td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('specialties.show', $specialty->idespecialidad) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-eye width="20" height="20" /></a>
-                            <a href="{{ route('specialties.edit', $specialty->idespecialidad) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
-                            <form action="{{ route('specialties.destroy', $specialty->idespecialidad) }}" method="POST" style="display:inline">
+                            <a href="{{ route('specialties.show', $specialty->id_specialty) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-eye width="20" height="20" /></a>
+                            <a href="{{ route('specialties.edit', $specialty->id_specialty) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
+                            <form action="{{ route('specialties.destroy', $specialty->id_specialty) }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 dark:text-red-500" onclick="return confirm('{{ __('¿Está seguro de que desea eliminar esta especialidad?') }}')">
+                                <button type="submit" class="text-red-600 dark:text-red-500" onclick="return confirm('{{ __('¿Está seguro de que desea eliminar esta specialty?') }}')">
                                     <x-monoicon-delete-alt width="20" height="20" />
                                 </button>
                             </form>

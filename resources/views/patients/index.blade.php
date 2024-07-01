@@ -49,11 +49,11 @@
             <tbody>
             @foreach($patients as $patient)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">{{ $patient->persona->nombres }} {{ $patient->persona->apellidos }}</td>
-                    <td class="px-6 py-4">{{ $patient->persona->cedula }}</td>
-                    <td class="px-6 py-4">{{ $patient->persona->age }} {{ __('years') }}</td>
-                    <td class="px-6 py-4">{{ $patient->persona->sexo }}</td>
-                    <td class="px-6 py-4">{{ $patient->persona->telefono }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->first_name }} {{ $patient->profile->last_name }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->nid }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->age }} {{ __('years') }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->gender }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->phone }}</td>
                     <td class="px-6 py-4">{{ $patient->email }}</td>
                     <td class="px-6 py-4">
                         <button wire:click="edit({{ $patient->id }})" class="text-gray-600 dark:text-gray-300">
@@ -87,57 +87,57 @@
                 <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                     <form>
                         <div class="mb-4">
-                            <label for="nombres" class="block text-gray-700 text-sm font-bold mb-2">Nombres:</label>
-                            <input type="text" id="nombres" wire:model="nombres" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            @error('nombres') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                            <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">{{ __('First name') }}:</label>
+                            <input type="text" id="first_name" wire:model="first_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @error('first_name') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="apellidos" class="block text-gray-700 text-sm font-bold mb-2">Apellidos:</label>
-                            <input type="text" id="apellidos" wire:model="apellidos" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            @error('apellidos') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                            <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Last name') }}:</label>
+                            <input type="text" id="last_name" wire:model="last_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @error('last_name') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula:</label>
-                            <input type="text" id="cedula" wire:model="cedula" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            @error('cedula') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                            <label for="nid" class="block text-gray-700 text-sm font-bold mb-2">{{ __('NUI') }}:</label>
+                            <input type="text" id="nid" wire:model="nid" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @error('nid') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="telefono" class="block text-gray-700 text-sm font-bold mb-2">Teléfono:</label>
-                            <input type="text" id="telefono" wire:model="telefono" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            @error('telefono') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                            <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Phone') }}:</label>
+                            <input type="text" id="phone" wire:model="phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="sexo" class="block text-gray-700 text-sm font-bold mb-2">Sexo:</label>
-                            <select id="sexo" wire:model="sexo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Gender') }}:</label>
+                            <select id="gender" wire:model="gender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 <option value="">Seleccione</option>
                                 <option value="M">Masculino</option>
                                 <option value="F">Femenino</option>
                             </select>
-                            @error('sexo') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                            @error('gender') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="fecha_nacimiento" class="block text-gray-700 text-sm font-bold mb-2">Fecha de Nacimiento:</label>
-                            <input type="date" id="fecha_nacimiento" wire:model="fecha_nacimiento" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            @error('fecha_nacimiento') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                            <label for="dob" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Date of birth') }}:</label>
+                            <input type="date" id="dob" wire:model="dob" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            @error('dob') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Correo Electrónico:</label>
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Email') }}:</label>
                             <input type="email" id="email" wire:model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             @error('email') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
                             <button wire:click="closeModal()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                Cancelar
+                                {{ __('Cancel') }}
                             </button>
                             <button wire:click.prevent="store()" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">
-                                Guardar
+                                {{ __('Save') }}
                             </button>
                         </div>
                     </form>

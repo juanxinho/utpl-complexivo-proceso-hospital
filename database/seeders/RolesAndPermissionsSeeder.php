@@ -16,7 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // Create permissions
         Permission::create(['name' => 'view module']);
 
-        // Appointments
+        // Appointment
         Permission::create(['name' => 'view appointment']);
         Permission::create(['name' => 'create appointment']);
         Permission::create(['name' => 'update appointment']);
