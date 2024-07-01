@@ -23,12 +23,6 @@
             @error('email') <span>{{ $message }}</span> @enderror
         </div>
         <div>
-            <label for="clave">{{ __('Password') }}:</label>
-            <input type="password" wire:model="password">
-            @error('password') <span>{{ $message }}</span> @enderror
-        </div>
-
-        <div>
             <label for="idroles">{{ __('Role') }}:</label>
             @foreach ($roles as $rol)
                 <label>

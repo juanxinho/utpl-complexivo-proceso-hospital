@@ -9,6 +9,7 @@ use App\Models\Profile;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserManagement extends Component
 {
@@ -55,9 +56,10 @@ class UserManagement extends Component
 
     public function store()
     {
+        
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
-            'password' => 'required|min:6',
+            //'password' => 'required|min:6',
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
             'profile.nid' => 'required|string|max:10',
@@ -80,18 +82,16 @@ class UserManagement extends Component
 
         $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
-            'password' => bcrypt($this->password),
+            //'password' => bcrypt($this->password),
             //'status' => $this->status,
             'id_profile' => $profile->id_profile,
             'user_register' => auth()->user()->id,
         ]);
 
-        foreach ($this->idroles as $roleId) {
-            $role = Role::findById($roleId);
-            if ($role) {
-                $user->assignRole($role);
-            }
-        }
+
+        $roles = Role::whereIn('id',  $this->idroles)->get();
+        $user->syncRoles($roles);
+
 
         session()->flash('message',
             $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
@@ -107,9 +107,9 @@ class UserManagement extends Component
         $this->id = $id;
         $this->profile = $user->profile->toArray();
         $this->email = $user->email;
-        $this->password = $user->password;
+        //$this->password = $user->password;
         $this->idroles = $user->roles->pluck('id')->toArray();
-        //var_dump($this->profile);die;
+
         $this->openModal();
     }
 
