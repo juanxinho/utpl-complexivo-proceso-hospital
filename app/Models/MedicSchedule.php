@@ -13,13 +13,8 @@ class MedicSchedule extends Model
     protected $primaryKey = 'id_medic_schedule';
 
     protected $fillable = [
-        'user_rol_id_user_rol', 'specialty_id_specialty', 'schedule_id_schedule'
+        'id_medic', 'specialty_id_specialty', 'schedule_id_schedule'
     ];
-
-    public function usuarioRol()
-    {
-        return $this->belongsTo(UsuarioRol::class, 'user_rol_id_user_rol');
-    }
 
     public function specialty()
     {

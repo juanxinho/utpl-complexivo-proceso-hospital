@@ -7,7 +7,7 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <a href="{{ route('employees.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <a href="#" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 New Employee
             </a>
 
@@ -28,8 +28,8 @@
                             <td class="px-6 py-4">{{ $employee->email }}</td>
                             <td class="px-6 py-4">{{ implode(', ', $employee->getRoleNames()->toArray()) }}</td>
                             <td class="px-6 py-4">
-                                <a href="{{ route('employees.edit', $employee->id) }}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="inline">
+                                <a href="" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <form action="" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 dark:text-red-500 hover:underline">Delete</button>

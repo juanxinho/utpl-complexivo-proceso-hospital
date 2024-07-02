@@ -15,5 +15,10 @@ class Specialty extends Model
     protected $fillable = [
         'name', 'abbreviation', 'description', 'status'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'medico_schedule', 'specialty_id', 'id_patient');
+    }
 }
 

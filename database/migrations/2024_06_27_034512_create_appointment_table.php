@@ -10,6 +10,7 @@ class CreateAppointmentTable extends Migration
     {
         Schema::create('appointment', function (Blueprint $table) {
             $table->id('id_appointment');
+            $table->unsignedBigInteger('id_patient');
             $table->unsignedBigInteger('user_register');
             $table->unsignedBigInteger('user_modification')->nullable();
             $table->timestamp('record_date')->useCurrent();

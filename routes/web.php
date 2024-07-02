@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SpecialtyController;
+use App\Livewire\EmployeeManagement;
+use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\SpecialtyController;
-use App\Livewire\PatientManagement;
-use App\Http\Controllers\EmployeeController;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -24,8 +25,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/patients', PatientManagement::class)->name('patients');
-    Route::resource('employees', EmployeeController::class);
+    Route::get('patients', PatientManagement::class)->name('patients');
+    //Route::get('employees', EmployeeManagement::class)->name('employees');
+
+    Route::get('/employees', EmployeeManagement::class)->name('employees.index');
+    Route::post('/employees', [UserController::class, 'store'])->name('employees.store');
+    Route::patch('/employees/{employee}', [UserController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/{employee}', [UserController::class, 'destroy'])->name('employees.destroy');
 });
 
 // Rutas protegidas para roles específicos

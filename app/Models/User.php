@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Profile::class, 'id_profile', 'id_profile');
     }
+
+    public function specialties()
+    {
+        return $this->belongsToMany(Specialty::class, 'medico_schedule', 'user_id', 'specialty_id');
+    }
 }

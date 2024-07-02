@@ -33,7 +33,7 @@
                 </x-nav-link>
             </li>
             <li>
-                <x-nav-link href="{{ route('employees') }}" :active="request()->routeIs('employees')">
+                <x-nav-link href="{{ route('employees.index') }}" :active="request()->routeIs('employees.index')">
                     <x-monoicon-clipboard-list width="20" height="20" />
                     <span class="ms-3">{{ __('Employees management') }}</span>
                 </x-nav-link>
