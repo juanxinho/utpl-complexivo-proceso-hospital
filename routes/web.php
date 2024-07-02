@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\SpecialtyController;
 use App\Livewire\PatientManagement;
+use App\Http\Controllers\EmployeeController;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get('/patients', PatientManagement::class)->name('patients');
+    Route::resource('employees', EmployeeController::class);
 });
 
 // Rutas protegidas para roles específicos
