@@ -2,13 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Rules\EcuadorCedulaOrRuc;
+use App\Rules\EcuadorPhone;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Validator;
 
 class PatientManagement extends Component
 {
@@ -18,17 +18,6 @@ class PatientManagement extends Component
     public $patientId;
     public $isOpen = false;
 
-    /*protected $rules = [
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6',
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'nid' => ['required', 'string', 'max:10', new \App\Rules\EcuadorianCedulaOrRuc],
-        'phone' => ['required', 'string', new \App\Rules\EcuadorianPhone],
-        'gender' => 'required|string|in:M,F',
-        'dob' => 'required|date',
-    ];
-*/
     public function render()
     {
         return view('patients.index', [
@@ -66,7 +55,16 @@ class PatientManagement extends Component
 
     public function store()
     {
-        $validatedData = $this->validate();
+        $validatedData = $this->validate([
+            'email' => 'required|email|unique:users,email,' . $this->id,
+            //'password' => 'required|min:6',
+            'profile.first_name' => 'required|string|max:255',
+            'profile.last_name' => 'required|string|max:255',
+            'profile.nid' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
+            'profile.gender' => 'required|string|in:M,F',
+            'profile.dob' => 'required|date',
+        ]);
 
         $profile = Profile::create([
             'first_name' => $this->first_name,

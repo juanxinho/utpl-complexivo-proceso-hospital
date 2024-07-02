@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Rules\EcuadorCedulaOrRuc;
+use App\Rules\EcuadorPhone;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
@@ -15,14 +17,15 @@ class UserManagement extends Component
 {
     use WithPagination;
 
-    public $users, $roles, $profile, $name, $email, $password, $idusuario, $idroles, $id;
+    public $profile, $name, $email, $password, $idroles, $id;
     public $isOpen = 0;
 
     public function render()
     {
-        $this->users = User::with('roles', 'profile')->get();
-        $this->roles = Role::all();
-        return view('users.index')->layout('layouts.app');
+        return view('users.index', [
+            'users' => User::with('profile')->paginate(10),
+            'roles' => Role::all(),
+        ])->layout('layouts.app');
     }
 
     public function create()
@@ -45,12 +48,12 @@ class UserManagement extends Component
     {
         $this->email = '';
         $this->password = '';
-        $this->first_name = '';
-        $this->last_name = '';
-        $this->nid = '';
-        $this->phone = '';
-        $this->gender = '';
-        $this->dob = '';
+        $this->profile['first_name'] = '';
+        $this->profile['last_name'] = '';
+        $this->profile['nid'] = '';
+        $this->profile['phone'] = '';
+        $this->profile['gender'] = '';
+        $this->profile['dob'] = null;
         $this->idroles = [];
     }
 
@@ -59,11 +62,10 @@ class UserManagement extends Component
 
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
-            //'password' => 'required|min:6',
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
-            'profile.nid' => 'required|string|max:10',
-            'profile.phone' => 'required|string|max:10',
+            'profile.nid' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
             'idroles' => 'required|array|min:1',
