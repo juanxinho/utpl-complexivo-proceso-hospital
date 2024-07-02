@@ -161,7 +161,7 @@ return array (
   array (
     'attribute-name' =>
     array (
-      'rule-name' => 'mensaje profilelizado',
+      'rule-name' => 'mensaje personalizado',
     ),
   ),
 );

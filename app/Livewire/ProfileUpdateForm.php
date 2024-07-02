@@ -69,6 +69,7 @@ class ProfileUpdateForm extends Component
 
     public function render()
     {
+        $this->user = Auth::user();
         return view('livewire.profile-update-form');
     }
 }

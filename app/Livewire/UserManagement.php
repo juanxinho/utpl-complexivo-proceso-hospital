@@ -56,7 +56,7 @@ class UserManagement extends Component
 
     public function store()
     {
-        
+
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
             //'password' => 'required|min:6',

@@ -55,7 +55,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the user should have a profilel team.
+     * Indicate that the user should have a personal team.
      */
     public function withPersonalTeam(callable $callback = null): static
     {
@@ -68,7 +68,7 @@ class UserFactory extends Factory
                 ->state(fn (array $attributes, User $user) => [
                     'name' => $user->name.'\'s Team',
                     'user_id' => $user->id,
-                    'profilel_team' => true,
+                    'personal_team' => true,
                 ])
                 ->when(is_callable($callback), $callback),
             'ownedTeams'

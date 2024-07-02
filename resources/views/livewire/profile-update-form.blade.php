@@ -1,4 +1,3 @@
-@php $this->user = Auth::user(); @endphp
 <x-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('Profile Information') }}
