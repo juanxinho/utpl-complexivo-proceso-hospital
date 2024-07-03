@@ -13,8 +13,10 @@ class EmployeeManagement extends Component
 {
     use WithPagination;
 
-    public $email, $password, $first_name, $last_name, $nid, $phone, $gender, $dob;
+    public $email, $password, $first_name, $last_name, $nid, $phone, $gender, $dob, $roles;
     public $employeeId;
+    public $employee;
+    public $isOpenNew = false;
     public $isOpen = false;
 
     protected $listeners = ['create', 'edit', 'destroy'];
@@ -28,9 +30,10 @@ class EmployeeManagement extends Component
 
     public function create()
     {
-        $roles = Role::whereNotIn('name', ['patient', 'medic'])->get();
-        return view('employees.create', compact('roles'));
+        $this->roles = Role::whereNotIn('name', ['patient', 'medic'])->get();
+        $this->isOpenNew = true;
     }
+
 
     public function storeEmployee(UserRequest $request)
     {
@@ -39,8 +42,9 @@ class EmployeeManagement extends Component
 
     public function edit(User $employee)
     {
-        $roles = Role::whereNotIn('name', ['patient', 'medic'])->get();
-        return view('employees.edit', compact('employee', 'roles'));
+        $this->roles = Role::whereNotIn('name', ['patient', 'medic'])->get();
+        $this->employee=$employee;
+        $this->isOpen = true;
     }
 
     public function updateEmployee(UserRequest $request, User $employee)
