@@ -8,7 +8,11 @@ use App\Livewire\EmployeeManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\ScheduleAppointmentWizard;
 
+Route::middleware(['auth', 'role:patient'])->group(function () {
+    Route::get('patient/appointments/create', ScheduleAppointmentWizard::class)->name('patient.appointments.create');
+});
 // Rutas públicas
 Route::get('/', function () {
     return view('auth.login');
@@ -47,16 +51,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('specialties', SpecialtyController::class);
 });
 
-/*
-Route::middleware(['role:admin'])->group(function () {
-        Route::get('/admin', function () {
-            return 'Admin Page';
-        })->name('admin');
-    });
-
-    Route::middleware(['permission:edit articles'])->group(function () {
-        Route::get('/edit-article', function () {
-            return 'Edit Article Page';
-        })->name('edit.article');
-    });
- * */
+Route::middleware(['auth', 'role:patient'])->group(function () {
+    //Route::get('/dashboard', [App\Http\Controllers\PatientController::class, 'dashboard'])->name('dashboard');
+    Route::get('/appointments/{id}', [App\Http\Controllers\AppointmentController::class, 'show'])->name('appointments.show');
+    Route::get('/appointments/history', [App\Http\Controllers\AppointmentController::class, 'history'])->name('appointments.history');
+    //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
+    //Route::get('/prescriptions', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('prescriptions.index');
+    //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
+});

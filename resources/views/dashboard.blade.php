@@ -8,9 +8,13 @@
 
     <div class="py-2 md:py-12">
         <div class="mx-auto sm:px-6 lg:px-2">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500">
-                <x-welcome />
-            </div>
+            @role('patient')
+                @include('welcome.patient')
+            @elserole('medic')
+                @include('welcome.medic')
+            @else
+                @include('welcome.welcome')
+            @endrole
         </div>
     </div>
 

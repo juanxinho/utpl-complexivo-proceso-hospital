@@ -12,7 +12,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::with('medicSchedule', 'usuarioRol')->where('id_patient', Auth::id())->get();
-        return view('appointments.index', compact('appointments'));
+        return view('admin.appointments.index', compact('appointments'));
     }
 
     public function medicoIndex()
@@ -20,14 +20,14 @@ class AppointmentController extends Controller
         $appointments = Appointment::with('usuarioRol')->whereHas('medicSchedule', function ($query) {
             $query->where('id_patient', Auth::id());
         })->get();
-        return view('appointments.medic_index', compact('appointments'));
+        return view('admin.appointments.medic_index', compact('appointments'));
     }
 
     public function create()
     {
         $medicosHorarios = MedicSchedule::all();
         $usuariosRoles = UsuarioRol::all();
-        return view('appointments.create', compact('medicosHorarios', 'usuariosRoles'));
+        return view('admin.appointments.create', compact('medicosHorarios', 'usuariosRoles'));
     }
 
     public function store(Request $request)
@@ -46,13 +46,13 @@ class AppointmentController extends Controller
             'status' => 'pendiente',
         ]);
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment creada exitosamente.');
+        return redirect()->route('admin.appointments.index')->with('success', 'Appointment creada exitosamente.');
     }
 
     public function show(Appointment $appointment)
     {
         $this->authorize('view', $appointment);
-        return view('appointments.show', compact('appointment'));
+        return view('admin.appointments.show', compact('appointment'));
     }
 
     public function edit(Appointment $appointment)
@@ -60,7 +60,7 @@ class AppointmentController extends Controller
         $this->authorize('update', $appointment);
         $medicosHorarios = MedicSchedule::all();
         $usuariosRoles = UsuarioRol::all();
-        return view('appointments.edit', compact('appointment', 'medicosHorarios', 'usuariosRoles'));
+        return view('admin.appointments.edit', compact('appointment', 'medicosHorarios', 'usuariosRoles'));
     }
 
     public function update(Request $request, Appointment $appointment)
@@ -79,7 +79,7 @@ class AppointmentController extends Controller
             'service_date' => $request->service_date,
         ]);
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment actualizada exitosamente.');
+        return redirect()->route('admin.appointments.index')->with('success', 'Appointment actualizada exitosamente.');
     }
 
     public function destroy(Appointment $appointment)
@@ -87,6 +87,18 @@ class AppointmentController extends Controller
         $this->authorize('delete', $appointment);
         $appointment->delete();
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment eliminada exitosamente.');
+        return redirect()->route('admin.appointments.index')->with('success', 'Appointment eliminada exitosamente.');
+    }
+
+    public function Singleshow($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        return view('front.appointments.show', compact('appointment'));
+    }
+
+    public function history()
+    {
+        $appointments = Appointment::where('patient_id', Auth::id())->where('date', '<', now())->orderBy('date', 'desc')->get();
+        return view('front.appointments.history', compact('appointments'));
     }
 }

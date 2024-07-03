@@ -10,12 +10,12 @@ class SpecialtyController extends Controller
     public function index()
     {
         $specialties = Specialty::all();
-        return view('specialties.index', compact('specialties'));
+        return view('admin.specialties.index', compact('specialties'));
     }
 
     public function create()
     {
-        return view('specialties.create');
+        return view('admin.specialties.create');
     }
 
     public function store(Request $request)
@@ -29,17 +29,17 @@ class SpecialtyController extends Controller
 
         Specialty::create($request->all());
 
-        return redirect()->route('specialties.index')->with('success', 'Especialidad creada exitosamente.');
+        return redirect()->route('admin.specialties.index')->with('success', 'Especialidad creada exitosamente.');
     }
 
     public function show(Specialty $specialty)
     {
-        return view('specialties.show', compact('specialty'));
+        return view('admin.specialties.show', compact('specialty'));
     }
 
     public function edit(Specialty $specialty)
     {
-        return view('specialties.edit', compact('specialty'));
+        return view('admin.specialties.edit', compact('specialty'));
     }
 
     public function update(Request $request, Specialty $specialty)
@@ -53,13 +53,13 @@ class SpecialtyController extends Controller
 
         $specialty->update($request->all());
 
-        return redirect()->route('specialties.index')->with('success', 'Especialidad actualizada exitosamente.');
+        return redirect()->route('admin.specialties.index')->with('success', 'Especialidad actualizada exitosamente.');
     }
 
     public function destroy(Specialty $specialty)
     {
         $specialty->delete();
 
-        return redirect()->route('specialties.index')->with('success', 'Especialidad eliminada exitosamente.');
+        return redirect()->route('admin.specialties.index')->with('success', 'Especialidad eliminada exitosamente.');
     }
 }
