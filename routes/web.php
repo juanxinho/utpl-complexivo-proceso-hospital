@@ -8,7 +8,11 @@ use App\Livewire\EmployeeManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\ScheduleAppointmentWizard;
 
+Route::middleware(['auth', 'role:patient'])->group(function () {
+    Route::get('patient/appointments/create', ScheduleAppointmentWizard::class)->name('patient.appointments.create');
+});
 // Rutas públicas
 Route::get('/', function () {
     return view('auth.login');
