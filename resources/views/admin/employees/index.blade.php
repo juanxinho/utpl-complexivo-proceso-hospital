@@ -1,8 +1,8 @@
 @if($isOpenNew)
-    @include('employees.create')
+    @include('admin.employees.create')
 @endif
 @if($isOpen)
-    @include('employees.edit')
+    @include('admin.employees.edit')
 @endif
 
 
@@ -19,7 +19,8 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <button wire:click="create()" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button wire:click="create()"
+                    class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 New Employee
             </button>
 
@@ -41,11 +42,15 @@
                             <td class="px-6 py-4">{{ implode(', ', $employee->getRoleNames()->toArray()) }}</td>
                             <td class="px-6 py-4">
                                 <!-- <a href="{{ route('employees.update', $employee) }}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
-                                <button wire:click="edit({{ $employee->id }})" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                                <button wire:click="edit({{ $employee->id }})"
+                                        class="text-blue-600 dark:text-blue-500 hover:underline">Edit
+                                </button>
                                 <form action="" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                    <button type="submit" class="text-red-600 dark:text-red-500 hover:underline">
+                                        Delete
+                                    </button>
                                 </form>
                             </td>
                         </tr>

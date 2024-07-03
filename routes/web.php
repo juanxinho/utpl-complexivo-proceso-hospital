@@ -10,9 +10,6 @@ use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\ScheduleAppointmentWizard;
 
-Route::middleware(['auth', 'role:patient'])->group(function () {
-    Route::get('patient/appointments/create', ScheduleAppointmentWizard::class)->name('patient.appointments.create');
-});
 // Rutas públicas
 Route::get('/', function () {
     return view('auth.login');
@@ -46,12 +43,21 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 
 // Rutas protegidas por autenticación (menos restrictivas)
 Route::middleware(['auth'])->group(function () {
-    Route::resource('appointments', AppointmentController::class);
+    Route::resource('admin/appointments', AppointmentController::class)->names([
+        'index' => 'admin.appointments.index',
+        'create' => 'admin.appointments.create',
+        'store' => 'admin.appointments.store',
+        'show' => 'admin.appointments.show',
+        'edit' => 'admin.appointments.edit',
+        'update' => 'admin.appointments.update',
+        'destroy' => 'admin.appointments.destroy',
+    ]);
     Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
     Route::resource('specialties', SpecialtyController::class);
 });
 
-Route::middleware(['auth', 'role:patient'])->group(function () {
+Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
+    Route::get('patient/appointments/create', ScheduleAppointmentWizard::class)->name('patient.appointments.create');
     //Route::get('/dashboard', [App\Http\Controllers\PatientController::class, 'dashboard'])->name('dashboard');
     Route::get('/appointments/{id}', [App\Http\Controllers\AppointmentController::class, 'show'])->name('appointments.show');
     Route::get('/appointments/history', [App\Http\Controllers\AppointmentController::class, 'history'])->name('appointments.history');

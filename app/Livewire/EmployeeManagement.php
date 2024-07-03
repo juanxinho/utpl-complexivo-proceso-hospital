@@ -23,7 +23,7 @@ class EmployeeManagement extends Component
 
     public function render()
     {
-        return view('employees.index', [
+        return view('admin.employees.index', [
             'employees' => User::with('profile')->withoutRole('patient')->paginate(10),
         ])->layout('layouts.app');
     }

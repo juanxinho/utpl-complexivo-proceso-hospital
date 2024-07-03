@@ -14,7 +14,7 @@
                     </div>
                 @endif
 
-                <a href="{{ route('appointments.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ route('admin.appointments.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     {{ __('Create New Appointment') }}
                 </a>
 

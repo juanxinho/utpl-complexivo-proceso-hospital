@@ -20,7 +20,7 @@ class PatientManagement extends Component
 
     public function render()
     {
-        return view('patients.index', [
+        return view('admin.patients.index', [
             'patients' => User::with('profile')->role('patient')->paginate(10),
         ])->layout('layouts.app');
     }

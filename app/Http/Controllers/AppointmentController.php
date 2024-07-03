@@ -15,7 +15,7 @@ class AppointmentController extends Controller
         return view('admin.appointments.index', compact('appointments'));
     }
 
-    public function medicoIndex()
+    public function medicIndex()
     {
         $appointments = Appointment::with('usuarioRol')->whereHas('medicSchedule', function ($query) {
             $query->where('id_patient', Auth::id());
