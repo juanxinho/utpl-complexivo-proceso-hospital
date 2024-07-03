@@ -22,7 +22,7 @@ class UserManagement extends Component
 
     public function render()
     {
-        return view('users.index', [
+        return view('admin.users.index', [
             'users' => User::with('profile')->paginate(10),
             'roles' => Role::all(),
         ])->layout('layouts.app');
