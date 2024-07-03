@@ -29,13 +29,7 @@
 
     <!-- Page Content -->
     <main>
-        @role('patient')
-            @include('sidebars.patient')
-        @elserole('medic')
-            @include('sidebars.medic')
-        @else
-            @include('sidebars.sidebar')
-        @endrole
+        @include('sidebars.sidebar')
         <div class="p-4 sm:ml-64">
             <div class="px-0 mt-14 md:p-2">
                 <!-- Page Heading -->

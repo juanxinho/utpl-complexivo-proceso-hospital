@@ -5,7 +5,20 @@
                 <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     <x-monoicon-grid width="20" height="20" />
                     <span class="ms-3">{{ __('Dashboard') }}</span>
-
+                </x-nav-link>
+            </li>
+            <!-- Falta validar rol medico -->
+            <li>
+                <x-nav-link href="#">
+                    <x-monoicon-calendar  width="20" height="20"/>
+                    <span class="ms-3">{{ __('View appointments') }}</span>
+                </x-nav-link>
+            </li>
+            <!-- Falta validar rol paciente -->
+            <li>
+                <x-nav-link href="{{ route('patient.appointments.create') }}" :active="request()->routeIs('patient.appointments.create')">
+                    <x-monoicon-calendar  width="20" height="20"/>
+                    <span class="ms-3">{{ __('Schedule an appointment') }}</span>
                 </x-nav-link>
             </li>
             <li>
