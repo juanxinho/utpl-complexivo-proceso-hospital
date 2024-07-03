@@ -29,17 +29,13 @@
 
     <!-- Page Content -->
     <main>
-        @php
-            $role = Auth::user()->roles->first()->name;
-        @endphp
-
-        @if ($role == 'patient')
+        @role('patient')
             @include('sidebars.patient')
-        @elseif ($role == 'medic')
+        @elserole('medic')
             @include('sidebars.medic')
         @else
             @include('sidebars.sidebar')
-        @endif
+        @endrole
         <div class="p-4 sm:ml-64">
             <div class="px-0 mt-14 md:p-2">
                 <!-- Page Heading -->

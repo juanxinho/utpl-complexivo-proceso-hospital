@@ -13,6 +13,12 @@
 
         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
             <li>
+                <x-nav-link href="{{ route('patient.appointments.create') }}" :active="request()->routeIs('patient.appointments.create')">
+                    <x-monoicon-calendar  width="20" height="20"/>
+                    <span class="ms-3">{{ __('Schedule an appointment') }}</span>
+                </x-nav-link>
+            </li>
+            <li>
                 <x-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     <x-monoicon-user width="20" height="20" />
                     <span class="ms-3">{{ __('Profile') }}</span>
