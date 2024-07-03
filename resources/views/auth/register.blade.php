@@ -20,7 +20,7 @@
             </div>
 
             <div class="mt-4">
-                <x-label for="nid" value="{{ __('ID') }}" />
+                <x-label for="nid" value="{{ __('NID') }}" />
                 <x-input id="nid" class="block mt-1 w-full" type="text" name="nid" :value="old('nid')" required autofocus autocomplete="nid" />
             </div>
 
@@ -36,7 +36,7 @@
 
             <div class="mt-4">
                 <x-label for="gender" value="{{ __('Sex') }}" />
-                <x-select name="gender" id="gender" class="mt-1 block w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.gender" placeholder="Select an option" />
+                <x-select name="gender" id="gender" class="mt-1 block w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model.defer="state.gender" placeholder="Select an option" />
             </div>
 
             <div class="mt-4">

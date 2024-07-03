@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-span-6 sm:col-span-3">
                                 <x-label for="profile.gender" value="{{ __('Gender') }}:"/>
-                                <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model="profile.gender" />
+                                <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model="profile.gender" />
                                 @error('profile.gender') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-6 sm:col-span-3">

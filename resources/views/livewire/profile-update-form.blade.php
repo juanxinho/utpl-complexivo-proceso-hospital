@@ -69,7 +69,7 @@
 
         <!-- NID -->
         <div class="col-span-6 sm:col-span-3">
-            <x-label for="nid" value="{{ __('nid') }}" />
+            <x-label for="nid" value="{{ __('NID') }}" />
             <x-input id="nid" type="text" class="mt-1 block w-full" wire:model.defer="state.nid" autocomplete="nid" />
             <x-input-error for="nid" class="mt-2" />
         </div>
@@ -84,7 +84,7 @@
         <!-- Gender -->
         <div class="col-span-6 sm:col-span-3">
             <x-label for="gender" value="{{ __('Gender') }}" />
-            <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => 'Male', 'F' => 'Female']" wire:model.defer="state.gender" />
+            <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model.defer="state.gender" />
             <x-input-error for="gender" class="mt-2" />
         </div>
 

@@ -13,7 +13,7 @@ return array (
   'ascii' => 'El campo :attribute solo debe contener símbolos y caracteres alfanuméricos de un solo byte.',
   'before' => 'El campo :attribute debe ser una fecha anterior a :date.',
   'before_or_equal' => 'El campo :attribute debe ser una fecha anterior o igual a :date.',
-  'between' =>
+  'between' => 
   array (
     'array' => 'El campo :attribute debe tener entre :min y :max elementos.',
     'file' => 'El campo :attribute debe tener entre :min y :max kilobytes.',
@@ -45,14 +45,14 @@ return array (
   'extensions' => 'El campo :attribute debe tener una de las siguientes extensiones: :values.',
   'file' => 'El campo :attribute debe ser un archivo.',
   'filled' => 'El campo :attribute debe tener un valor.',
-  'gt' =>
+  'gt' => 
   array (
     'array' => 'El campo :attribute debe tener más de :value elementos.',
     'file' => 'El campo :attribute debe ser mayor que :value kilobytes.',
     'numeric' => 'El campo :attribute debe ser mayor que :value.',
     'string' => 'El campo :attribute debe tener más de :value caracteres.',
   ),
-  'gte' =>
+  'gte' => 
   array (
     'array' => 'El campo :attribute debe tener :value elementos o más.',
     'file' => 'El campo :attribute debe ser mayor o igual a :value kilobytes.',
@@ -70,14 +70,14 @@ return array (
   'json' => 'El campo :attribute debe ser una cadena JSON válida.',
   'list' => 'El campo :attribute debe ser una lista.',
   'lowercase' => 'El campo :attribute debe estar en minúscula.',
-  'lt' =>
+  'lt' => 
   array (
     'array' => 'El campo :attribute debe tener menos de :value elementos.',
     'file' => 'El campo :attribute debe tener menos de :value kilobytes.',
     'numeric' => 'El campo :attribute debe ser menor que :value.',
     'string' => 'El campo :attribute debe tener menos de :value caracteres.',
   ),
-  'lte' =>
+  'lte' => 
   array (
     'array' => 'El campo :attribute no debe tener más de :value elementos.',
     'file' => 'El campo :attribute debe ser menor o igual a :value kilobytes.',
@@ -85,7 +85,7 @@ return array (
     'string' => 'El campo :attribute debe tener menos o igual que :value caracteres.',
   ),
   'mac_address' => 'El campo :attribute debe ser una dirección MAC válida.',
-  'max' =>
+  'max' => 
   array (
     'array' => 'El campo :attribute no debe tener más de :max elementos.',
     'file' => 'El campo :attribute no debe ser mayor que :max kilobytes.',
@@ -95,7 +95,7 @@ return array (
   'max_digits' => 'El campo :attribute no debe tener más de :max dígitos.',
   'mimes' => 'El campo :attribute debe ser un archivo de tipo: :values.',
   'mimetypes' => 'El campo :attribute debe ser un archivo de tipo: :values.',
-  'min' =>
+  'min' => 
   array (
     'array' => 'El campo :attribute debe tener al menos :min elementos.',
     'file' => 'El campo :attribute debe tener al menos :min kilobytes.',
@@ -112,7 +112,7 @@ return array (
   'not_in' => 'El :attribute seleccionado no es válido.',
   'not_regex' => 'El formato del campo :attribute no es válido.',
   'numeric' => 'El campo :attribute debe ser un número.',
-  'password' =>
+  'password' => 
   array (
     'letters' => 'El campo :attribute debe contener al menos una letra.',
     'mixed' => 'El campo :attribute debe contener al menos una letra mayúscula y una minúscula.',
@@ -141,7 +141,7 @@ return array (
   'required_without' => 'El campo :attribute es obligatorio cuando :values no está presente.',
   'required_without_all' => 'El campo :attribute es obligatorio cuando ninguno de :values está presente.',
   'same' => 'El campo :attribute debe coincidir con :other.',
-  'size' =>
+  'size' => 
   array (
     'array' => 'El campo :attribute debe contener elementos :size.',
     'file' => 'El campo :attribute debe tener :size kilobytes.',
@@ -157,9 +157,9 @@ return array (
   'url' => 'El campo :attribute debe ser una URL válida.',
   'ulid' => 'El campo :attribute debe ser un ULID válido.',
   'uuid' => 'El campo :attribute debe ser un UUID válido.',
-  'custom' =>
+  'custom' => 
   array (
-    'attribute-name' =>
+    'attribute-name' => 
     array (
       'rule-name' => 'mensaje personalizado',
     ),

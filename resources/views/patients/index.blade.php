@@ -27,7 +27,7 @@
                     {{ __('Name') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    {{ __('ID') }}
+                    {{ __('NID') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
                     {{ __('Age') }}
@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="nid" class="block text-gray-700 text-sm font-bold mb-2">{{ __('NUI') }}:</label>
+                            <label for="nid" class="block text-gray-700 text-sm font-bold mb-2">{{ __('NID') }}:</label>
                             <input type="text" id="nid" wire:model="nid" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             @error('nid') <span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
