@@ -1,5 +1,5 @@
 <!-- resources/views/livewire/create.blade.php-->
-<div>
+<div class="py-2 md:py-12">
     @include('admin.users.menu')
     <div class="mx-auto sm:px-6 lg:px-2">
         <div class="flex flex-col">
@@ -49,7 +49,7 @@
                                 <x-label for="idroles" value="{{ __('Role') }}:"/>
                                 @foreach ($roles as $rol)
                                     <div class="flex items-center mb-4">
-                                        <input type="checkbox" wire:model.defer="idroles"  value="{{ $rol->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                        <input type="checkbox" wire:model.defer="idroles"  value="{{ $rol->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 me-2"
                                                @foreach ($idroles as $rolId)
                                                    @if($rolId==$rol->id) checked @endif
                                             @endforeach
@@ -63,8 +63,8 @@
                         </div>
                     </div>
                     <div class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-                        <x-button type="submit">{{ __('Save') }}</x-button>
-                        <x-button type="button" wire:click="closeModal()">{{ __('Cancel') }}</x-button>
+                        <x-button class="me-2" type="submit">{{ __('Save') }}</x-button>
+                        <x-secondary-button type="button" wire:click="closeModal()">{{ __('Cancel') }}</x-secondary-button>
                     </div>
                 </form>
 

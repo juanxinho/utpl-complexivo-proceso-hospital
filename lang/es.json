@@ -180,5 +180,8 @@
     "Notes": "Notas",
     "Medication": "Medicamento",
     "Dosage": "Dosis",
-    "Instructions": "Instrucciones"
+    "Instructions": "Instrucciones",
+    "List": "Lista",
+    "Add new user": "Nuevo usuario",
+    "Manage roles": "Manejar roles"
 }

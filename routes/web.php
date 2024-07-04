@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('patients', PatientManagement::class)->name('patients');
+    Route::get('/admin/patients', PatientManagement::class)->name('patients');
     //Route::get('employees', EmployeeManagement::class)->name('employees');
 
     Route::get('/employees', EmployeeManagement::class)->name('employees.index');
@@ -42,7 +42,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 });
 
 // Rutas protegidas por autenticación (menos restrictivas)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
     Route::resource('admin/appointments', AppointmentController::class)->names([
         'index' => 'admin.appointments.index',
         'create' => 'admin.appointments.create',
