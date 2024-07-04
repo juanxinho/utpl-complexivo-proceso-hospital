@@ -9,7 +9,7 @@
     <button wire:click="create()" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Nuevo Paciente</button>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <div class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+        <div class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4">
             <label for="table-search" class="sr-only">{{ __('Search') }}</label>
             <div class="relative">
                 <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -29,7 +29,7 @@
 
         </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     {{ __('Name') }}

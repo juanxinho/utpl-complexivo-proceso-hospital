@@ -24,6 +24,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name',
+            'description' => 'roles,description',
             'permissions' => 'required',
         ]);
 
@@ -43,6 +44,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name,' . $role->id,
+            'description' => 'roles,description',
             'permissions' => 'required',
         ]);
 

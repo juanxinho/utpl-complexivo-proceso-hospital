@@ -1,5 +1,6 @@
 <!-- resources/views/livewire/create.blade.php-->
 <div>
+    @include('admin.users.menu')
     <div class="mx-auto sm:px-6 lg:px-2">
         <div class="flex flex-col">
             <div class="mt-5 md:mt-0 md:col-span-2">
@@ -53,7 +54,7 @@
                                                    @if($rolId==$rol->id) checked @endif
                                             @endforeach
                                         />
-                                    <label>{{ $rol->name }}</label>
+                                    <label> {{ $rol->name }}</label>
                                     </div>
                                 @endforeach
 

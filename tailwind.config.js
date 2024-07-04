@@ -36,8 +36,8 @@ export default {
         },
         colors: {
             'malachite': {
-                '50': '#effbef',
-                '100': '#daffd9',
+                '50': '#f5fff5',
+                '100': '#effbef',
                 '200': '#afe89f',
                 '300': '#99e187',
                 '400': '#3dec3c',

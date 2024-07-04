@@ -37,7 +37,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 // Rutas protegidas para roles específicos
 Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
-    Route::resource('/users/roles', RoleController::class);
+    Route::resource('/admin/users/roles', RoleController::class);
     Route::get('/admin/users', UserManagement::class)->name('users');
 });
 
