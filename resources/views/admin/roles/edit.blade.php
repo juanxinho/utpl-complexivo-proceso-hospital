@@ -28,6 +28,11 @@
                     </div>
 
                     <div class="mb-4">
+                        <x-label for="description" value="{{ __('Description') }}" />
+                        <x-input id="description" class="block mt-1 w-full" type="text" name="description" value="{{ $role->description }}" required autofocus autocomplete="description" />
+                    </div>
+
+                    <div class="mb-4">
                         <x-label for="permissions" value="{{ __('Permissions') }}" />
                         @foreach ($permissions as $permission)
                             <div>

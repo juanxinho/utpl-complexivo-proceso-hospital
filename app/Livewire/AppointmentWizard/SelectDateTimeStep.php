@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\AppointmentWizard;
 
 use Livewire\Component;
 use Carbon\Carbon;
@@ -11,7 +11,7 @@ class SelectDateTimeStep extends Component
 
     public function render()
     {
-        return view('livewire.select-date-time-step');
+        return view('livewire.appointment-wizard.select-date-time-step');
     }
 
     public function nextStep()
@@ -21,7 +21,7 @@ class SelectDateTimeStep extends Component
             'appointment_time' => 'required',
         ]);
 
-        $this->emit('goToNextStep', ['appointment_date' => $this->appointment_date, 'appointment_time' => $this->appointment_time]);
+        $this->dispatch('goToNextStep', ['appointment_date' => $this->appointment_date, 'appointment_time' => $this->appointment_time]);
     }
 }
 

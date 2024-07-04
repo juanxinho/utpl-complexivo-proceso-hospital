@@ -18,7 +18,7 @@ class Specialty extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'medico_schedule', 'specialty_id', 'id_patient');
+        return $this->belongsToMany(User::class, 'medico_schedule', 'id_specialty', 'id_patient');
     }
 }
 
