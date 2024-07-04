@@ -8,15 +8,12 @@
     <div class="py-2 md:py-12">
 
         @include('admin.users.menu')
+
         @if (session('success'))
             <div class="mb-4 text-malachite-600 dark:text-malachite-300">
                 {{ session('success') }}
             </div>
         @endif
-
-        <a href="{{ route('roles.create') }}" class="mb-4 inline-block hover:underline font-medium py-2 px-4">
-            Create New Role
-        </a>
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
