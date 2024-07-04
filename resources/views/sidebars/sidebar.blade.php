@@ -8,62 +8,77 @@
                 </x-nav-link>
             </li>
             <!-- Falta validar rol medico -->
+            @hasanyrole('medic|admin|super-admin')
             <li>
                 <x-nav-link href="#">
                     <x-monoicon-calendar  width="20" height="20"/>
                     <span class="ms-3">{{ __('View appointments') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
             <!-- Falta validar rol paciente -->
+            @hasanyrole('patient|admin|super-admin')
             <li>
                 <x-nav-link href="{{ route('patient.appointments.create') }}" :active="request()->routeIs('patient.appointments.create')">
                     <x-monoicon-calendar  width="20" height="20"/>
                     <span class="ms-3">{{ __('Schedule an appointment') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
             <li>
                 <x-nav-link href="{{ route('patients') }}" :active="request()->routeIs('patients')">
                     <x-monoicon-temperature width="20" height="20" />
                     <span class="ms-3">{{ __('Patients management') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
             <li>
                 <x-nav-link href="{{ route('admin.appointments.index') }}" :active="request()->routeIs('admin.appointments.index')">
                     <x-monoicon-calendar  width="20" height="20"/>
                     <span class="ms-3">{{ __('Appointments') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
             <li>
                 <x-nav-link href="#">
                     <x-monoicon-credit-card width="20" height="20" />
                     <span class="ms-3">{{ __('Billing') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
             <li>
                 <x-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
                     <x-monoicon-users width="20" height="20" />
                     <span class="ms-3">{{ __('Users management') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
             <li>
                 <x-nav-link href="{{ route('employees.index') }}" :active="request()->routeIs('employees.index')">
                     <x-monoicon-clipboard-list width="20" height="20" />
                     <span class="ms-3">{{ __('Employees management') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
             <li>
                 <x-nav-link href="#">
                     <x-monoicon-bar-chart-alt width="20" height="20" />
                     <span class="ms-3">{{ __('Analytics') }}</span>
                 </x-nav-link>
             </li>
+            @endhasanyrole
             <li>
                 <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
                     <x-monoicon-circle-help width="20" height="20" />
                     <span class="ms-3">{{ __('Help and Support') }}</span>
                 </x-nav-link>
             </li>
-
         </ul>
 
         <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
@@ -109,7 +124,7 @@
                 <label @click="$refs.switchButton.click(); $refs.switchButton.focus()" :id="$id('switch')"
                        :class="{ 'text-malachite-600 dark:text-malachite-300': switchOn, 'text-gray-400': ! switchOn }"
                        class="text-sm select-none">
-                    Dark Mode
+                    {{ __('Dark Mode') }}
                 </label>
             </div>
         </ul>
