@@ -26,7 +26,7 @@
                         {{ __('Name') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        {{ __('Code') }}
+                        {{ __('Description') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
                         {{ __('Actions') }}
@@ -37,10 +37,10 @@
                 @foreach ($roles as $role)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $role->description }}
+                            {{ $role->name }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $role->name }}
+                            {{ $role->description }}
                         </th>
                         <td class="px-6 py-4">
                             <a href="{{ route('roles.edit', $role) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
