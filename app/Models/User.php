@@ -70,6 +70,6 @@ class User extends Authenticatable
 
     public function specialties()
     {
-        return $this->belongsToMany(Specialty::class, 'medico_schedule', 'user_id', 'specialty_id');
+        return $this->belongsToMany(Specialty::class, 'medico_schedule', 'user_id', 'id_specialty');
     }
 }

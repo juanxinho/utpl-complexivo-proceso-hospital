@@ -1,17 +1,17 @@
 <!-- Next Appointment Card -->
-<h1 class="text-2xl font-bold mb-4">{{ __('Welcome') }}, {{ Auth::user()->name }}!</h1>
+<h1 class="text-2xl font-bold mb-4">{{ __('Welcome') }}, {{ Auth::user()->profile->first_name }}!</h1>
 
 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
     <div class="p-5">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ __('Next Appointment') }}</h5>
-        @if($nextAppointment)
+        {{--@if($nextAppointment)
             <p class="mb-3 font-normal text-gray-700">{{ $nextAppointment->date->format('F j, Y, g:i a') }}</p>
             <a href="{{ route('appointments.show', $nextAppointment->id) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 {{ __('View Details') }}
             </a>
         @else
             <p class="mb-3 font-normal text-gray-700">{{ __('No upcoming appointments') }}</p>
-        @endif
+        @endif--}}
     </div>
 </div>
 

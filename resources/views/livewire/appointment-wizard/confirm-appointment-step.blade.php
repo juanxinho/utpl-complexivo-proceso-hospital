@@ -1,6 +1,6 @@
 <div>
     <p>{{ __('Confirm your appointment') }}</p>
-    <p>{{ __('Specialty') }}: {{ $this->state['specialty_id'] }}</p>
+    <p>{{ __('Specialty') }}: {{ $this->state['id_specialty'] }}</p>
     <p>{{ __('Doctor') }}: {{ $this->state['doctor_id'] }}</p>
     <p>{{ __('Date') }}: {{ $this->state['appointment_date'] }}</p>
     <p>{{ __('Time') }}: {{ $this->state['appointment_time'] }}</p>

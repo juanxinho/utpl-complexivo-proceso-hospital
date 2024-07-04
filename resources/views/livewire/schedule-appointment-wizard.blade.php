@@ -1,13 +1,13 @@
 <div>
     @if ($step == 1)
-        @livewire('patient-information-step')
+        @livewire('appointment-wizard.patient-information-step')
     @elseif ($step == 2)
-        @livewire('select-specialty-step')
+        @livewire('appointment-wizard.select-specialty-step')
     @elseif ($step == 3)
-        @livewire('select-doctor-step')
+        @livewire('appointment-wizard.select-medic-step')
     @elseif ($step == 4)
-        @livewire('select-date-time-step')
+        @livewire('appointment-wizard.select-date-time-step')
     @elseif ($step == 5)
-        @livewire('confirm-appointment-step')
+        @livewire('appointment-wizard.confirm-appointment-step')
     @endif
 </div>

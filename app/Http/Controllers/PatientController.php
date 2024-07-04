@@ -11,8 +11,8 @@ class PatientController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $nextAppointment = Appointment::where('patient_id', $user->id)->where('date', '>=', now())->orderBy('date', 'asc')->first();
-        $appointmentHistory = Appointment::where('patient_id', $user->id)->where('date', '<', now())->orderBy('date', 'desc')->get();
+        $nextAppointment = Appointment::where('id_patient', $user->id)->where('date', '>=', now())->orderBy('date', 'asc')->first();
+        $appointmentHistory = Appointment::where('id_patient', $user->id)->where('date', '<', now())->orderBy('date', 'desc')->get();
 
         return view('welcome.patient', compact('user', 'nextAppointment', 'appointmentHistory'));
     }

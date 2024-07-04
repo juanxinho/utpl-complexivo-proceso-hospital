@@ -1,8 +1,8 @@
 <div>
-    <x-select label="{{ __('Select Specialty') }}" wire:model="specialty_id">
+    <select id="specialty" name="specialty" label="{{ __('Select Specialty') }}" wire:model="id_specialty">
         @foreach($specialties as $specialty)
             <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
         @endforeach
-    </x-select>
+    </select>
     <x-button wire:click="nextStep">{{ __('Next') }}</x-button>
 </div>
