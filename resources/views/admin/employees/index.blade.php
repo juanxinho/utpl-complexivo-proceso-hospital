@@ -5,11 +5,6 @@
     @include('admin.employees.edit')
 @endif
 
-
-@if (session()->has('message'))
-    <div>{{ session('message') }}</div>
-@endif
-
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Employee Management') }}
@@ -60,6 +55,9 @@
             </div>
             <div class="mt-4">
                 {{ $employees->links() }}
+                @if (session()->has('message'))
+                    <div>{{ session('message') }}</div>
+                @endif
             </div>
         </div>
     </div>
