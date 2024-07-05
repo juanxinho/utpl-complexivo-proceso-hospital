@@ -26,10 +26,7 @@
                 </div>
                 <div class="mb-4">
                     <x-label for="gender" :value="__('Gender')"/>
-                    <x-select id="gender" name="gender" wire:model="profile.gender" class="mt-1 block w-full">
-                        <option value="M">{{ __('Male') }}</option>
-                        <option value="F">{{ __('Female') }}</option>
-                    </x-select>
+                    <x-select id="gender" name="gender" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model="profile.gender" class="mt-1 block w-full"/>
                     @error('profile.gender') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
                 <div class="mb-4">
@@ -47,14 +44,16 @@
                     <x-input id="password" wire:model="password" type="password" class="mt-1 block w-full"/>
                     @error('password') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
-                <div class="mb-4">
-                    <x-label for="roles" :value="__('Roles')"/>
-                    <x-select id="roles" name="roles" wire:model="idroles" multiple class="mt-1 block w-full">
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                        @endforeach
-                    </x-select>
-                    @error('idroles') <span class="text-red-500">{{ $message }}</span> @enderror
+                <div class="col-span-6 sm:col-span-3">
+                    <x-label for="idroles" value="{{ __('Role') }}:"/>
+                    @foreach ($roles as $role)
+                        <div class="flex items-center mb-4">
+                            <input type="checkbox" wire:model.defer="idroles"  value="{{ $role->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            <label>{{ $role->name }}</label>
+                        </div>
+                    @endforeach
+
+                    @error('idroles') <span>{{ $message }}</span> @enderror
                 </div>
                 <div class="flex items-center justify-end">
                     <x-button class="bg-blue-500 hover:bg-blue-700">
