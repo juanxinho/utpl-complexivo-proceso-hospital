@@ -1,10 +1,10 @@
 @if($isOpen)
     @include('admin.users.create')
 @endif
-
-@if (session()->has('message'))
-    <div>{{ session('message') }}</div>
+@if($isOpenEdit)
+    @include('admin.users.edit')
 @endif
+
 
 <x-slot name="header">
     <h2 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
@@ -19,6 +19,9 @@
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        @if (session()->has('message'))
+            <div>{{ session('message') }}</div>
+        @endif
             <thead class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
             <tr>
                 {{--<th scope="col" class="p-4">

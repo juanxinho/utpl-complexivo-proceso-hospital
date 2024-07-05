@@ -18,7 +18,8 @@ class UserManagement extends Component
     use WithPagination;
 
     public $profile, $name, $email, $password, $idroles, $id;
-    public $isOpen = 0;
+    public $isOpen = false;
+    public $isOpenEdit = false;
 
     public function render()
     {
@@ -39,9 +40,19 @@ class UserManagement extends Component
         $this->isOpen = true;
     }
 
+    public function openModalEdit()
+    {
+        $this->isOpenEdit = true;
+    }
+
     public function closeModal()
     {
         $this->isOpen = false;
+    }
+    
+    public function closeModalEdit()
+    {
+        $this->isOpenEdit = false;
     }
 
     private function resetInputFields()
@@ -99,6 +110,7 @@ class UserManagement extends Component
             $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
 
         $this->closeModal();
+        $this->closeModalEdit();
         $this->resetInputFields();
     }
 
@@ -112,7 +124,7 @@ class UserManagement extends Component
         //$this->password = $user->password;
         $this->idroles = $user->roles->pluck('id')->toArray();
 
-        $this->openModal();
+        $this->openModalEdit();
     }
 
     public function delete($id)
