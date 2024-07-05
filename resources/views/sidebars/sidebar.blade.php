@@ -51,7 +51,7 @@
             @endhasanyrole
             @hasanyrole('admin|super-admin')
             <li>
-                <x-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
+                <x-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.index')">
                     <x-monoicon-users width="20" height="20" />
                     <span class="ms-3">{{ __('Users management') }}</span>
                 </x-nav-link>

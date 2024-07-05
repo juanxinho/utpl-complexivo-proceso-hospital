@@ -1,6 +1,5 @@
-@if($isOpen)
-    @include('admin.users.create')
-@endif
+<x-app-layout>
+
 
 @if (session()->has('message'))
     <div>{{ session('message') }}</div>
@@ -84,3 +83,4 @@
     </div>
 
 </div>
+</x-app-layout>

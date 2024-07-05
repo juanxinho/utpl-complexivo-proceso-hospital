@@ -18,7 +18,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('roles.store') }}" method="POST">
+                <form action="{{ route('admin.roles.store') }}" method="POST">
                     @csrf
                     <div class="mb-4">
                         <x-label for="name" value="{{ __('Role Name') }}" />

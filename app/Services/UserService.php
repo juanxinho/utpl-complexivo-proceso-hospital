@@ -8,12 +8,13 @@ use App\Models\Specialty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
     public function getAllUsers()
     {
-        return User::with('roles', 'profile')->get();
+        return User::with('roles', 'profile')->paginate(10);
     }
 
     public function getUserById($id)
@@ -28,9 +29,9 @@ class UserService
 
     public function createUser(array $data)
     {
-        $profile = Profile::create($data['profile']);
+        $profile = Profile::updateOrCreate($data['profile']);
 
-        $user = User::create([
+        $user = User::updateOrCreate([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'id_profile' => $profile->id,
@@ -62,9 +63,9 @@ class UserService
         $user->delete();
     }
 
-    public function assignSpecialties(Request $request, $userId)
+    public function assignSpecialties($userId, $specialties)
     {
         $user = User::findOrFail($userId);
-        $user->specialties()->sync($request->specialties);
+        $user->specialties()->sync($specialties);
     }
 }

@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $user = $this->userService->getUserById($id);
         $roles = $this->userService->getAllRoles();
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.create', compact('user', 'roles'));
     }
 
     public function update(UserRequest $request, $id)
