@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->string('description')->nullable();
-        });
         Schema::table('roles', function (Blueprint $table) {
             $table->string('description')->nullable();
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropColumn('description');
         });
     }
 };

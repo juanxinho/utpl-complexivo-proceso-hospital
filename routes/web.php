@@ -31,14 +31,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //Route::get('employees', EmployeeManagement::class)->name('employees');
 
     Route::get('admin/employees', EmployeeManagement::class)->name('employees.index');
-    Route::post('admin//employees', [UserController::class, 'store'])->name('employees.store');
+    Route::post('admin/employees', [UserController::class, 'store'])->name('employees.store');
     Route::patch('admin/employees/{employee}', [UserController::class, 'update'])->name('employees.update');
     Route::delete('admin/employees/{employee}', [UserController::class, 'destroy'])->name('employees.destroy');
 });
 
 // Rutas protegidas para roles específicos
 Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
-    Route::resource('/admin/users/roles', RoleController::class);
+    //Route::resource('/admin/users/roles', RoleController::class);
     Route::get('/admin/users', UserManagement::class)->name('users');
 });
 
@@ -52,6 +52,15 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'edit' => 'admin.appointments.edit',
         'update' => 'admin.appointments.update',
         'destroy' => 'admin.appointments.destroy',
+    ]);
+    Route::resource('admin/user/roles', RoleController::class)->names([
+        'index' => 'admin.roles.index',
+        'create' => 'admin.roles.create',
+        'store' => 'admin.roles.store',
+        'show' => 'admin.roles.show',
+        'edit' => 'admin.roles.edit',
+        'update' => 'admin.roles.update',
+        'destroy' => 'admin.roles.destroy',
     ]);
     //Route::resource('admin/employees', EmployeeController::class);
     //Route::get('admin/employees/assign-specialties/{id}', [EmployeeController::class, 'assignSpecialties'])->name('employees.assign.specialties');

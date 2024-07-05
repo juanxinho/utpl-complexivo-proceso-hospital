@@ -18,7 +18,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('roles.update', $role) }}" method="POST">
+                <form action="{{ route('admin.roles.update', $role) }}" method="POST">
                     @csrf
                     @method('PUT')
 

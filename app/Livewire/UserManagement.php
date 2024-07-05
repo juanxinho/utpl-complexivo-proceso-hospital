@@ -78,14 +78,14 @@ class UserManagement extends Component
             'phone' => $this->profile['phone'],
             'gender' => $this->profile['gender'],
             'dob' => $this->profile['dob'],
-            'status' => $this->profile['status'],
+            'status' => 1,
             'user_register' => auth()->user()->id,
         ]);
 
         $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
-            //'password' => bcrypt($this->password),
-            //'status' => $this->status,
+            'password' => bcrypt($this->password),
+            'status' => 1,
             'id_profile' => $profile->id_profile,
             'user_register' => auth()->user()->id,
         ]);

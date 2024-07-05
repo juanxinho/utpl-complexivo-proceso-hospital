@@ -1,3 +1,4 @@
+<!-- create.blade.php or edit.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">
@@ -18,7 +19,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('roles.store') }}" method="POST">
+                <form action="{{ route('admin.roles.store') }}" method="POST">
                     @csrf
                     <div class="mb-4">
                         <x-label for="name" value="{{ __('Role Name') }}" />
@@ -27,7 +28,7 @@
 
                     <div class="mb-4">
                         <x-label for="description" value="{{ __('Description') }}" />
-                        <x-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required autofocus autocomplete="description" />
+                        <x-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" autofocus autocomplete="description" />
                     </div>
 
                     <div class="mb-4">

@@ -40,8 +40,8 @@
                             {{ $role->description }}
                         </th>
                         <td class="px-6 py-4">
-                            <a href="{{ route('roles.edit', $role) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
-                            <form action="{{ route('roles.destroy', $role) }}" method="POST" class="inline">
+                            <a href="{{ route('admin.roles.edit', $role) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
+                            <form action="{{ route('admin.roles.destroy', $role) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="inline-block text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
