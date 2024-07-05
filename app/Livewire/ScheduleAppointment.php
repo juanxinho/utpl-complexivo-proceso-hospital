@@ -45,7 +45,7 @@ class ScheduleAppointment extends Component
 
     public function updatedMedicId($value)
     {
-        $this->times = MedicSchedule::where('user_id', $value)->get();
+        $this->times = MedicSchedule::where('id_medic', $value)->get();
     }
 
     public function render()

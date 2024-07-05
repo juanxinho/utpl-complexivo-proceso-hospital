@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Specialty;
+use App\Models\Schedule;
+use App\Models\MedicSchedule;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,6 +18,7 @@ class MedicSeeder extends Seeder
     {
         $faker = Faker::create();
         $specialtyIds = Specialty::pluck('id_specialty')->toArray();
+        $scheduleIds = Schedule::pluck('id_schedule')->toArray();
 
         // Create 50 Medic Users with different Specialties
         foreach (range(1, 50) as $index) {
@@ -46,7 +49,23 @@ class MedicSeeder extends Seeder
             $user->assignRole($MedicRole);
 
             // Assign random specialties to each medic
-            $user->specialties()->sync(array_rand(array_flip($specialtyIds), rand(1, 3)));
+            $assignedSpecialties = array_rand(array_flip($specialtyIds), rand(1, 3));
+            $user->specialties()->sync($assignedSpecialties);
+
+            // Assign schedules to each medic's specialties
+            foreach ((array) $assignedSpecialties as $specialtyId) {
+                $medicSchedules = [];
+                foreach (range(1, 2) as $i) { // Adjust the range to assign more schedules if needed
+                    $medicSchedules[] = [
+                        'id_medic' => $user->id,
+                        'id_specialty' => $specialtyId,
+                        'id_schedule' => $scheduleIds[array_rand($scheduleIds)],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+                MedicSchedule::insert($medicSchedules);
+            }
         }
     }
 }
