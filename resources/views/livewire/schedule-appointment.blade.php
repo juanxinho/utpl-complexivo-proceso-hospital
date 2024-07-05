@@ -29,18 +29,13 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="date" value="{{ __('Date') }}" />
-                <x-input id="date" type="date" wire:model="date" class="mt-1 block w-full" />
+                <x-input id="date" type="date" wire:model.live="date" class="mt-1 block w-full" />
                 <x-input-error for="date" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="time" value="{{ __('Time') }}" />
-                <x-select id="time" name="time" wire:model="time" class="mt-1 block w-full">
-                    <option value="">{{ __('Select Time') }}</option>
-                    @foreach($times as $time)
-                        <option value="{{ $time->time }}">{{ $time->time }}</option>
-                    @endforeach
-                </x-select>
+                <x-select id="time" name="time" :options="$times" wire:model.live="time" class="mt-1 block w-full" placeholder="Select an option"/>
                 <x-input-error for="time" class="mt-2" />
             </div>
         </x-slot>

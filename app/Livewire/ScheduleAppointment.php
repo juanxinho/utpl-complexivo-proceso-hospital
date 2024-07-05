@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\Specialty;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ScheduleAppointment extends Component
 {
@@ -45,7 +46,39 @@ class ScheduleAppointment extends Component
 
     public function updatedMedicId($value)
     {
-        $this->times = MedicSchedule::where('id_medic', $value)->get();
+        $this->loadAvailableTimes();
+    }
+
+    public function updatedDate($value)
+    {
+        $this->loadAvailableTimes();
+    }
+
+    protected function loadAvailableTimes()
+    {
+        if ($this->medic_id && $this->date) {
+            $date = Carbon::parse($this->date);
+            $dayOfWeek = $date->format('l');
+
+            $schedules = MedicSchedule::where('id_medic', $this->medic_id)
+                ->whereHas('schedule', function ($query) use ($dayOfWeek) {
+                    $query->where('days', 'like', '%' . $dayOfWeek . '%');
+                })
+                ->get();
+
+            $availableTimes = [];
+            foreach ($schedules as $schedule) {
+                $timeRange = explode(' - ', $schedule->schedule->time_range);
+                $startTime = Carbon::createFromFormat('H:i', $timeRange[0]);
+                $endTime = Carbon::createFromFormat('H:i', $timeRange[1]);
+                while ($startTime < $endTime) {
+                    $availableTimes[] = $startTime->format('H:i');
+                    $startTime->addMinutes(20);
+                }
+            }
+
+            $this->times = $availableTimes;
+        }
     }
 
     public function render()
