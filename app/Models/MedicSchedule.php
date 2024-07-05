@@ -13,12 +13,12 @@ class MedicSchedule extends Model
     protected $primaryKey = 'id_medic_schedule';
 
     protected $fillable = [
-        'id_medic', 'specialty_id_specialty', 'schedule_id_schedule'
+        'id_medic', 'id_specialty', 'schedule_id_schedule'
     ];
 
     public function specialty()
     {
-        return $this->belongsTo(Specialty::class, 'specialty_id_specialty');
+        return $this->belongsTo(Specialty::class, 'id_specialty');
     }
 
     public function schedule()

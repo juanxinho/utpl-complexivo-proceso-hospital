@@ -62,11 +62,9 @@ class UserService
         $user->delete();
     }
 
-    public function assignSpecialties($userId, $specialties)
+    public function assignSpecialties(Request $request, $userId)
     {
         $user = User::findOrFail($userId);
-        $user->specialties()->sync($specialties);
-
-        return $user;
+        $user->specialties()->sync($request->specialties);
     }
 }
