@@ -15,11 +15,11 @@ class PatientSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            // Crear 25 usuarios adicionales con rol patient
+            // Crear 10 usuarios adicionales con rol patient
             $faker = Faker::create();
             $roles = Role::all()->pluck('name')->toArray();
 
-            foreach (range(1, 25) as $index) {
+            foreach (range(1, 10) as $index) {
                 $profile = Profile::create([
                     'nid' => $faker->unique()->numerify('##########'),
                     'first_name' => $faker->firstName,

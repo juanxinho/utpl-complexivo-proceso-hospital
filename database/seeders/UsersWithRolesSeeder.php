@@ -15,6 +15,9 @@ class UsersWithRolesSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
+
+            $faker = Faker::create();
+
             // Crear el usuario por defecto con rol super-admin
             $profile = Profile::create([
                 'nid' => '0923717722',
@@ -42,8 +45,62 @@ class UsersWithRolesSeeder extends Seeder
             $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
             $user->assignRole($superAdminRole);
 
+            // Crear el usuario por defecto con rol patient
+            $profile = Profile::create([
+                'nid' => $faker->unique()->numerify('##########'),
+                'first_name' => 'Juan',
+                'last_name' => 'Nieto',
+                'dob' => '1986-05-04',
+                'phone' => '0995767405',
+                'gender' => 'M',
+                'status' => 1,
+                'user_register' => 1, // Ajustar según sea necesario
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $user = User::create([
+                'email' => 'jnietos@live.com',
+                'password' => Hash::make('prncs135'),
+                'status' => 1,
+                'user_register' => 1, // Ajustar según sea necesario
+                'id_profile' => $profile->id_profile,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $patientRole = Role::firstOrCreate(['name' => 'patient']);
+            $user->assignRole($patientRole);
+
+            // Crear el usuario por defecto con rol super-admin
+            $profile = Profile::create([
+                'nid' => $faker->unique()->numerify('##########'),
+                'first_name' => 'Juan',
+                'last_name' => 'Nieto',
+                'dob' => '1986-05-04',
+                'phone' => '0995767405',
+                'gender' => 'M',
+                'status' => 1,
+                'user_register' => 1, // Ajustar según sea necesario
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $user = User::create([
+                'email' => 'juanxinh@gmail.com',
+                'password' => Hash::make('prncs135'),
+                'status' => 1,
+                'user_register' => 1, // Ajustar según sea necesario
+                'id_profile' => $profile->id_profile,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $medicRole = Role::firstOrCreate(['name' => 'medic']);
+            $user->assignRole($medicRole);
+
             // Crear 50 usuarios adicionales con roles diferentes
-            $faker = Faker::create();
+            /*$faker = Faker::create();
             $roles = Role::all()->pluck('name')->toArray();
 
             foreach (range(1, 50) as $index) {
@@ -73,7 +130,7 @@ class UsersWithRolesSeeder extends Seeder
                 // Asignar un rol aleatorio al usuario
                 $randomRole = $faker->randomElement($roles);
                 $user->assignRole($randomRole);
-            }
+            }*/
         });
     }
 }
