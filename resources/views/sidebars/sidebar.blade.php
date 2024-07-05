@@ -17,7 +17,7 @@
             </li>
             @endhasanyrole
             <!-- Falta validar rol paciente -->
-            @hasanyrole('patient|admin|super-admin')
+            @hasanyrole('super-admin|admin|patient')
             <li>
                 <x-nav-link href="{{ route('patient.appointments.create') }}" :active="request()->routeIs('patient.appointments.create')">
                     <x-monoicon-calendar  width="20" height="20"/>

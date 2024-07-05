@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             SpecialtiesSeeder::class,
             UsersWithRolesSeeder::class,
             PatientSeeder::class,
+            ScheduleSeeder::class,
             MedicSeeder::class,
         ]);
     }
