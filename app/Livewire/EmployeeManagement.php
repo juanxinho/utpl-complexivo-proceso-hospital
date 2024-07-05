@@ -16,12 +16,11 @@ class EmployeeManagement extends Component
 {
     use WithPagination;
 
-    public $profile, $email, $roles, $idroles, $id;
+    public $profile, $email, $password, $roles, $idroles, $id;
     public $employee;
     public $isOpenNew = false;
     public $isOpen = false;
 
-    protected $listeners = ['create', 'edit', 'destroy'];
 
     public function render()
     {
@@ -51,14 +50,10 @@ class EmployeeManagement extends Component
     public function create()
     {
         $this->roles = Role::whereNotIn('name', ['patient'])->get();
+        $this->resetInputFields();
         $this->isOpenNew = true;
     }
 
-
-    public function storeEmployee(UserRequest $request)
-    {
-        app(UserController::class)->store($request);
-    }
 
     public function edit($id)
     {
@@ -70,8 +65,9 @@ class EmployeeManagement extends Component
         $this->idroles = $employee->roles->pluck('id')->toArray();
         $this->isOpen = true;
     }
+        
 
-    public function updateEmployee()
+    public function store()
     {
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
@@ -91,12 +87,14 @@ class EmployeeManagement extends Component
             'phone' => $this->profile['phone'],
             'gender' => $this->profile['gender'],
             'dob' => $this->profile['dob'],
-            'status' => $this->profile['status'],
+            'status' => 1,
             'user_register' => auth()->user()->id,
         ]);
 
         $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
+            'password' => bcrypt($this->password),
+            'status' => 1,
             'id_profile' => $profile->id_profile,
             'user_register' => auth()->user()->id,
         ]);

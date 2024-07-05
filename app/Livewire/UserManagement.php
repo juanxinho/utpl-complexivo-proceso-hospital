@@ -48,10 +48,6 @@ class UserManagement extends Component
     public function closeModal()
     {
         $this->isOpen = false;
-    }
-    
-    public function closeModalEdit()
-    {
         $this->isOpenEdit = false;
     }
 
@@ -110,7 +106,6 @@ class UserManagement extends Component
             $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
 
         $this->closeModal();
-        $this->closeModalEdit();
         $this->resetInputFields();
     }
 

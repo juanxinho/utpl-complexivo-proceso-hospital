@@ -2,7 +2,7 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-            <form wire:submit.prevent="updateEmployee">
+            <form wire:submit.prevent="store">
                 <div class="mb-4">
                     <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">First Name:</label>
                     <input type="text" id="first_name"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" wire:model="profile.first_name" required>

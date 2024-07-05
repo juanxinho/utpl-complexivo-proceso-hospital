@@ -65,7 +65,7 @@
                     </div>
                     <div class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
                         <x-button class="me-2" type="submit">{{ __('Save') }}</x-button>
-                        <x-secondary-button type="button" wire:click="closeModalEdit()">{{ __('Cancel') }}</x-secondary-button>
+                        <x-secondary-button type="button" wire:click="closeModal()">{{ __('Cancel') }}</x-secondary-button>
                     </div>
                 </form>
 
