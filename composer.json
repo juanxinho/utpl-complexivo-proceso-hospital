@@ -14,7 +14,6 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0",
-        "spatie/laravel-livewire-wizard": "^2.3",
         "spatie/laravel-permission": "^6.9",
         "tanmuhittin/laravel-google-translate": "^2.3"
     },

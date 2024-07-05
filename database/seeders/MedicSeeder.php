@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Profile;
@@ -13,49 +14,36 @@ class MedicSeeder extends Seeder
 {
     public function run()
     {
-        // Create Role 'medic' if it doesn't exist
-        if (!Role::where('name', 'medic')->exists()) {
-            Role::create(['name' => 'medic']);
-        }
-
-        // Create Specialties if they don't exist
-        /*$specialties = [
-            'Cardiology', 'Dermatology', 'Emergency Medicine', 'Endocrinology',
-            'Gastroenterology', 'Geriatrics', 'Hematology', 'Infectious Disease',
-            'Nephrology', 'Neurology', 'Obstetrics and Gynecology', 'Oncology',
-            'Ophthalmology', 'Orthopedics', 'Otolaryngology', 'Pathology',
-            'Pediatrics', 'Physical Medicine and Rehabilitation', 'Psychiatry',
-            'Pulmonology', 'Radiology', 'Rheumatology', 'Surgery', 'Urology'
-        ];
-
-        foreach ($specialties as $specialtyName) {
-            Specialty::firstOrCreate(['name' => $specialtyName]);
-        }*/
-
+        $faker = Faker::create();
         $specialtyIds = Specialty::pluck('id_specialty')->toArray();
 
         // Create 50 Medic Users with different Specialties
-        for ($i = 1; $i <= 50; $i++) {
+        foreach (range(1, 50) as $index) {
             $profile = Profile::create([
-                'first_name' => 'Medic' . $i,
-                'last_name' => 'User' . $i,
-                'nid' => '123456789' . $i,
-                'phone' => '09999999' . $i,
-                'gender' => 'M',
-                'dob' => now()->subYears(30)->toDateString(),
+                'nid' => $faker->unique()->numerify('##########'),
+                'first_name' => $faker->firstName . ' M' . $index,
+                'last_name' => $faker->lastName,
+                'dob' => $faker->date(),
+                'phone' => $faker->unique()->numerify('##########'),//$faker->phoneNumber,
+                'gender' => $faker->randomElement(['M', 'F']),
                 'status' => 1,
-                'user_register' => 1, // Assuming the admin user id is 1
+                'user_register' => 1, // Ajustar según sea necesario
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             $user = User::create([
-                'email' => 'medic' . $i . '@example.com',
-                'password' => Hash::make('password'),
-                'id_profile' => $profile->id,
+                'email' => $faker->unique()->safeEmail,
+                'password' => Hash::make('password'), // Cambiar según sea necesario
                 'status' => 1,
-                'user_register' => 1, // Assuming the admin user id is 1
+                'user_register' => 1, // Ajustar según sea necesario
+                'id_profile' => $profile->id_profile,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
-            $user->assignRole('medic');
+            $MedicRole = Role::firstOrCreate(['name' => 'medic']);
+            $user->assignRole($MedicRole);
 
             // Assign random specialties to each medic
             $user->specialties()->sync(array_rand(array_flip($specialtyIds), rand(1, 3)));

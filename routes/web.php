@@ -9,7 +9,7 @@ use App\Livewire\EmployeeManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\ScheduleAppointmentWizard;
+use App\Livewire\ScheduleAppointment;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -70,7 +70,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
-    Route::get('patient/appointments/create', ScheduleAppointmentWizard::class)->name('patient.appointments.create');
+    Route::get('patient/appointments/create', ScheduleAppointment::class)->name('patient.appointments.create');
     //Route::get('/dashboard', [App\Http\Controllers\PatientController::class, 'dashboard'])->name('dashboard');
     Route::get('/appointments/{id}', [App\Http\Controllers\AppointmentController::class, 'show'])->name('appointments.show');
     Route::get('/appointments/history', [App\Http\Controllers\AppointmentController::class, 'history'])->name('appointments.history');
