@@ -4,7 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpecialtyController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DashboardController;
 use App\Livewire\EmployeeManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
@@ -24,9 +24,7 @@ Route::view('/help', 'help')->name('help');
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/patients', PatientManagement::class)->name('patients');
     //Route::get('employees', EmployeeManagement::class)->name('employees');
 
@@ -52,6 +50,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'edit' => 'admin.appointments.edit',
         'update' => 'admin.appointments.update',
         'destroy' => 'admin.appointments.destroy',
+        'patientAppointments' => 'admin.appointments.patient_appointments',
     ]);
     Route::resource('admin/user/roles', RoleController::class)->names([
         'index' => 'admin.roles.index',
@@ -70,10 +69,10 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
-    Route::get('patient/appointments/create', ScheduleAppointment::class)->name('patient.appointments.create');
+    Route::get('patient/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     //Route::get('/dashboard', [App\Http\Controllers\PatientController::class, 'dashboard'])->name('dashboard');
-    Route::get('/appointments/{id}', [App\Http\Controllers\AppointmentController::class, 'show'])->name('appointments.show');
-    Route::get('/appointments/history', [App\Http\Controllers\AppointmentController::class, 'history'])->name('appointments.history');
+    Route::get('patient/appointments/{id}', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
+    Route::get('patient/appointments/history', [AppointmentController::class, 'history'])->name('front.patient.appointments.history');
     //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
     //Route::get('/prescriptions', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('prescriptions.index');
     //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');

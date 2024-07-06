@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Appointment;
 use App\Models\MedicSchedule;
 use Illuminate\Http\Request;
@@ -51,13 +52,13 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
-        $this->authorize('view', $appointment);
-        return view('admin.appointments.show', compact('appointment'));
+        //$this->authorize('view', $appointment);
+        return view('front.patient.appointments.show', compact('appointment'));
     }
 
     public function edit(Appointment $appointment)
     {
-        $this->authorize('update', $appointment);
+        //$this->authorize('update', $appointment);
         $medicosHorarios = MedicSchedule::all();
         $usuariosRoles = UsuarioRol::all();
         return view('admin.appointments.edit', compact('appointment', 'medicosHorarios', 'usuariosRoles'));
@@ -65,7 +66,7 @@ class AppointmentController extends Controller
 
     public function update(Request $request, Appointment $appointment)
     {
-        $this->authorize('update', $appointment);
+        //$this->authorize('update', $appointment);
 
         $request->validate([
             'medic_schedule_id_medic_schedule' => 'required|exists:medic_schedule,id_medic_schedule',
@@ -84,7 +85,7 @@ class AppointmentController extends Controller
 
     public function destroy(Appointment $appointment)
     {
-        $this->authorize('delete', $appointment);
+        //$this->authorize('delete', $appointment);
         $appointment->delete();
 
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment eliminada exitosamente.');
@@ -93,12 +94,41 @@ class AppointmentController extends Controller
     public function Singleshow($id)
     {
         $appointment = Appointment::findOrFail($id);
-        return view('front.appointments.show', compact('appointment'));
+        return view('front.patient.appointments.show', compact('appointment'));
     }
 
     public function history()
     {
-        $appointments = Appointment::where('patient_id', Auth::id())->where('date', '<', now())->orderBy('date', 'desc')->get();
-        return view('front.appointments.history', compact('appointments'));
+        $user = Auth::user();
+        $appointments = Appointment::where('id_patient', $user->id)
+            ->where('service_date', '>=', now())
+            ->orderBy('service_date', 'asc')
+            ->get();
+
+        //$appointments = Appointment::where('patient_id', Auth::id())->where('date', '<', now())->orderBy('date', 'desc')->get();
+        return view('front.patient.appointments.history', compact('appointments'));
+    }
+
+    public function patientAppointments(Request $request)
+    {
+        //$this->authorize('viewAny', Appointment::class);
+
+        // Fetch patient data with profile fields
+        $patients = User::role('patient')
+            ->join('profile', 'users.id_profile', '=', 'profile.id_profile')
+            ->selectRaw('users.id, CONCAT(profile.first_name, " ", profile.last_name) as name')
+            ->pluck('name', 'users.id');
+
+        $appointments = collect();
+
+        if ($request->has('patient_id')) {
+            $appointments = Appointment::where('id_patient', $request->patient_id)
+                ->where('service_date', '>=', now())
+                ->orderBy('service_date', 'asc')
+                ->get();
+        }
+
+        //$this->authorize('view', $appointment);
+        return view('admin.appointments.patient_appointments', compact('appointments', 'patients'));
     }
 }
