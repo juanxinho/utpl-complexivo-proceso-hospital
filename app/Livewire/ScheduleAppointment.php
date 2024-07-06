@@ -6,6 +6,7 @@ use App\Models\MedicSchedule;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Specialty;
+use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -96,8 +97,17 @@ class ScheduleAppointment extends Component
         ]);
 
         // Logic to save the appointment
+        Appointment::create([
+            'id_patient' => $this->patient->id,
+            'user_register' => $this->patient->id,
+            'record_date' => now(),
+            'id_medic_schedule' => $this->medic_id,
+            'service_date' => Carbon::parse($this->date . ' ' . $this->time),
+            'status' => 'scheduled',
+        ]);
 
         session()->flash('message', 'Appointment scheduled successfully!');
+        return redirect()->route('dashboard');
     }
 }
 
