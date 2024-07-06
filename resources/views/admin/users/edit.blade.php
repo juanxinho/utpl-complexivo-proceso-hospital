@@ -1,5 +1,5 @@
 <!-- resources/views/admin/users/edit.blade.php-->
-<div class="py-2 md:py-12">
+<div class="py-2">
     @include('admin.users.menu')
     <div class="mx-auto sm:px-6 lg:px-2">
         <div class="flex flex-col">

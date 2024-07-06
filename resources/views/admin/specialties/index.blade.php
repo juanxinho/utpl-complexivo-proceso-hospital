@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-2 md:py-12">
+    <div class="py-2">
 
         @if (session('success'))
             <div class="mb-4 text-malachite-600 dark:text-malachite-300">

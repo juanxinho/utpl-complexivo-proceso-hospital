@@ -4,7 +4,7 @@
     </h2>
 </x-slot>
 
-<div class="py-2 md:py-12">
+<div class="py-2">
 
     @include('admin.patients.menu')
     {{--    @include('admin.users.actions')--}}

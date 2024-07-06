@@ -17,16 +17,51 @@ class UserManagement extends Component
 {
     use WithPagination;
 
-    public $profile, $name, $email, $password, $idroles, $id;
+    public $profile, $name, $email, $password, $roles, $idroles, $id, $searchRoles, $selectedRole;
     public $isOpen = false;
     public $isOpenEdit = false;
+    public $searchTerm = '';
 
+
+    public function mount()
+    {
+        $this->searchRoles = Role::pluck('name', 'name');
+        $this->roles = Role::all();
+    }
     public function render()
     {
-        return view('admin.users.index', [
-            'users' => User::with('profile')->paginate(10),
-            'roles' => Role::all(),
-        ])->layout('layouts.app');
+        $searchTerm = '%' . $this->searchTerm . '%';
+
+        $users = User::with('profile')
+            ->when($this->selectedRole, function ($query) {
+                $query->role($this->selectedRole);
+            })
+            ->where(function($query) use ($searchTerm) {
+                $query->where('email', 'like', $searchTerm)
+                    ->orWhereHas('profile', function($query) use ($searchTerm) {
+                        $query->where('first_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+            })
+            ->paginate(10);
+
+        $roles = Role::all();
+
+        return view('admin.users.index', compact('users', 'roles'))->layout('layouts.app');
+    }
+
+    public function updatedSelectedRole() {
+        $this->render();
+    }
+
+    public function updatedSsearchTerm() {
+        $this->render();
+    }
+
+    public function clearFilters()
+    {
+        $this->searchTerm = '';
+        $this->selectedRole = '';
     }
 
     public function create()

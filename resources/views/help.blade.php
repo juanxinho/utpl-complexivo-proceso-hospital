@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-2 md:py-12">
+    <div class="py-2">
         <div class="mx-auto sm:px-6 lg:px-2">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500 p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-malachite-300">Bienvenido a la página de Soporte y Ayuda</h3>
