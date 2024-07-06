@@ -13,6 +13,7 @@ class Appointment extends Model
     protected $primaryKey = 'id_appointment';
 
     protected $fillable = [
+        'id_patient',
         'user_register',
         'user_modification',
         'record_date',

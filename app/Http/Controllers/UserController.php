@@ -60,17 +60,17 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Specialties assigned successfully.');
     }
 
-    public function storeEmployee(UserRequest $request)
+    public function storeMedic(UserRequest $request)
     {
         $this->userService->createUser($request->validated());
 
-        return redirect()->route('admin.employees.index')->with('success', 'Employee created successfully.');
+        return redirect()->route('admin.medics.index')->with('success', 'Medic created successfully.');
     }
 
-    public function updateEmployee(UserRequest $request, User $employee)
+    public function updateMedic(UserRequest $request, User $medic)
     {
-        $this->userService->updateUser($employee, $request->validated());
+        $this->userService->updateUser($medic, $request->validated());
 
-        return redirect()->route('admin.employees.index')->with('success', 'Employee updated successfully.');
+        return redirect()->route('admin.medics.index')->with('success', 'Medic updated successfully.');
     }
 }

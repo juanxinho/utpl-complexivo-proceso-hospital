@@ -28,11 +28,9 @@
     "Already registered?": "Already registered?",
     "Register": "Register",
     "Dashboard": "Dashboard",
-    "Patients management": "Patients management",
     "Appointments": "Appointments",
     "Billing": "Billing",
     "Users Management": "Users Management",
-    "Employees management": "Employees management",
     "Analytics": "Analytics",
     "Profile": "Profile",
     "Settings": "Settings",
@@ -129,7 +127,7 @@
     "Check your medical test results": "Check your medical test results",
     "Confirm your appointment": "Confirm your appointment",
     "Create Appointment": "Create Appointment",
-    "Create Employee": "Create Employee",
+    "Create Medic": "Create Medic",
     "Create New Appointment": "Create New Appointment",
     "Create New Role": "Create New Role",
     "Create New Specialty": "Create New Specialty",
@@ -142,7 +140,7 @@
     "Doctor Appointments": "Doctor Appointments",
     "Dosage": "Dosage",
     "Edit Appointment": "Edit Appointment",
-    "Edit Employee": "Edit Employee",
+    "Edit Medic": "Edit Medic",
     "Edit Role": "Edit Role",
     "Instructions": "Instructions",
     "Medication": "Medication",
@@ -185,5 +183,7 @@
     "List": "List",
     "Manage roles": "Manage roles",
     "Dark Mode": "Dark Mode",
-    "Update your account's profile information and email address.": "Update your account's profile information and email address."
+    "Update your account's profile information and email address.": "Update your account's profile information and email address.",
+    "Physician management": "Physician management",
+    "Patient management": "Patient management"
 }

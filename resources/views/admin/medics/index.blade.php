@@ -1,19 +1,19 @@
 @if($isOpenNew)
-    @include('admin.employees.create')
+    @include('admin.medics.create')
 @endif
 @if($isOpen)
-    @include('admin.employees.edit')
+    @include('admin.medics.edit')
 @endif
 
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Employee Management') }}
+        {{ __('Medic Management') }}
     </h2>
 </x-slot>
 
 <div class="py-2 md:py-12">
 
-    @include('admin.employees.menu')
+    @include('admin.medics.menu')
     {{--    @include('admin.users.actions')--}}
 
 
@@ -37,13 +37,13 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($employees as $employee)
+            @foreach($medics as $medic)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">{{ $employee->profile->first_name }} {{ $employee->profile->last_name }}</td>
-                    <td class="px-6 py-4">{{ $employee->email }}</td>
-                    <td class="px-6 py-4">{{ implode(', ', $employee->getRoleNames()->toArray()) }}</td>
+                    <td class="px-6 py-4">{{ $medic->profile->first_name }} {{ $medic->profile->last_name }}</td>
+                    <td class="px-6 py-4">{{ $medic->email }}</td>
+                    <td class="px-6 py-4">{{ implode(', ', $medic->getRoleNames()->toArray()) }}</td>
                     <td class="px-6 py-4">
-                        <button wire:click="edit({{ $employee->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
+                        <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
                         <form action="" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
@@ -58,7 +58,7 @@
         </table>
     </div>
     <div class="mt-4">
-        {{ $employees->links() }}
+        {{ $medics->links() }}
         @if (session()->has('message'))
             <div>{{ session('message') }}</div>
         @endif

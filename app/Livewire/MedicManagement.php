@@ -12,20 +12,20 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\UserRequest;
 
-class EmployeeManagement extends Component
+class MedicManagement extends Component
 {
     use WithPagination;
 
     public $profile, $email, $password, $roles, $idroles, $id;
-    public $employee;
+    public $medic;
     public $isOpenNew = false;
     public $isOpen = false;
 
 
     public function render()
     {
-        return view('admin.employees.index', [
-            'employees' => User::with('profile')->withoutRole('patient')->paginate(10),
+        return view('admin.medics.index', [
+            'medics' => User::with('profile')->role('medic')->paginate(10),
         ])->layout('layouts.app');
     }
 
@@ -57,15 +57,15 @@ class EmployeeManagement extends Component
 
     public function edit($id)
     {
-        $employee = User::with('profile', 'roles')->findOrFail($id);
+        $medic = User::with('profile', 'roles')->findOrFail($id);
         $this->id = $id;
-        $this->profile = $employee->profile->toArray();
-        $this->email = $employee->email;
+        $this->profile = $medic->profile->toArray();
+        $this->email = $medic->email;
         $this->roles = Role::whereNotIn('name', ['patient'])->get();
-        $this->idroles = $employee->roles->pluck('id')->toArray();
+        $this->idroles = $medic->roles->pluck('id')->toArray();
         $this->isOpen = true;
     }
-        
+
 
     public function store()
     {
@@ -111,8 +111,8 @@ class EmployeeManagement extends Component
         $this->resetInputFields();
     }
 
-    public function destroy(User $employee)
+    public function destroy(User $medic)
     {
-        app(UserController::class)->destroy($employee);
+        app(UserController::class)->destroy($medic);
     }
 }

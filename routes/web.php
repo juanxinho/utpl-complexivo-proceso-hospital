@@ -5,7 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DashboardController;
-use App\Livewire\EmployeeManagement;
+use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
@@ -26,12 +26,12 @@ Route::view('/help', 'help')->name('help');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/patients', PatientManagement::class)->name('patients');
-    //Route::get('employees', EmployeeManagement::class)->name('employees');
+    //Route::get('medics', MedicManagement::class)->name('medics');
 
-    Route::get('admin/employees', EmployeeManagement::class)->name('employees.index');
-    Route::post('admin/employees', [UserController::class, 'store'])->name('employees.store');
-    Route::patch('admin/employees/{employee}', [UserController::class, 'update'])->name('employees.update');
-    Route::delete('admin/employees/{employee}', [UserController::class, 'destroy'])->name('employees.destroy');
+    Route::get('admin/medics', MedicManagement::class)->name('medics.index');
+    Route::post('admin/medics', [UserController::class, 'store'])->name('medics.store');
+    Route::patch('admin/medics/{medic}', [UserController::class, 'update'])->name('medics.update');
+    Route::delete('admin/medics/{medic}', [UserController::class, 'destroy'])->name('medics.destroy');
 });
 
 // Rutas protegidas para roles específicos
@@ -61,9 +61,9 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'update' => 'admin.roles.update',
         'destroy' => 'admin.roles.destroy',
     ]);
-    //Route::resource('admin/employees', EmployeeController::class);
-    //Route::get('admin/employees/assign-specialties/{id}', [EmployeeController::class, 'assignSpecialties'])->name('employees.assign.specialties');
-    //Route::post('admin/employees/store-specialties/{id}', [EmployeeController::class, 'storeSpecialties'])->name('employees.store.specialties');
+    //Route::resource('admin/medics', MedicController::class);
+    //Route::get('admin/medics/assign-specialties/{id}', [MedicController::class, 'assignSpecialties'])->name('medics.assign.specialties');
+    //Route::post('admin/medics/store-specialties/{id}', [MedicController::class, 'storeSpecialties'])->name('medics.store.specialties');
     Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
     Route::resource('specialties', SpecialtyController::class);
 });

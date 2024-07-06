@@ -1,5 +1,5 @@
 <x-app-layout>
-    <h2 class="text-2xl font-bold mb-4 dark:text-malachite-300">{{ __('Welcome') }}, {{ $user->profile->first_name }} {{ $user->profile->last_name }}!</h2>
+<h2 class="text-2xl font-bold mb-4 dark:text-malachite-300">{{ __('Welcome') }}, {{ $user->profile->first_name }} {{ $user->profile->last_name }}!</h2>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <!-- Next Appointment Card -->

@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    @if($appointment->isEmpty())
+    @if($appointment)
         <p>{{ __('No appointment found.') }}</p>
     @else
         <h1 class="text-2xl font-bold mb-4">{{ __('Appointment Details') }}</h1>

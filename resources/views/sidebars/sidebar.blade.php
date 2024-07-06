@@ -7,7 +7,6 @@
                     <span class="ms-3">{{ __('Dashboard') }}</span>
                 </x-nav-link>
             </li>
-            <!-- Falta validar rol medico -->
             @hasanyrole('medic|admin|super-admin')
             <li>
                 <x-nav-link href="#">
@@ -16,20 +15,11 @@
                 </x-nav-link>
             </li>
             @endhasanyrole
-            <!-- Falta validar rol paciente -->
             @hasanyrole('super-admin|admin|patient')
             <li>
                 <x-nav-link href="{{ route('front.patient.appointments.create') }}" :active="request()->routeIs('front.patient.appointments.create')">
                     <x-monoicon-calendar  width="20" height="20"/>
                     <span class="ms-3">{{ __('Schedule an appointment') }}</span>
-                </x-nav-link>
-            </li>
-            @endhasanyrole
-            @hasanyrole('admin|super-admin')
-            <li>
-                <x-nav-link href="{{ route('patients') }}" :active="request()->routeIs('patients')">
-                    <x-monoicon-temperature width="20" height="20" />
-                    <span class="ms-3">{{ __('Patients management') }}</span>
                 </x-nav-link>
             </li>
             @endhasanyrole
@@ -43,9 +33,17 @@
             @endhasanyrole
             @hasanyrole('admin|super-admin')
             <li>
-                <x-nav-link href="#">
-                    <x-monoicon-credit-card width="20" height="20" />
-                    <span class="ms-3">{{ __('Billing') }}</span>
+                <x-nav-link href="{{ route('patients') }}" :active="request()->routeIs('patients')">
+                    <x-monoicon-temperature width="20" height="20" />
+                    <span class="ms-3">{{ __('Patient management') }}</span>
+                </x-nav-link>
+            </li>
+            @endhasanyrole
+            @hasanyrole('admin|super-admin')
+            <li>
+                <x-nav-link href="{{ route('medics.index') }}" :active="request()->routeIs('medics.index')">
+                    <x-monoicon-clipboard-list width="20" height="20" />
+                    <span class="ms-3">{{ __('Physician management') }}</span>
                 </x-nav-link>
             </li>
             @endhasanyrole
@@ -59,9 +57,9 @@
             @endhasanyrole
             @hasanyrole('admin|super-admin')
             <li>
-                <x-nav-link href="{{ route('employees.index') }}" :active="request()->routeIs('employees.index')">
-                    <x-monoicon-clipboard-list width="20" height="20" />
-                    <span class="ms-3">{{ __('Employees management') }}</span>
+                <x-nav-link href="#">
+                    <x-monoicon-credit-card width="20" height="20" />
+                    <span class="ms-3">{{ __('Billing') }}</span>
                 </x-nav-link>
             </li>
             @endhasanyrole

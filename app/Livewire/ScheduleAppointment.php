@@ -29,6 +29,10 @@ class ScheduleAppointment extends Component
 
     public function updatedSpecialtyId($value)
     {
+        $this->validate([
+            'specialty_id' => 'required|exists:specialty,id_specialty',
+        ]);
+
         $query = User::role('medic')
             ->whereHas('specialties', function($query) use ($value) {
                 $query->where('specialty.id_specialty', $value);
@@ -57,29 +61,33 @@ class ScheduleAppointment extends Component
 
     protected function loadAvailableTimes()
     {
-        if ($this->medic_id && $this->date) {
-            $date = Carbon::parse($this->date);
-            $dayOfWeek = $date->format('l');
+        $this->validate([
+            'specialty_id' => 'required|exists:specialty,id_specialty',
+            'medic_id' => 'required|exists:users,id',
+        ]);
 
-            $schedules = MedicSchedule::where('id_medic', $this->medic_id)
-                ->whereHas('schedule', function ($query) use ($dayOfWeek) {
-                    $query->where('days', 'like', '%' . $dayOfWeek . '%');
-                })
-                ->get();
+        $dayOfWeek = Carbon::parse($this->date)->format('l');
 
-            $availableTimes = [];
-            foreach ($schedules as $schedule) {
-                $timeRange = explode(' - ', $schedule->schedule->time_range);
-                $startTime = Carbon::createFromFormat('H:i', $timeRange[0]);
-                $endTime = Carbon::createFromFormat('H:i', $timeRange[1]);
-                while ($startTime < $endTime) {
-                    $availableTimes[] = $startTime->format('H:i');
-                    $startTime->addMinutes(20);
-                }
-            }
+        $query = MedicSchedule::where('id_medic', $this->medic_id)
+            ->whereHas('schedule', function ($query) use ($dayOfWeek) {
+                $query->where('days', 'like', '%' . $dayOfWeek . '%')
+                    ->where('id_specialty', $this->specialty_id);
+            });
 
-            $this->times = $availableTimes;
+        // Get the raw SQL query
+        $sql = $query->toSql();
+        $bindings = $query->getBindings();
+
+        // Debug: Dump the SQL and bindings
+        //dd($sql, $bindings);
+
+        $schedules = $query->get();
+
+        $availableTimes = [];
+        foreach ($schedules as $schedule) {
+            $availableTimes[$schedule->id_medic_schedule] = $schedule->schedule->time_range;
         }
+        $this->times = $availableTimes;
     }
 
     public function render()
@@ -101,8 +109,8 @@ class ScheduleAppointment extends Component
             'id_patient' => $this->patient->id,
             'user_register' => $this->patient->id,
             'record_date' => now(),
-            'id_medic_schedule' => $this->medic_id,
-            'service_date' => Carbon::parse($this->date . ' ' . $this->time),
+            'medic_schedule_id_medic_schedule' => $this->medic_id,//id de schedule_medic
+            'service_date' => Carbon::parse($this->date),//fecha de la cita
             'status' => 'scheduled',
         ]);
 
