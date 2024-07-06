@@ -27,6 +27,16 @@ class ScheduleAppointment extends Component
         $this->specialties = Specialty::pluck('name', 'id_specialty');
     }
 
+    private function resetInputFields()
+    {
+        $this->specialty_id = '';
+        $this->medic_id = '';
+        $this->date= '';
+        $this->time = '';
+        $this->medics = [];
+        $this->times = [];
+    }
+
     public function updatedSpecialtyId($value)
     {
         $this->validate([
@@ -68,11 +78,16 @@ class ScheduleAppointment extends Component
 
         $dayOfWeek = Carbon::parse($this->date)->format('l');
 
+
         $query = MedicSchedule::where('id_medic', $this->medic_id)
             ->whereHas('schedule', function ($query) use ($dayOfWeek) {
                 $query->where('days', 'like', '%' . $dayOfWeek . '%')
                     ->where('id_specialty', $this->specialty_id);
-            });
+            })
+            ->whereDoesntHave('appointments', function ($query) {
+                $query->where('appointment.medic_schedule_id_medic_schedule', '!=', 'medic_shedule.id_medic_schedule')
+                      ->where('appointment.status', '=', 'scheduled');
+            });        
 
         // Get the raw SQL query
         $sql = $query->toSql();
@@ -99,7 +114,6 @@ class ScheduleAppointment extends Component
     {
         $this->validate([
             'specialty_id' => 'required',
-            'medic_id' => 'required',
             'date' => 'required|date',
             'time' => 'required',
         ]);
@@ -109,13 +123,13 @@ class ScheduleAppointment extends Component
             'id_patient' => $this->patient->id,
             'user_register' => $this->patient->id,
             'record_date' => now(),
-            'medic_schedule_id_medic_schedule' => $this->medic_id,//id de schedule_medic
+            'medic_schedule_id_medic_schedule' => $this->time,//id de schedule_medic
             'service_date' => Carbon::parse($this->date),//fecha de la cita
             'status' => 'scheduled',
         ]);
 
         session()->flash('message', 'Appointment scheduled successfully!');
-        return redirect()->route('dashboard');
+        $this->resetInputFields();
     }
 }
 
