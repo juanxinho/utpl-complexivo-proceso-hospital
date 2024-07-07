@@ -18,7 +18,17 @@ class MedicSeeder extends Seeder
     {
         $faker = Faker::create();
         $specialtyIds = Specialty::pluck('id_specialty')->toArray();
-        $scheduleIds = Schedule::pluck('id_schedule')->toArray();
+
+        // Define schedules
+        $morningSchedules = Schedule::whereIn('days', ['Monday', 'Wednesday', 'Friday'])
+            ->where('time_range', '09:00 - 12:00')
+            ->pluck('id_schedule')
+            ->toArray();
+
+        $afternoonSchedules = Schedule::whereIn('days', ['Tuesday', 'Thursday'])
+            ->where('time_range', '16:00 - 18:00')
+            ->pluck('id_schedule')
+            ->toArray();
 
         // Create 50 Medic Users with different Specialties
         foreach (range(1, 50) as $index) {
@@ -53,17 +63,16 @@ class MedicSeeder extends Seeder
 
             // Assign schedules to each medic's specialties
             foreach ((array) $assignedSpecialties as $specialtyId) {
-                $medicSchedules = [];
-                foreach (range(1, 2) as $i) { // Adjust the range to assign more schedules if needed
-                    $medicSchedules[] = [
+                $scheduleType = rand(0, 1) ? $morningSchedules : $afternoonSchedules;
+                foreach ($scheduleType as $scheduleId) {
+                    MedicSchedule::create([
                         'id_medic' => $user->id,
                         'id_specialty' => $specialtyId,
-                        'id_schedule' => $scheduleIds[array_rand($scheduleIds)],
+                        'id_schedule' => $scheduleId,
                         'created_at' => now(),
                         'updated_at' => now(),
-                    ];
+                    ]);
                 }
-                MedicSchedule::insert($medicSchedules);
             }
         }
     }
