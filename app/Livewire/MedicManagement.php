@@ -16,7 +16,7 @@ class MedicManagement extends Component
 {
     use WithPagination;
 
-    public $medic, $profile, $email, $password, $roles, $specialties, $searchSpecialties, $selectedSpecialties = [], $id;
+    public $medic, $profile, $email, $password, $roles, $id_specialties, $specialties, $searchSpecialties, $selectedSpecialties = [], $id;
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
@@ -63,7 +63,6 @@ class MedicManagement extends Component
     public function clearFilters()
     {
         $this->searchTerm = '';
-        $this->selectedRole = '';
     }
 
     public function closeModal()
@@ -81,7 +80,7 @@ class MedicManagement extends Component
         $this->profile['phone'] = '';
         $this->profile['gender'] = '';
         $this->profile['dob'] = null;
-        $this->idroles = [];
+        $this->id_specialties = [];
         $this->selectedSpecialties = [];
     }
 
@@ -102,8 +101,7 @@ class MedicManagement extends Component
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
-            'idroles' => 'required|array|min:1',
-            'selectedSpecialties' => 'required|array|min:1',
+            'id_specialties' => 'required|array|min:1',
         ]);
 
         $profile = Profile::updateOrCreate(['id_profile' => $this->id], [
@@ -125,13 +123,13 @@ class MedicManagement extends Component
         ]);
 
 
-        $roles = Role::whereIn('id',  $this->idroles)->get();
+        $roles = Role::where('name', 'medic')->get();
         $user->syncRoles($roles);
 
-        $user->specialties()->sync($this->selectedSpecialties);
+        $user->specialties()->sync($this->id_specialties);
 
         session()->flash('message',
-            $this->id ? 'Empleado actualizado exitosamente.' : 'Empleado creado exitosamente.');
+            $this->id ? __('Medic successfully updated.') : __('Medic successfully created.'));
 
         $this->closeModal();
         $this->resetInputFields();
@@ -144,8 +142,7 @@ class MedicManagement extends Component
         $this->profile = $medic->profile->toArray();
         $this->email = $medic->email;
         $this->roles = Role::where('name', 'medic')->get();
-        $this->idroles = $medic->roles->pluck('id')->toArray();
-        $this->selectedSpecialties = $medic->specialties->pluck('id_specialty')->toArray();
+        $this->id_specialties = $medic->specialties()->pluck('specialty.id_specialty')->toArray();
         $this->isOpenEdit = true;
     }
 

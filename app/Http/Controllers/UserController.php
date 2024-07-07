@@ -53,13 +53,6 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
 
-    public function assignSpecialties(Request $request, $userId)
-    {
-        $this->userService->assignSpecialties($userId, $request->specialties);
-
-        return redirect()->route('admin.users.index')->with('success', 'Specialties assigned successfully.');
-    }
-
     public function storeMedic(UserRequest $request)
     {
         $this->userService->createUser($request->validated());

@@ -22,6 +22,11 @@ class Profile extends Model
         return Carbon::parse($this->dob)->age;
     }
 
+    public function getGenderNameAttribute($value)
+    {
+        return $this->gender === 'M' ? __('Male') : __('Female');
+    }
+
     public function user()
     {
         return $this->hasOne(User::class, 'id_profile', 'id_profile');

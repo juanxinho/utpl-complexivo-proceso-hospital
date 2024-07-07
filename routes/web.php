@@ -61,11 +61,16 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'update' => 'admin.roles.update',
         'destroy' => 'admin.roles.destroy',
     ]);
-    //Route::resource('admin/medics', MedicController::class);
-    //Route::get('admin/medics/assign-specialties/{id}', [MedicController::class, 'assignSpecialties'])->name('medics.assign.specialties');
-    //Route::post('admin/medics/store-specialties/{id}', [MedicController::class, 'storeSpecialties'])->name('medics.store.specialties');
+    Route::resource('admin/medics/specialties', SpecialtyController::class)->names([
+        'index' => 'admin.specialties.index',
+        'create' => 'admin.specialties.create',
+        'store' => 'admin.specialties.store',
+        'show' => 'admin.specialties.show',
+        'edit' => 'admin.specialties.edit',
+        'update' => 'admin.specialties.update',
+        'destroy' => 'admin.specialties.destroy',
+    ]);
     Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
-    Route::resource('specialties', SpecialtyController::class);
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
