@@ -49,15 +49,15 @@
                         class="inline-flex items-center p-2 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-white hover:text-gray-700 dark:hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out w-full rounded-md"
                         aria-controls="dropdown-medics"
                         data-collapse-toggle="dropdown-medics"
-                        aria-expanded="{{ request()->routeIs('medics.index', 'admin.specialties.*') ? 'true' : 'false' }}">
+                        aria-expanded="{{ request()->routeIs('admin.medics.index', 'admin.specialties.*') ? 'true' : 'false' }}">
                     <x-monoicon-clipboard-list width="20" height="20"/>
                     <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Physician management') }}</span>
                     <x-monoicon-chevron-down width="20" height="20"/>
                 </button>
-                <ul id="dropdown-medics" class="py-2 space-y-2 {{ request()->routeIs('medics.index', 'admin.specialties.*') ? 'show' : 'hidden' }}">
+                <ul id="dropdown-medics" class="py-2 space-y-2 {{ request()->routeIs('admin.medics.index', 'admin.specialties.*') ? 'show' : 'hidden' }}">
                     <li>
                         <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
-                                    href="{{ route('medics.index') }}" :active="request()->routeIs('medics.index')">
+                                    href="{{ route('admin.medics.index') }}" :active="request()->routeIs('admin.medics.index')">
                             {{ __('Medics') }}
                         </x-nav-link>
                     </li>

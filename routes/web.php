@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/admin/patients', PatientManagement::class)->name('patients');
     //Route::get('medics', MedicManagement::class)->name('medics');
 
-    Route::get('admin/medics', MedicManagement::class)->name('medics.index');
+    Route::get('admin/medics', MedicManagement::class)->name('admin.medics.index');
     Route::post('admin/medics', [UserController::class, 'store'])->name('medics.store');
     Route::patch('admin/medics/{medic}', [UserController::class, 'update'])->name('medics.update');
     Route::delete('admin/medics/{medic}', [UserController::class, 'destroy'])->name('medics.destroy');

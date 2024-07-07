@@ -7,10 +7,26 @@ use Illuminate\Http\Request;
 
 class SpecialtyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $specialties = Specialty::all();
-        return view('admin.specialties.index', compact('specialties'));
+        $search = $request->input('searchTerm');
+        $status = $request->input('statusFilter');
+
+        $specialties = Specialty::query()
+            ->when($search, function ($query) use ($search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('abbreviation', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
+            })
+            ->when($status !== null, function ($query) use ($status) {
+                return $query->where('status', $status);
+            });
+
+        $specialties = $specialties->paginate(10);
+
+        return view('admin.specialties.index', compact('specialties', 'search', 'status'));
     }
 
     public function create()
