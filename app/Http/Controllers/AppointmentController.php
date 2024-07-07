@@ -12,7 +12,7 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::all();
+        $appointments = Appointment::paginate(10);
         return view('admin.appointments.index', compact('appointments'));
     }
 
@@ -20,7 +20,7 @@ class AppointmentController extends Controller
     {
         $appointments = Appointment::with('usuarioRol')->whereHas('medicSchedule', function ($query) {
             $query->where('id_patient', Auth::id());
-        })->get();
+        })->paginate(10);
         return view('admin.appointments.medic_index', compact('appointments'));
     }
 
@@ -103,7 +103,7 @@ class AppointmentController extends Controller
         $appointments = Appointment::where('id_patient', $user->id)
             ->where('service_date', '>=', now())
             ->orderBy('service_date', 'asc')
-            ->get();
+            ->paginate(10);
 
         //$appointments = Appointment::where('patient_id', Auth::id())->where('date', '<', now())->orderBy('date', 'desc')->get();
         return view('front.patient.appointments.history', compact('appointments'));
@@ -114,7 +114,9 @@ class AppointmentController extends Controller
         //$this->authorize('viewAny', Appointment::class);
 
         // Fetch patient data with profile fields
-        $appointments = Appointment::with('medicSchedule')->where('id_patient', Auth::id())->get();
+        $appointments = Appointment::with('medicSchedule')
+            ->where('id_patient', Auth::id())
+            ->paginate(10);
         //return view('admin.appointments.index', compact('appointments'));
         return view('admin.appointments.patient_appointments', compact('appointments', 'patients'));
     }

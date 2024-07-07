@@ -25,7 +25,7 @@ class MedicManagement extends Component
     public function mount()
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
-        $this->specialties = Specialty::all();
+        $this->specialties = Specialty::where('status', 1)->get();
     }
     public function render()
     {
