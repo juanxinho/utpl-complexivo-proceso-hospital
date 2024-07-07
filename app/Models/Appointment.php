@@ -39,5 +39,10 @@ class Appointment extends Model
     {
         return $this->belongsTo(ClinicalHistory::class, 'clinical_history_id_clinical_history');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'id_patient');
+    }
 }
 

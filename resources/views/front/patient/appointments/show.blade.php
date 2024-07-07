@@ -1,20 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Patient Appointments') }}
+            {{ __('Patient Appointment') }}
         </h2>
     </x-slot>
 
     @if($appointment)
-        <p>{{ __('No appointment found.') }}</p>
-    @else
         <h1 class="text-2xl font-bold mb-4">{{ __('Appointment Details') }}</h1>
         <div class="bg-white p-6 rounded-lg shadow">
-            <p>{{ __('Date') }}: {{ $appointment->date->format('F j, Y, g:i a') }}</p>
-            <p>{{ __('Doctor') }}: {{ $appointment->doctor->profile->first_name }} {{ $appointment->doctor->profile->last_name }}</p>
-            <p>{{ __('Specialty') }}: {{ $appointment->specialty->name }}</p>
+            <p>{{ __('Date') }}: {{ $appointment->service_date }}</p>
+            <p>{{ __('Doctor') }}: {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}</p>
+            <p>{{ __('Specialty') }}: {{ $appointment->medicSchedule->specialty->name }}</p> 
             <p>{{ __('Status') }}: {{ $appointment->status }}</p>
-            <p>{{ __('Notes') }}: {{ $appointment->notes }}</p>
         </div>
+    @else
+        <p>{{ __('No appointment found.') }}</p>
     @endif
 </x-app-layout>

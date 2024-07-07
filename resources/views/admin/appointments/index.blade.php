@@ -24,6 +24,7 @@
                         <th>No</th>
                         <th>Date and Time</th>
                         <th>Doctor</th>
+                        <th>Patient</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -33,12 +34,17 @@
                         <tr>
                             <td class="border px-4 py-2">{{ $loop->index + 1 }}</td>
                             <td class="border px-4 py-2">{{ $appointment->service_date }}</td>
-                            <td class="border px-4 py-2">{{ $appointment->medicSchedule->usuarioRol->usuario->first_name }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->medicSchedule->user->profile->first_name }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
                             <td class="border px-4 py-2">{{ $appointment->status }}</td>
                             <td class="border px-4 py-2">
-                                <a href="{{ route('appointments.show', $appointment->idappointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
-                                <a href="{{ route('appointments.edit', $appointment->idappointment) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>
-                                <form action="{{ route('appointments.destroy', $appointment->idappointment) }}" method="POST" class="inline">
+                                <a href="{{ route('admin.appointments.show', $appointment->id_appointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
+                                
+                                @if($appointment->status!='attended')
+                                <a href="" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                @endif    
+                                
+                                <form action="" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
