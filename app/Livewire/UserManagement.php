@@ -8,17 +8,14 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\Profile;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class UserManagement extends Component
 {
     use WithPagination;
 
-    public $profile, $name, $email, $password, $roles, $idroles, $id, $searchRoles, $selectedRole;
-    public $isOpen = false;
+    public $profile, $email, $password, $roles, $idroles, $searchRoles, $selectedRole, $id;
+    public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
 
@@ -64,25 +61,9 @@ class UserManagement extends Component
         $this->selectedRole = '';
     }
 
-    public function create()
-    {
-        $this->resetInputFields();
-        $this->openModal();
-    }
-
-    public function openModal()
-    {
-        $this->isOpen = true;
-    }
-
-    public function openModalEdit()
-    {
-        $this->isOpenEdit = true;
-    }
-
     public function closeModal()
     {
-        $this->isOpen = false;
+        $this->isOpenCreate = false;
         $this->isOpenEdit = false;
     }
 
@@ -97,6 +78,12 @@ class UserManagement extends Component
         $this->profile['gender'] = '';
         $this->profile['dob'] = null;
         $this->idroles = [];
+    }
+
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->isOpenCreate = true;
     }
 
     public function store()
@@ -153,8 +140,7 @@ class UserManagement extends Component
         $this->email = $user->email;
         //$this->password = $user->password;
         $this->idroles = $user->roles->pluck('id')->toArray();
-
-        $this->openModalEdit();
+        $this->isOpenEdit = true;
     }
 
     public function delete($id)

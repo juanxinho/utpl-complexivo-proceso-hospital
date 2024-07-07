@@ -8,31 +8,67 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Specialty;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\UserController;
-use App\Http\Requests\UserRequest;
 
 class MedicManagement extends Component
 {
     use WithPagination;
 
-    public $profile, $email, $password, $roles, $idroles, $id;
-    public $medic;
-    public $isOpenNew = false;
-    public $isOpen = false;
+    public $medic, $profile, $email, $password, $roles, $specialties, $searchSpecialties, $selectedSpecialties, $id;
+    public $isOpenCreate = false;
+    public $isOpenEdit = false;
+    public $searchTerm = '';
 
 
+    public function mount()
+    {
+        $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
+        $this->specialties = Specialty::all();
+    }
     public function render()
     {
-        return view('admin.medics.index', [
-            'medics' => User::with('profile')->role('medic')->paginate(10),
-        ])->layout('layouts.app');
+        $searchTerm = '%' . $this->searchTerm . '%';
+
+        $medics = User::with('profile')
+            ->when($this->selectedSpecialties, function ($query) {
+                $query->whereHas('specialties', function ($query) {
+                    $query->whereIn('id_specialty', $this->selectedSpecialties);
+                });
+            })
+            ->where(function($query) use ($searchTerm) {
+                $query->where('email', 'like', $searchTerm)
+                    ->orWhereHas('profile', function($query) use ($searchTerm) {
+                        $query->where('first_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+            })
+            ->paginate(10);
+
+        $specialties = Specialty::all();
+
+        return view('admin.medics.index', compact('medics', 'specialties'))->layout('layouts.app');
+    }
+
+    public function updatedSelectedSpecialty() {
+        $this->render();
+    }
+
+    public function updatedSsearchTerm() {
+        $this->render();
+    }
+
+    public function clearFilters()
+    {
+        $this->searchTerm = '';
+        $this->selectedRole = '';
     }
 
     public function closeModal()
     {
-        $this->isOpen = false;
-        $this->isOpenNew = false;
+        $this->isOpenCreate = false;
+        $this->isOpenEdit = false;
     }
 
     private function resetInputFields()
@@ -45,27 +81,15 @@ class MedicManagement extends Component
         $this->profile['gender'] = '';
         $this->profile['dob'] = null;
         $this->idroles = [];
+        $this->selectedSpecialties = [];
     }
 
     public function create()
     {
-        $this->roles = Role::whereNotIn('name', ['patient'])->get();
         $this->resetInputFields();
-        $this->isOpenNew = true;
+        $this->roles = Role::where('name', 'medic')->get();
+        $this->isOpenCreate = true;
     }
-
-
-    public function edit($id)
-    {
-        $medic = User::with('profile', 'roles')->findOrFail($id);
-        $this->id = $id;
-        $this->profile = $medic->profile->toArray();
-        $this->email = $medic->email;
-        $this->roles = Role::whereNotIn('name', ['patient'])->get();
-        $this->idroles = $medic->roles->pluck('id')->toArray();
-        $this->isOpen = true;
-    }
-
 
     public function store()
     {
@@ -78,6 +102,7 @@ class MedicManagement extends Component
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
             'idroles' => 'required|array|min:1',
+            'selectedSpecialties' => 'required|array|min:1',
         ]);
 
         $profile = Profile::updateOrCreate(['id_profile' => $this->id], [
@@ -103,12 +128,25 @@ class MedicManagement extends Component
         $roles = Role::whereIn('id',  $this->idroles)->get();
         $user->syncRoles($roles);
 
+        $user->specialties()->sync($this->selectedSpecialties);
 
         session()->flash('message',
             $this->id ? 'Empleado actualizado exitosamente.' : 'Empleado creado exitosamente.');
 
         $this->closeModal();
         $this->resetInputFields();
+    }
+
+    public function edit($id)
+    {
+        $medic = User::with('profile', 'roles', 'specialties')->findOrFail($id);
+        $this->id = $id;
+        $this->profile = $medic->profile->toArray();
+        $this->email = $medic->email;
+        $this->roles = Role::where('name', 'medic')->get();
+        $this->idroles = $medic->roles->pluck('id')->toArray();
+        $this->selectedSpecialties = $medic->specialties->pluck('id_specialty')->toArray();
+        $this->isOpenEdit = true;
     }
 
     public function destroy(User $medic)

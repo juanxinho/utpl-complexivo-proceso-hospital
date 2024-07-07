@@ -1,10 +1,9 @@
-@if($isOpen)
+@if($isOpenCreate)
     @include('admin.users.create')
 @endif
 @if($isOpenEdit)
     @include('admin.users.edit')
 @endif
-
 
 <x-slot name="header">
     <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">

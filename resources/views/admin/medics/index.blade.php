@@ -1,21 +1,20 @@
-@if($isOpenNew)
+@if($isOpenCreate)
     @include('admin.medics.create')
 @endif
-@if($isOpen)
+@if($isOpenEdit)
     @include('admin.medics.edit')
 @endif
 
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
         {{ __('Medic Management') }}
-    </h2>
+    </h1>
 </x-slot>
 
 <div class="py-2">
 
+    @include('admin.medics.actions')
     @include('admin.medics.menu')
-    {{--    @include('admin.users.actions')--}}
-
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -26,10 +25,16 @@
                     {{ __('Name') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    {{ __('Email') }}
+                    {{ __('NID') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    {{ __('Roles') }}
+                    {{ __('Phone') }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ __('Gender') }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ __('Specialty') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
                     {{ __('Actions') }}
@@ -39,16 +44,29 @@
             <tbody>
             @foreach($medics as $medic)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">{{ $medic->profile->first_name }} {{ $medic->profile->last_name }}</td>
-                    <td class="px-6 py-4">{{ $medic->email }}</td>
-                    <td class="px-6 py-4">{{ implode(', ', $medic->getRoleNames()->toArray()) }}</td>
+                    <th scope="row"
+                        class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <img class="w-10 h-10 rounded-full" src="{{ $medic->profile_photo_url }}"
+                             alt="{{ $medic->first_name }}">
+                        <div class="ps-3">
+                            <div
+                                class="text-base font-semibold">{{ $medic->profile->first_name }} {{ $medic->profile->last_name }}</div>
+                            <div class="font-normal text-gray-500">{{ $medic->email }}</div>
+                        </div>
+                    </th>
+                    <td class="px-6 py-4">{{ $medic->profile->nid }}</td>
+                    <td class="px-6 py-4">{{ $medic->profile->phone }}</td>
+                    <td class="px-6 py-4">{{ $medic->profile->gender }}</td>
+                    <td class="px-6 py-4">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
                     <td class="px-6 py-4">
-                        <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
+                        <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300">
+                            <x-monoicon-edit-alt width="20" height="20"/>
+                        </button>
                         <form action="" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 dark:text-red-500">
-                                <x-monoicon-delete-alt width="20" height="20" />
+                                <x-monoicon-delete-alt width="20" height="20"/>
                             </button>
                         </form>
                     </td>
