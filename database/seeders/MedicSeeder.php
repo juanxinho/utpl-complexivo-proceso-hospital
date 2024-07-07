@@ -21,12 +21,10 @@ class MedicSeeder extends Seeder
 
         // Define schedules
         $morningSchedules = Schedule::whereIn('days', ['Monday', 'Wednesday', 'Friday'])
-            ->where('time_range', '09:00 - 12:00')
             ->pluck('id_schedule')
             ->toArray();
 
         $afternoonSchedules = Schedule::whereIn('days', ['Tuesday', 'Thursday'])
-            ->where('time_range', '16:00 - 18:00')
             ->pluck('id_schedule')
             ->toArray();
 

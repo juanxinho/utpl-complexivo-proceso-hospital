@@ -4,9 +4,14 @@ namespace Database\Seeders;
 
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use App\Models\Appointment;
-use App\Models\MedicSchedule;
 use App\Models\User;
+use App\Models\Profile;
+use App\Models\Specialty;
+use App\Models\Schedule;
+use App\Models\MedicSchedule;
+use App\Models\Appointment;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class AppointmentSeeder extends Seeder
@@ -21,10 +26,12 @@ class AppointmentSeeder extends Seeder
 
         // Create 50 random new appointments
         foreach (range(1, 50) as $index) {
+            $medicScheduleId = MedicSchedule::inRandomOrder()->first()->id_medic_schedule;
+            $patientId = User::role('patient')->inRandomOrder()->first()->id;
             Appointment::create([
-                'user_register' => 1, // Assuming the user_register ID is 1, adjust as needed
-                'medic_schedule_id_medic_schedule' => $faker->randomElement($medicSchedules),
-                'id_patient' => $faker->randomElement($patients),
+                'user_register' => 1,
+                'medic_schedule_id_medic_schedule' => $medicScheduleId,
+                'id_patient' => $patientId,
                 'service_date' => $faker->dateTimeBetween('+1 week', '+1 month'),
                 'status' => 'scheduled',
             ]);
@@ -32,11 +39,13 @@ class AppointmentSeeder extends Seeder
 
         // Create 50 random old appointments
         foreach (range(1, 50) as $index) {
+            $medicScheduleId = MedicSchedule::inRandomOrder()->first()->id_medic_schedule;
+            $patientId = User::role('patient')->inRandomOrder()->first()->id;
             Appointment::create([
-                'user_register' => 1, // Assuming the user_register ID is 1, adjust as needed
-                'medic_schedule_id_medic_schedule' => $faker->randomElement($medicSchedules),
-                'id_patient' => $faker->randomElement($patients),
-                'service_date' => $faker->dateTimeBetween('-1 week', '-1 month'),
+                'user_register' => 1,
+                'medic_schedule_id_medic_schedule' => $medicScheduleId,
+                'id_patient' => $patientId,
+                'service_date' => $faker->dateTimeBetween('-1 month', '-1 week'),
                 'status' => 'attended',
             ]);
         }
@@ -49,13 +58,16 @@ class AppointmentSeeder extends Seeder
         ];
 
         foreach ($futureDates as $date) {
-            Appointment::create([
-                'user_register' => 1,
-                'medic_schedule_id_medic_schedule' => MedicSchedule::where('id_medic', 3)->first()->id_medic_schedule,
-                'id_patient' => 2,
-                'service_date' => $date,
-                'status' => 'scheduled',
-            ]);
+            $medicScheduleId = MedicSchedule::where('id_medic', 3)->first()->id_medic_schedule ?? null;
+            if ($medicScheduleId) {
+                Appointment::create([
+                    'user_register' => 1,
+                    'medic_schedule_id_medic_schedule' => $medicScheduleId,
+                    'id_patient' => 2,
+                    'service_date' => $date,
+                    'status' => 'pendiente',
+                ]);
+            }
         }
 
         // Create 3 past appointments for user ID 2 with medic user ID 3
@@ -66,13 +78,16 @@ class AppointmentSeeder extends Seeder
         ];
 
         foreach ($pastDates as $date) {
-            Appointment::create([
-                'user_register' => 1,
-                'medic_schedule_id_medic_schedule' => MedicSchedule::where('id_medic', 3)->first()->id_medic_schedule,
-                'id_patient' => 2,
-                'service_date' => $date,
-                'status' => 'attended',
-            ]);
+            $medicScheduleId = MedicSchedule::where('id_medic', 3)->first()->id_medic_schedule ?? null;
+            if ($medicScheduleId) {
+                Appointment::create([
+                    'user_register' => 1,
+                    'medic_schedule_id_medic_schedule' => $medicScheduleId,
+                    'id_patient' => 2,
+                    'service_date' => $date,
+                    'status' => 'completada',
+                ]);
+            }
         }
     }
 }

@@ -97,7 +97,7 @@ class MedicManagement extends Component
             'email' => 'required|email|unique:users,email,' . $this->id,
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
-            'profile.nid' => ['required', 'string', 'max:13', 'unique:profiles,nid,' . $this->id, new EcuadorCedulaOrRuc],
+            'profile.nid' => ['required', 'string', 'max:13', 'unique:profile,nid,' . $this->id . ',id_profile', new EcuadorCedulaOrRuc],
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
