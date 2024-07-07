@@ -1,12 +1,19 @@
+<!-- edit.blade.php -->
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">
-            {{ __('Edit Role') }}
-        </h2>
+        <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
+            {{ __('Roles Management') }}
+        </h1>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-2">
+        <div class="mx-auto sm:px-6 lg:px-2 pb-4 pt-3">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white h-[1.9rem]">
+                {{ __('Edit Role') }}
+            </h2>
+        </div>
+        @include('admin.roles.menu')
+        <div class="mx-auto sm:px-6 lg:px-2">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500 p-6">
                 @if ($errors->any())
                     <div class="mb-4 text-red-600">

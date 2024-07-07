@@ -1,5 +1,10 @@
 <!-- resources/views/admin/users/create.blade.php-->
 <div class="py-2">
+    <div class="mx-auto sm:px-6 lg:px-2 pb-4 pt-3">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white h-[1.9rem]">
+            {{ __('Create new user') }}
+        </h2>
+    </div>
     @include('admin.users.menu')
     <div class="mx-auto sm:px-6 lg:px-2">
         <div class="flex flex-col">

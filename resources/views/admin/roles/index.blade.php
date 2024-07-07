@@ -1,13 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">
+        <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
             {{ __('Roles Management') }}
         </h1>
     </x-slot>
 
     <div class="py-2">
+        <div class="mx-auto sm:px-6 lg:px-2 pb-4 pt-3">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white h-[1.9rem]">
+            </h2>
+        </div>
 
-        @include('admin.users.menu')
+        @include('admin.roles.menu')
 
         @if (session('success'))
             <div class="mb-4 text-malachite-600 dark:text-malachite-300">

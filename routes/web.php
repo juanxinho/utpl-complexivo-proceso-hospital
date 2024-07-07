@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'destroy' => 'admin.appointments.destroy',
         'patientAppointments' => 'admin.appointments.patient_appointments',
     ]);
-    Route::resource('admin/user/roles', RoleController::class)->names([
+    Route::resource('admin/users/roles', RoleController::class)->names([
         'index' => 'admin.roles.index',
         'create' => 'admin.roles.create',
         'store' => 'admin.roles.store',
