@@ -86,7 +86,8 @@ class ScheduleAppointment extends Component
             })
             ->whereDoesntHave('appointments', function ($query) {
                 $query->where('appointment.medic_schedule_id_medic_schedule', '!=', 'medic_shedule.id_medic_schedule')
-                      ->where('appointment.status', '=', 'scheduled');
+                      ->where('appointment.status', '=', 'scheduled')
+                      ->where('appointment.service_date', '=', $this->date);
             });        
 
         // Get the raw SQL query
@@ -97,7 +98,6 @@ class ScheduleAppointment extends Component
         //dd($sql, $bindings);
 
         $schedules = $query->get();
-
         $availableTimes = [];
         foreach ($schedules as $schedule) {
             $availableTimes[$schedule->id_medic_schedule] = $schedule->schedule->time_range;
@@ -117,6 +117,15 @@ class ScheduleAppointment extends Component
             'date' => 'required|date',
             'time' => 'required',
         ]);
+        
+        $appointmentCount = Appointment::where('id_patient', $this->patient->id)
+            ->whereDate('service_date', Carbon::parse($this->date))
+            ->count();
+
+        if ($appointmentCount >= 2) {
+            session()->flash('message', 'You have already scheduled two appointments for this day.');
+            return;
+        }
 
         // Logic to save the appointment
         Appointment::create([
