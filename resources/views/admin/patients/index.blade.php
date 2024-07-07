@@ -43,7 +43,7 @@
                     <td class="px-6 py-4">{{ $patient->profile->first_name }} {{ $patient->profile->last_name }}</td>
                     <td class="px-6 py-4">{{ $patient->profile->nid }}</td>
                     <td class="px-6 py-4">{{ $patient->profile->age }} {{ __('years') }}</td>
-                    <td class="px-6 py-4">{{ $patient->profile->gender }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->gender_name }}</td>
                     <td class="px-6 py-4">{{ $patient->profile->phone }}</td>
                     <td class="px-6 py-4">{{ $patient->email }}</td>
                     <td class="px-6 py-4">

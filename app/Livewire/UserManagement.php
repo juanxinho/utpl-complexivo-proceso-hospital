@@ -14,7 +14,7 @@ class UserManagement extends Component
 {
     use WithPagination;
 
-    public $profile, $email, $password, $roles, $idroles, $searchRoles, $selectedRole, $searchStatuses, $selectedStatus, $id;
+    public $profile, $email, $password, $roles, $id_roles, $searchRoles, $selectedRole, $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
@@ -86,7 +86,7 @@ class UserManagement extends Component
         $this->profile['phone'] = '';
         $this->profile['gender'] = '';
         $this->profile['dob'] = null;
-        $this->idroles = [];
+        $this->id_roles = [];
     }
 
     public function create()
@@ -106,7 +106,7 @@ class UserManagement extends Component
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
-            'idroles' => 'required|array|min:1',
+            'id_roles' => 'required|array|min:1',
         ]);
 
         $profile = Profile::updateOrCreate(['id_profile' => $this->id], [
@@ -128,7 +128,7 @@ class UserManagement extends Component
         ]);
 
 
-        $roles = Role::whereIn('id',  $this->idroles)->get();
+        $roles = Role::whereIn('id',  $this->id_roles)->get();
         $user->syncRoles($roles);
 
 
@@ -147,7 +147,7 @@ class UserManagement extends Component
         $this->profile = $user->profile->toArray();
         $this->email = $user->email;
         //$this->password = $user->password;
-        $this->idroles = $user->roles->pluck('id')->toArray();
+        $this->id_roles = $user->roles->pluck('id')->toArray();
         $this->isOpenEdit = true;
     }
 

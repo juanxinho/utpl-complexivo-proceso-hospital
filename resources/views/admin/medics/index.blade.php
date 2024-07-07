@@ -56,7 +56,7 @@
                     </th>
                     <td class="px-6 py-4">{{ $medic->profile->nid }}</td>
                     <td class="px-6 py-4">{{ $medic->profile->phone }}</td>
-                    <td class="px-6 py-4">{{ $medic->profile->gender }}</td>
+                    <td class="px-6 py-4">{{ $medic->profile->gender_name }}</td>
                     <td class="px-6 py-4">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
                     <td class="px-6 py-4">
                         <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300">

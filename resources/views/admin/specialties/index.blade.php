@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <a href="{{ route('specialties.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{{ route('admin.specialties.create') }}" class="mb-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             {{ __('Create New Specialty') }}
         </a>
 
@@ -44,11 +44,11 @@
                         <td class="px-6 py-4">{{ __($specialty->name) }}</td>
                         <td class="px-6 py-4">{{ $specialty->abbreviation }}</td>
                         <td class="px-6 py-4">{{ __($specialty->description) }}</td>
-                        <td class="px-6 py-4">{{ $specialty->status ? __('Activo') : __('Inactivo') }}</td>
+                        <td class="px-6 py-4">{{ $specialty->status ? __('Active') : __('Inactive') }}</td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('specialties.show', $specialty->id_specialty) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-eye width="20" height="20" /></a>
-                            <a href="{{ route('specialties.edit', $specialty->id_specialty) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
-                            <form action="{{ route('specialties.destroy', $specialty->id_specialty) }}" method="POST" style="display:inline">
+                            <a href="{{ route('admin.specialties.show', $specialty->id_specialty) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-eye width="20" height="20" /></a>
+                            <a href="{{ route('admin.specialties.edit', $specialty->id_specialty) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
+                            <form action="{{ route('admin.specialties.destroy', $specialty->id_specialty) }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 dark:text-red-500" onclick="return confirm('{{ __('¿Está seguro de que desea eliminar esta specialty?') }}')">

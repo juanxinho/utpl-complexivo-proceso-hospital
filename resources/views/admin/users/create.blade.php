@@ -13,7 +13,6 @@
                     <div
                         class="px-4 py-5 bg-white sm:p-6 dark:bg-gray-900 dark:text-gray-400 shadow sm:rounded-tl-md sm:rounded-tr-md">
                         <div class="grid grid-cols-6 gap-6">
-                            <input type="hidden" wire:model="idusuario">
                             <div class="col-span-6 sm:col-span-3">
                                 <x-label for="profile.first_name" value="{{ __('First name') }}:"/>
                                 <x-input type="text" class="mt-1 block w-full" wire:model="profile.first_name"/>
@@ -49,22 +48,20 @@
                                 <x-input type="email" class="mt-1 block w-full" wire:model="email"/>
                                 @error('email') <span>{{ $message }}</span> @enderror
                             </div>
-
                             <div class="col-span-6 sm:col-span-3">
                                 <x-label for="password" value="{{ __('Password') }}:" />
                                 <x-input id="password" class="mt-1 block w-full" type="password" name="password" required autocomplete="new-password" />
                             </div>
-
                             <div class="col-span-6 sm:col-span-3">
-                                <x-label for="idroles" value="{{ __('Role') }}:"/>
+                                <x-label for="id_roles" value="{{ __('Role') }}:"/>
                                 @foreach ($roles as $role)
                                     <div class="flex items-center mb-4">
-                                        <input class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500" type="checkbox" wire:model.defer="idroles"  value="{{ $role->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                        <input class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500" type="checkbox" wire:model.defer="id_roles"  value="{{ $role->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                                     <label class="ms-3">{{ $role->name }}</label>
                                     </div>
                                 @endforeach
 
-                                @error('idroles') <span>{{ $message }}</span> @enderror
+                                @error('id_roles') <span>{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
