@@ -20,7 +20,7 @@ class ScheduleSeeder extends Seeder
         $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
         // Define appointment duration in minutes
-        $appointmentDuration = 20;
+        $appointmentDuration = 30;
 
         // Get all doctors (assuming doctors have the 'medic' role)
 

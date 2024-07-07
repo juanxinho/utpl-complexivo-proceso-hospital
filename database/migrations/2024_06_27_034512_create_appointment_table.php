@@ -19,7 +19,7 @@ class CreateAppointmentTable extends Migration
             $table->unsignedBigInteger('medic_schedule_id_medic_schedule');
             $table->unsignedBigInteger('invoice_id_invoice')->nullable();
             $table->unsignedBigInteger('clinical_history_id_clinical_history')->nullable();
-            $table->dateTime('service_date');
+            $table->date('service_date');
             $table->timestamps();
 
             $table->foreign('medic_schedule_id_medic_schedule')->references('id_medic_schedule')->on('medic_schedule');
