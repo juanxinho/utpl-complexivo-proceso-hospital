@@ -27,7 +27,6 @@ class PatientSeeder extends Seeder
                     'dob' => $faker->date(),
                     'phone' => $faker->unique()->numerify('##########'),//$faker->phoneNumber,
                     'gender' => $faker->randomElement(['M', 'F']),
-                    'status' => 1,
                     'user_register' => 1, // Ajustar según sea necesario
                     'created_at' => now(),
                     'updated_at' => now(),

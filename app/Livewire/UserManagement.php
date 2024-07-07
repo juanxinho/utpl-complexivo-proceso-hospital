@@ -14,7 +14,7 @@ class UserManagement extends Component
 {
     use WithPagination;
 
-    public $profile, $email, $password, $roles, $idroles, $searchRoles, $selectedRole, $id;
+    public $profile, $email, $password, $roles, $idroles, $searchRoles, $selectedRole, $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
@@ -23,6 +23,7 @@ class UserManagement extends Component
     public function mount()
     {
         $this->searchRoles = Role::pluck('name', 'name');
+        $this->searchStatuses = ['0' => 'Inactive', '1' => 'Active'];
         $this->roles = Role::all();
     }
     public function render()
@@ -32,6 +33,9 @@ class UserManagement extends Component
         $users = User::with('profile')
             ->when($this->selectedRole, function ($query) {
                 $query->role($this->selectedRole);
+            })
+            ->when($this->selectedStatus !== null && $this->selectedStatus !== '', function ($query) {
+                $query->where('status', $this->selectedStatus);
             })
             ->where(function($query) use ($searchTerm) {
                 $query->where('email', 'like', $searchTerm)
@@ -51,7 +55,11 @@ class UserManagement extends Component
         $this->render();
     }
 
-    public function updatedSsearchTerm() {
+    public function updatedSelectedStatus() {
+        $this->render();
+    }
+
+    public function updatedSearchTerm() {
         $this->render();
     }
 
@@ -59,6 +67,7 @@ class UserManagement extends Component
     {
         $this->searchTerm = '';
         $this->selectedRole = '';
+        $this->selectedStatus = null;
     }
 
     public function closeModal()
@@ -107,7 +116,6 @@ class UserManagement extends Component
             'phone' => $this->profile['phone'],
             'gender' => $this->profile['gender'],
             'dob' => $this->profile['dob'],
-            'status' => 1,
             'user_register' => auth()->user()->id,
         ]);
 

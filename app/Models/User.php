@@ -63,6 +63,11 @@ class User extends Authenticatable
         return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=0ac60a&background=effbef';
     }
 
+    public function getStatusLabelAttribute()
+    {
+        return $this->status ? __('Active') : __('Inactive');
+    }
+
     public function profile()
     {
         return $this->belongsTo(Profile::class, 'id_profile', 'id_profile');

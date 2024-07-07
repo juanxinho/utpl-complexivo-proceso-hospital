@@ -16,7 +16,7 @@ class MedicManagement extends Component
 {
     use WithPagination;
 
-    public $medic, $profile, $email, $password, $roles, $specialties, $searchSpecialties, $selectedSpecialties, $id;
+    public $medic, $profile, $email, $password, $roles, $specialties, $searchSpecialties, $selectedSpecialties = [], $id;
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
@@ -32,9 +32,9 @@ class MedicManagement extends Component
         $searchTerm = '%' . $this->searchTerm . '%';
 
         $medics = User::with('profile')
-            ->when($this->selectedSpecialties, function ($query) {
+            ->when(!empty($this->selectedSpecialties), function ($query) {
                 $query->whereHas('specialties', function ($query) {
-                    $query->whereIn('id_specialty', $this->selectedSpecialties);
+                    $query->whereIn('specialty.id_specialty', (array) $this->selectedSpecialties);
                 });
             })
             ->where(function($query) use ($searchTerm) {
@@ -44,6 +44,7 @@ class MedicManagement extends Component
                             ->orWhere('last_name', 'like', $searchTerm);
                     });
             })
+            ->role('medic')
             ->paginate(10);
 
         $specialties = Specialty::all();
@@ -55,7 +56,7 @@ class MedicManagement extends Component
         $this->render();
     }
 
-    public function updatedSsearchTerm() {
+    public function updatedSearchTerm() {
         $this->render();
     }
 
@@ -112,7 +113,6 @@ class MedicManagement extends Component
             'phone' => $this->profile['phone'],
             'gender' => $this->profile['gender'],
             'dob' => $this->profile['dob'],
-            'status' => 1,
             'user_register' => auth()->user()->id,
         ]);
 

@@ -14,7 +14,7 @@ class Profile extends Model
     protected $primaryKey = 'id_profile';
 
     protected $fillable = [
-        'nid', 'first_name', 'last_name', 'dob', 'phone', 'gender', 'status', 'user_register', 'user_modification'
+        'nid', 'first_name', 'last_name', 'dob', 'phone', 'gender', 'user_register', 'user_modification'
     ];
 
     public function getAgeAttribute()

@@ -33,6 +33,9 @@
                     {{ __('Date created') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    {{ __('Status') }}
+                </th>
+                <th scope="col" class="px-6 py-3">
                     {{ __('Actions') }}
                 </th>
             </tr>
@@ -55,6 +58,11 @@
                     <td class="px-6 py-4">
                         <div class="flex items-center">
                             {{ $user->created_at }}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            {{ $user->status_label }}
                         </div>
                     </td>
                     <td class="px-6 py-4">

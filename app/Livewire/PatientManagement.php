@@ -57,7 +57,6 @@ class PatientManagement extends Component
     {
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
-            //'password' => 'required|min:6',
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
             'profile.nid' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
@@ -77,8 +76,10 @@ class PatientManagement extends Component
 
         $user = User::create([
             'email' => $this->email,
-            'password' => Hash::make($this->password),
+            'password' => bcrypt($this->password),
+            'status' => 1,
             'id_profile' => $profile->id_profile,
+            'user_register' => auth()->user()->id,
         ]);
 
         $user->assignRole('patient');

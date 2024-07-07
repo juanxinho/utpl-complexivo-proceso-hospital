@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('dob');
             $table->string('phone', 10);
             $table->enum('gender', ['M', 'F']);
-            $table->tinyInteger('status');
             $table->timestamps();
             $table->unsignedBigInteger('user_register')->nullable();
             $table->unsignedBigInteger('user_modification')->nullable();
