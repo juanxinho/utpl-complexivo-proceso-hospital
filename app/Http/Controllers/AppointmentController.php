@@ -12,7 +12,7 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::with('medicSchedule', 'usuarioRol')->where('id_patient', Auth::id())->get();
+        $appointments = Appointment::all();
         return view('admin.appointments.index', compact('appointments'));
     }
 
@@ -50,10 +50,10 @@ class AppointmentController extends Controller
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment creada exitosamente.');
     }
 
-    public function show(Appointment $appointment)
+    public function show($id)
     {
-        //$this->authorize('view', $appointment);
-        return view('front.patient.appointments.show', compact('appointment'));
+        $appointment = Appointment::findOrFail($id);
+        return view('admin.appointments.patient_appointments', compact('appointment'));
     }
 
     public function edit(Appointment $appointment)
@@ -114,21 +114,8 @@ class AppointmentController extends Controller
         //$this->authorize('viewAny', Appointment::class);
 
         // Fetch patient data with profile fields
-        $patients = User::role('patient')
-            ->join('profile', 'users.id_profile', '=', 'profile.id_profile')
-            ->selectRaw('users.id, CONCAT(profile.first_name, " ", profile.last_name) as name')
-            ->pluck('name', 'users.id');
-
-        $appointments = collect();
-
-        if ($request->has('patient_id')) {
-            $appointments = Appointment::where('id_patient', $request->patient_id)
-                ->where('service_date', '>=', now())
-                ->orderBy('service_date', 'asc')
-                ->get();
-        }
-
-        //$this->authorize('view', $appointment);
+        $appointments = Appointment::with('medicSchedule')->where('id_patient', Auth::id())->get();
+        //return view('admin.appointments.index', compact('appointments'));
         return view('admin.appointments.patient_appointments', compact('appointments', 'patients'));
     }
 }

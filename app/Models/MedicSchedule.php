@@ -30,4 +30,9 @@ class MedicSchedule extends Model
     {
         return $this->hasMany(Appointment::class, 'medic_schedule_id_medic_schedule');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'id_medic');
+    }
 }
