@@ -11,8 +11,8 @@
             </li>
             @hasanyrole('medic|admin|super-admin')
             <li>
-                <x-nav-link href="{{ route('front.medic.appointments.index') }}"
-                            :active="request()->routeIs('front.medic.appointments.index')"> 
+                <x-nav-link href="{{ route('medic.appointments.index') }}"
+                            :active="request()->routeIs('medic.appointments.index')">
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="ms-3">{{ __('View appointments') }}</span>
                 </x-nav-link>
@@ -20,8 +20,8 @@
             @endhasanyrole
             @hasanyrole('super-admin|admin|patient')
             <li>
-                <x-nav-link href="{{ route('front.patient.appointments.create') }}"
-                            :active="request()->routeIs('front.patient.appointments.create')">
+                <x-nav-link href="{{ route('patient.appointments.create') }}"
+                            :active="request()->routeIs('patient.appointments.create')">
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="ms-3">{{ __('Schedule an appointment') }}</span>
                 </x-nav-link>
@@ -33,8 +33,8 @@
                 </x-nav-link>
             </li>
             <li>
-                <x-nav-link href="{{ route('front.patient.appointments.history') }}"
-                            :active="request()->routeIs('front.patient.appointments.history')">
+                <x-nav-link href="{{ route('patient.appointments.history') }}"
+                            :active="request()->routeIs('patient.appointments.history')">
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="ms-3">{{ __('Appointment History') }}</span>
                 </x-nav-link>

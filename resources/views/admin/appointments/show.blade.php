@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout>aqui
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Patient Appointment') }}
@@ -10,8 +10,8 @@
         <div class="bg-white p-6 rounded-lg shadow">
             <p>{{ __('Date') }}: {{ $appointment->service_date }}</p>
             <p>{{ __('Doctor') }}: {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}</p>
-            <p>{{ __('Specialty') }}: {{ $appointment->medicSchedule->specialty->name }}</p> 
-            <p>{{ __('Patient') }}: {{ $appointment->user->profile->first_name }}  {{ $appointment->user->profile->last_name }}</p> 
+            <p>{{ __('Specialty') }}: {{ $appointment->medicSchedule->specialty->name }}</p>
+            <p>{{ __('Patient') }}: {{ $appointment->user->profile->first_name }}  {{ $appointment->user->profile->last_name }}</p>
             <p>{{ __('Status') }}: {{ $appointment->status }}</p>
         </div>
     @else

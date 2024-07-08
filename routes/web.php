@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AppointmentPatientController;
+use App\Http\Controllers\AppointmentMedicController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpecialtyController;
@@ -51,7 +53,6 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'edit' => 'admin.appointments.edit',
         'update' => 'admin.appointments.update',
         'destroy' => 'admin.appointments.destroy',
-        'patientAppointments' => 'admin.appointments.patient_appointments',
     ]);
     Route::resource('admin/users/roles', RoleController::class)->names([
         'index' => 'admin.roles.index',
@@ -75,15 +76,32 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
-    Route::get('patient/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
-    //Route::get('/dashboard', [App\Http\Controllers\PatientController::class, 'dashboard'])->name('dashboard');
-    Route::get('patient/appointments', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
-    Route::get('patient/appointments/history', [AppointmentController::class, 'history'])->name('front.patient.appointments.history');
+    Route::resource('patient/appointments', AppointmentPatientController::class)->names([
+        'index' => 'patient.appointments.index',
+        'create' => 'patient.appointments.create',
+        'store' => 'patient.appointments.store',
+        'show' => 'patient.appointments.show',
+        'edit' => 'patient.appointments.edit',
+        'update' => 'patient.appointments.update',
+        'destroy' => 'patient.appointments.destroy',
+    ]);
+    ///Route::get('patient/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
+    ///Route::get('patient/appointments', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
+    Route::get('patient/appointments/history', [AppointmentPatientController::class, 'history'])->name('patient.appointments.history');
     //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
     //Route::get('/prescriptions', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('prescriptions.index');
     //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
 });
 
 Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {
-    Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('front.medic.appointments.index');
+    Route::resource('medic/appointments', AppointmentMedicController::class)->names([
+        'index' => 'medic.appointments.index',
+        'create' => 'medic.appointments.create',
+        'store' => 'medic.appointments.store',
+        'show' => 'medic.appointments.show',
+        'edit' => 'medic.appointments.edit',
+        'update' => 'medic.appointments.update',
+        'destroy' => 'medic.appointments.destroy',
+    ]);
+    ///Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('front.medic.appointments.index');
 });

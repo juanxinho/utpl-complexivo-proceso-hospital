@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class AppointmentController extends Controller
+class AppointmentPatientController extends Controller
 {
     /**
     * Obtiene la vista de consultas citas admin
@@ -23,28 +23,17 @@ class AppointmentController extends Controller
     }
 
     /**
-    * Obtiene la vista de consultas citas medico
-    *
-    * @return view front.medic.appointments.index
-    */
-    public function medicIndex()
-    {
-        $appointments = Appointment::whereHas('medicSchedule', function ($query) {
-                            $query->where('medic_schedule.id_medic', Auth::id());
-        })->paginate(10);
-
-        return view('front.medic.appointments.index', compact('appointments'));
-    }
-
-    /**
     * Obtiene la vista de consulta citas paciente
     *
     * @return view front.patient.appointments.show
     */
     public function show()
     {
-        $appointment = Appointment::findOrFail($id);
-        return view('admin.appointments.show', compact('appointment'));
+        $appointments = Appointment::where('id_patient', Auth::id())
+            ->where('service_date', '>=', now())
+            ->orderBy('service_date', 'asc')
+            ->get();
+        return view('front.patient.appointments.show', compact('appointments'));
     }
 
     /**
@@ -123,16 +112,6 @@ class AppointmentController extends Controller
 
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment eliminada exitosamente.');
     }
-
-    public function showSingle($id)
-    {
-        $appointments = Appointment::where('id_patient', Auth::id())
-            ->where('service_date', '>=', now())
-            ->orderBy('service_date', 'asc')
-            ->get();
-        return view('front.patient.appointments.show', compact('appointments'));
-    }
-
 
     public function patientAppointments(Request $request)
     {

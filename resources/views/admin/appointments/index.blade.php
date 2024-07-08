@@ -51,20 +51,21 @@
                         <td class="px-6 py-4">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
                         <td class="px-6 py-4">{{ $appointment->status }}</td>
                         <td class="px-6 py-4">
-                            <a href=""
-                               class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
-
-                            @if($appointment->status!='attended')
-                                <a href=""
-                                   class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>
-                            @endif
-
-                            <form action="" method="POST" class="inline">
+                            <a href="{{ route('admin.appointments.show', $appointment->id_appointment) }}"
+                               class="inline-block text-gray-600 dark:text-gray-300">
+                                <x-monoicon-eye width="20" height="20"/>
+                            </a>
+                            <a href="{{ route('admin.appointments.edit', $appointment->id_appointment) }}"
+                               class="inline-block text-gray-600 dark:text-gray-300">
+                                <x-monoicon-edit-alt width="20" height="20"/>
+                            </a>
+                            <form action="{{ route('admin.appointments.destroy', $appointment->id_appointment) }}"
+                                  method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                    Delete
+                                <button type="submit" class="text-red-600 dark:text-red-500"
+                                        onclick="return confirm('{{ __('¿Está seguro de que desea eliminar esta specialty?') }}')">
+                                    <x-monoicon-delete-alt width="20" height="20"/>
                                 </button>
                             </form>
                         </td>

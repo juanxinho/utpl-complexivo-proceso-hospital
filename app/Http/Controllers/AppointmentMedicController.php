@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class AppointmentController extends Controller
+class AppointmentMedicController extends Controller
 {
     /**
     * Obtiene la vista de consultas citas admin
@@ -45,21 +45,6 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($id);
         return view('admin.appointments.show', compact('appointment'));
-    }
-
-    /**
-    * Obtiene la vista de historial citas paciente
-    *
-    * @return view front.patient.appointments.history
-    */
-    public function history()
-    {
-        $appointments = Appointment::where('id_patient', Auth::id())
-                                    ->where('service_date', '<=', now())
-                                    ->orderBy('service_date', 'asc')
-                                    ->paginate(10);
-
-        return view('front.patient.appointments.history', compact('appointments'));
     }
 
     public function create()
