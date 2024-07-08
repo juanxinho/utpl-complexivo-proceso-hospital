@@ -21,6 +21,7 @@ Route::get('/translations', function () {
 })->name('translations');
 
 Route::view('/help', 'help')->name('help');
+Route::view('/translation-manager', 'translation-manager')->name('translation-manager');
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
