@@ -26,6 +26,19 @@
                     <span class="ms-3">{{ __('Schedule an appointment') }}</span>
                 </x-nav-link>
             </li>
+            <li>
+                <x-nav-link href="#">
+                    <x-monoicon-calendar width="20" height="20"/>
+                    <span class="ms-3">{{ __('Next Appointments') }}</span>
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link href="{{ route('front.patient.appointments.history') }}"
+                            :active="request()->routeIs('front.patient.appointments.history')">
+                    <x-monoicon-calendar width="20" height="20"/>
+                    <span class="ms-3">{{ __('Appointment History') }}</span>
+                </x-nav-link>
+            </li>
             @endhasanyrole
             @hasanyrole('admin|super-admin')
             <li>
@@ -131,12 +144,27 @@
                     <span class="ms-3">{{ __('Profile') }}</span>
                 </x-nav-link>
             </li>
+            @hasanyrole('admin|super-admin')
             <li>
-                <x-nav-link href="#">
+                <button type="button"
+                        class="inline-flex items-center p-2 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-white hover:text-gray-700 dark:hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out w-full rounded-md"
+                        aria-controls="dropdown-settings"
+                        data-collapse-toggle="dropdown-settings"
+                        aria-expanded="{{ request()->routeIs('translation-manager') ? 'true' : 'false' }}">
                     <x-monoicon-settings width="20" height="20"/>
-                    <span class="ms-3">{{ __('Settings') }}</span>
-                </x-nav-link>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Settings') }}</span>
+                    <x-monoicon-chevron-down width="20" height="20"/>
+                </button>
+                <ul id="dropdown-settings" class="py-2 space-y-2 {{ request()->routeIs('translation-manager') ? 'show' : 'hidden' }}">
+                    <li>
+                        <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
+                                    href="{{ route('translation-manager') }}" :active="request()->routeIs('translation-manager')">
+                            {{ __('Translations') }}
+                        </x-nav-link>
+                    </li>
+                </ul>
             </li>
+            @endhasanyrole
             <li>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" x-data>

@@ -19,7 +19,6 @@ class UserManagement extends Component
     public $isOpenEdit = false;
     public $searchTerm = '';
 
-
     public function mount()
     {
         $this->searchRoles = Role::pluck('name', 'name');
@@ -102,7 +101,7 @@ class UserManagement extends Component
             'email' => 'required|email|unique:users,email,' . $this->id,
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
-            'profile.nid' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'profile.nid' => ['required', 'string', 'max:13', 'unique:profile,nid,' . $this->id . ',id_profile', new EcuadorCedulaOrRuc],
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
@@ -133,7 +132,7 @@ class UserManagement extends Component
 
 
         session()->flash('message',
-            $this->id ? 'Usuario actualizado exitosamente.' : 'Usuario creado exitosamente.');
+            $this->id ? __('User successfully updated.') : __('User successfully created.'));
 
         $this->closeModal();
         $this->resetInputFields();
@@ -153,8 +152,13 @@ class UserManagement extends Component
 
     public function delete($id)
     {
-        User::find($id)->delete();
-        session()->flash('message', 'Usuario eliminado exitosamente.');
+        $user = User::find($id);
+        if ($user) {
+            $user->status = 0; // Set status to 0 to mark as inactive
+            $user->save(); // Save the change
+        }
+
+        session()->flash('message', __('User successfully deactivated.'));
     }
 }
 

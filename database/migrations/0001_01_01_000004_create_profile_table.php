@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('profile', function (Blueprint $table) {
             $table->id('id_profile');
-            $table->string('nid', 13);
+            $table->string('nid', 13)->unique();
             $table->string('first_name', 45);
             $table->string('last_name', 45);
             $table->date('dob');

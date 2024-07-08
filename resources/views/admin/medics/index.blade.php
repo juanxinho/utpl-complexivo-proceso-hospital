@@ -18,8 +18,10 @@
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead
-                class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
+        @if (session()->has('message'))
+            <div>{{ session('message') }}</div>
+        @endif
+            <thead class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     {{ __('Name') }}
@@ -59,26 +61,17 @@
                     <td class="px-6 py-4">{{ $medic->profile->gender_name }}</td>
                     <td class="px-6 py-4">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
                     <td class="px-6 py-4">
-                        <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300">
-                            <x-monoicon-edit-alt width="20" height="20"/>
-                        </button>
-                        <form action="" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 dark:text-red-500">
-                                <x-monoicon-delete-alt width="20" height="20"/>
-                            </button>
-                        </form>
+                        <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
+                        <button wire:click="delete({{ $medic->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
+
     <div class="mt-4">
         {{ $medics->links() }}
-        @if (session()->has('message'))
-            <div>{{ session('message') }}</div>
-        @endif
     </div>
+
 </div>

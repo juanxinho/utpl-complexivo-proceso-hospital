@@ -70,7 +70,7 @@ class UsersWithRolesSeeder extends Seeder
             $patientRole = Role::firstOrCreate(['name' => 'patient']);
             $user->assignRole($patientRole);
 
-            // Crear el usuario por defecto con rol super-admin
+            // Crear el usuario por defecto con rol medic
             $profile = Profile::create([
                 'nid' => $faker->unique()->numerify('##########'),
                 'first_name' => 'Juan',
@@ -84,7 +84,7 @@ class UsersWithRolesSeeder extends Seeder
             ]);
 
             $user = User::create([
-                'email' => 'juanxinh@gmail.com',
+                'email' => 'juanxinho@gmail.com',
                 'password' => Hash::make('prncs135'),
                 'status' => 1,
                 'user_register' => 1, // Ajustar según sea necesario

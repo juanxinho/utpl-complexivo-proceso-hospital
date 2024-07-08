@@ -52,18 +52,4 @@ class UserController extends Controller
         $this->userService->deleteUser($id);
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
-
-    public function storeMedic(UserRequest $request)
-    {
-        $this->userService->createUser($request->validated());
-
-        return redirect()->route('admin.medics.index')->with('success', 'Medic created successfully.');
-    }
-
-    public function updateMedic(UserRequest $request, User $medic)
-    {
-        $this->userService->updateUser($medic, $request->validated());
-
-        return redirect()->route('admin.medics.index')->with('success', 'Medic updated successfully.');
-    }
 }

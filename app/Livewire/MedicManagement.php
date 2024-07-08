@@ -21,7 +21,6 @@ class MedicManagement extends Component
     public $isOpenEdit = false;
     public $searchTerm = '';
 
-
     public function mount()
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
@@ -74,6 +73,7 @@ class MedicManagement extends Component
     private function resetInputFields()
     {
         $this->email = '';
+        $this->password = '';
         $this->profile['first_name'] = '';
         $this->profile['last_name'] = '';
         $this->profile['nid'] = '';
@@ -97,7 +97,7 @@ class MedicManagement extends Component
             'email' => 'required|email|unique:users,email,' . $this->id,
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
-            'profile.nid' => ['required', 'string', 'max:13', new EcuadorCedulaOrRuc],
+            'profile.nid' => ['required', 'string', 'max:13', 'unique:profile,nid,' . $this->id . ',id_profile', new EcuadorCedulaOrRuc],
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
@@ -122,9 +122,7 @@ class MedicManagement extends Component
             'user_register' => auth()->user()->id,
         ]);
 
-
-        $roles = Role::where('name', 'medic')->get();
-        $user->syncRoles($roles);
+        $user->assignRole('medic');
 
         $user->specialties()->sync($this->id_specialties);
 
@@ -138,16 +136,24 @@ class MedicManagement extends Component
     public function edit($id)
     {
         $medic = User::with('profile', 'roles', 'specialties')->findOrFail($id);
+
         $this->id = $id;
         $this->profile = $medic->profile->toArray();
         $this->email = $medic->email;
         $this->roles = Role::where('name', 'medic')->get();
         $this->id_specialties = $medic->specialties()->pluck('specialty.id_specialty')->toArray();
+        //$this->password = $user->password;
         $this->isOpenEdit = true;
     }
 
-    public function destroy(User $medic)
+    public function delete($id)
     {
-        app(UserController::class)->destroy($medic);
+        $user = User::find($id);
+        if ($user) {
+            $user->status = 0; // Set status to 0 to mark as inactive
+            $user->save(); // Save the change
+        }
+
+        session()->flash('message', __('Medic successfully deactivated.'));
     }
 }

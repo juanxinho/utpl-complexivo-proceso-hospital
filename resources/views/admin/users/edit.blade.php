@@ -39,7 +39,7 @@
                                 @error('profile.gender') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <x-label for="profile.gender" value="{{ __('Date of birth') }}:"/>
+                                <x-label for="profile.dob" value="{{ __('Date of birth') }}:"/>
                                 <x-date-picker id="dob" type="date" name="dob" class="block mt-1 w-full" defaultdate="{{$profile['dob'] }}" wire:model="profile.dob" />
                                 @error('profile.dob') <span>{{ $message }}</span> @enderror
                             </div>
