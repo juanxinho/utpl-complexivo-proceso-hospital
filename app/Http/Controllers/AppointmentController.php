@@ -7,21 +7,62 @@ use App\Models\Appointment;
 use App\Models\MedicSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
+    /**
+    * Obtiene la vista de consultas citas admin
+    *
+    * @return view admin.appointments.index
+    */
     public function index()
     {
         $appointments = Appointment::paginate(10);
         return view('admin.appointments.index', compact('appointments'));
     }
 
+    /**
+    * Obtiene la vista de consultas citas medico
+    *
+    * @return view front.medic.appointments.index
+    */
     public function medicIndex()
     {
-        $appointments = Appointment::with('usuarioRol')->whereHas('medicSchedule', function ($query) {
-            $query->where('id_patient', Auth::id());
+        $appointments = Appointment::whereHas('medicSchedule', function ($query) {
+                            $query->where('medic_schedule.id_medic', Auth::id());
         })->paginate(10);
-        return view('admin.appointments.medic_index', compact('appointments'));
+
+        return view('front.medic.appointments.index', compact('appointments'));
+    }
+
+    /**
+    * Obtiene la vista de consulta citas paciente
+    *
+    * @return view front.patient.appointments.show
+    */
+    public function show()
+    {
+        $appointments = Appointment::where('id_patient', Auth::id())
+                                    ->where('service_date', '>=', now())
+                                    ->orderBy('service_date', 'asc')
+                                    ->get();
+        return view('front.patient.appointments.show', compact('appointments'));
+    }
+
+    /**
+    * Obtiene la vista de historial citas paciente
+    *
+    * @return view front.patient.appointments.history
+    */
+    public function history()
+    {
+        $appointments = Appointment::where('id_patient', Auth::id())
+                                    ->where('service_date', '<=', now())
+                                    ->orderBy('service_date', 'asc')
+                                    ->paginate(10);
+
+        return view('front.patient.appointments.history', compact('appointments'));
     }
 
     public function create()
@@ -50,11 +91,6 @@ class AppointmentController extends Controller
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment creada exitosamente.');
     }
 
-    public function show($id)
-    {
-        $appointment = Appointment::findOrFail($id);
-        return view('admin.appointments.patient_appointments', compact('appointment'));
-    }
 
     public function edit(Appointment $appointment)
     {
@@ -94,20 +130,9 @@ class AppointmentController extends Controller
     public function Singleshow($id)
     {
         $appointment = Appointment::findOrFail($id);
-        return view('front.patient.appointments.show', compact('appointment'));
+        return view('admin.appointments.patient_appointments', compact('appointment'));
     }
 
-    public function history()
-    {
-        $user = Auth::user();
-        $appointments = Appointment::where('id_patient', $user->id)
-            ->where('service_date', '>=', now())
-            ->orderBy('service_date', 'asc')
-            ->paginate(10);
-
-        //$appointments = Appointment::where('patient_id', Auth::id())->where('date', '<', now())->orderBy('date', 'desc')->get();
-        return view('front.patient.appointments.history', compact('appointments'));
-    }
 
     public function patientAppointments(Request $request)
     {

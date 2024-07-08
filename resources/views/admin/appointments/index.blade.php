@@ -46,12 +46,12 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">{{ $loop->index + 1 }}</td>
-                        <td class="px-6 py-4">{{ $appointment->service_date }}</td>
+                        <td class="px-6 py-4">{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</td>
                         <td class="px-6 py-4">{{ $appointment->medicSchedule->user->profile->first_name }}</td>
                         <td class="px-6 py-4">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
                         <td class="px-6 py-4">{{ $appointment->status }}</td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('admin.appointments.show', $appointment->id_appointment) }}"
+                            <a href=""
                                class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
 
                             @if($appointment->status!='attended')

@@ -11,7 +11,8 @@
             </li>
             @hasanyrole('medic|admin|super-admin')
             <li>
-                <x-nav-link href="#">
+                <x-nav-link href="{{ route('front.medic.appointments.index') }}"
+                            :active="request()->routeIs('front.medic.appointments.index')"> 
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="ms-3">{{ __('View appointments') }}</span>
                 </x-nav-link>

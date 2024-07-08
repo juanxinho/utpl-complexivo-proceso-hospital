@@ -17,7 +17,7 @@
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ __('Next Appointments') }}</h5>
             @if($nextAppointment)
                 <p class="mb-3 font-normal text-gray-700">{{ $nextAppointment->service_date}}</p>
-                <a href="{{ route('front.patient.appointments.show', $nextAppointment->id_appointment) }}" >
+                <a href="{{ route('front.patient.appointments.show') }}" >
                     {{ __('View Details') }}
                 </a>
             @else

@@ -70,15 +70,19 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'update' => 'admin.specialties.update',
         'destroy' => 'admin.specialties.destroy',
     ]);
-    Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
+    //Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
     Route::get('patient/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     //Route::get('/dashboard', [App\Http\Controllers\PatientController::class, 'dashboard'])->name('dashboard');
-    Route::get('patient/appointments/{id}', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
+    Route::get('patient/appointments', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
     Route::get('patient/appointments/history', [AppointmentController::class, 'history'])->name('front.patient.appointments.history');
     //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
     //Route::get('/prescriptions', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('prescriptions.index');
     //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
+});
+
+Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {
+    Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('front.medic.appointments.index');
 });
