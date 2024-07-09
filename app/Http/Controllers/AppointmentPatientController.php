@@ -12,28 +12,17 @@ use Illuminate\Support\Facades\DB;
 class AppointmentPatientController extends Controller
 {
     /**
-    * Obtiene la vista de consultas citas admin
+    * Obtiene la vista de proximas citas paciente
     *
-    * @return view admin.appointments.index
+    * @return view front.patient.appointments.next
     */
-    public function index()
-    {
-        $appointments = Appointment::paginate(10);
-        return view('admin.appointments.index', compact('appointments'));
-    }
-
-    /**
-    * Obtiene la vista de consulta citas paciente
-    *
-    * @return view front.patient.appointments.show
-    */
-    public function show()
-    {
+    public function next()
+    { 
         $appointments = Appointment::where('id_patient', Auth::id())
             ->where('service_date', '>=', now())
             ->orderBy('service_date', 'asc')
             ->get();
-        return view('front.patient.appointments.show', compact('appointments'));
+        return view('front.patient.appointments.next', compact('appointments'));
     }
 
     /**
@@ -111,17 +100,5 @@ class AppointmentPatientController extends Controller
         $appointment->delete();
 
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment eliminada exitosamente.');
-    }
-
-    public function patientAppointments(Request $request)
-    {
-        //$this->authorize('viewAny', Appointment::class);
-
-        // Fetch patient data with profile fields
-        $appointments = Appointment::with('medicSchedule')
-            ->where('id_patient', Auth::id())
-            ->paginate(10);
-        //return view('admin.appointments.index', compact('appointments'));
-        return view('admin.appointments.show', compact('appointments', 'patients'));
     }
 }

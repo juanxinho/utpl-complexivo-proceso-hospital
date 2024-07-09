@@ -12,29 +12,19 @@ use Illuminate\Support\Facades\DB;
 class AppointmentMedicController extends Controller
 {
     /**
-    * Obtiene la vista de consultas citas admin
-    *
-    * @return view admin.appointments.index
-    */
-    public function index()
-    {
-        $appointments = Appointment::paginate(10);
-        return view('admin.appointments.index', compact('appointments'));
-    }
-
-    /**
-    * Obtiene la vista de consultas citas medico
+    * Obtiene la vista de consultas citas 
     *
     * @return view front.medic.appointments.index
     */
-    public function medicIndex()
+    public function index()
     {
         $appointments = Appointment::whereHas('medicSchedule', function ($query) {
-                            $query->where('medic_schedule.id_medic', Auth::id());
-        })->paginate(10);
+                        $query->where('medic_schedule.id_medic', Auth::id());
+                        })->paginate(10);
 
         return view('front.medic.appointments.index', compact('appointments'));
     }
+
 
     /**
     * Obtiene la vista de consulta citas paciente
@@ -109,25 +99,4 @@ class AppointmentMedicController extends Controller
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment eliminada exitosamente.');
     }
 
-    public function showSingle($id)
-    {
-        $appointments = Appointment::where('id_patient', Auth::id())
-            ->where('service_date', '>=', now())
-            ->orderBy('service_date', 'asc')
-            ->get();
-        return view('front.patient.appointments.show', compact('appointments'));
-    }
-
-
-    public function patientAppointments(Request $request)
-    {
-        //$this->authorize('viewAny', Appointment::class);
-
-        // Fetch patient data with profile fields
-        $appointments = Appointment::with('medicSchedule')
-            ->where('id_patient', Auth::id())
-            ->paginate(10);
-        //return view('admin.appointments.index', compact('appointments'));
-        return view('admin.appointments.show', compact('appointments', 'patients'));
-    }
 }

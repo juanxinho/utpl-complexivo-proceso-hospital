@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class AppointmentController extends Controller
 {
     /**
-    * Obtiene la vista de consultas citas admin
+    * Obtiene la vista de consultas citas 
     *
     * @return view admin.appointments.index
     */
@@ -22,45 +22,27 @@ class AppointmentController extends Controller
         return view('admin.appointments.index', compact('appointments'));
     }
 
-    /**
-    * Obtiene la vista de consultas citas medico
-    *
-    * @return view front.medic.appointments.index
-    */
-    public function medicIndex()
-    {
-        $appointments = Appointment::whereHas('medicSchedule', function ($query) {
-                            $query->where('medic_schedule.id_medic', Auth::id());
-        })->paginate(10);
-
-        return view('front.medic.appointments.index', compact('appointments'));
-    }
 
     /**
-    * Obtiene la vista de consulta citas paciente
+    * Obtiene la vista de detalle por cita
     *
     * @return view front.patient.appointments.show
     */
-    public function show()
+    public function show($id)
     {
         $appointment = Appointment::findOrFail($id);
         return view('admin.appointments.show', compact('appointment'));
     }
 
-    /**
-    * Obtiene la vista de historial citas paciente
-    *
-    * @return view front.patient.appointments.history
-    */
-    public function history()
-    {
-        $appointments = Appointment::where('id_patient', Auth::id())
-                                    ->where('service_date', '<=', now())
-                                    ->orderBy('service_date', 'asc')
-                                    ->paginate(10);
 
-        return view('front.patient.appointments.history', compact('appointments'));
+    public function edit(Appointment $appointment)
+    {
+        //$this->authorize('update', $appointment);
+        $medicosHorarios = MedicSchedule::all();
+        return view('admin.appointments.edit', compact('appointment', 'medicosHorarios'));
     }
+
+
 
     public function create()
     {
@@ -89,14 +71,6 @@ class AppointmentController extends Controller
     }
 
 
-    public function edit(Appointment $appointment)
-    {
-        //$this->authorize('update', $appointment);
-        $medicosHorarios = MedicSchedule::all();
-        $usuariosRoles = UsuarioRol::all();
-        return view('admin.appointments.edit', compact('appointment', 'medicosHorarios', 'usuariosRoles'));
-    }
-
     public function update(Request $request, Appointment $appointment)
     {
         //$this->authorize('update', $appointment);
@@ -124,25 +98,5 @@ class AppointmentController extends Controller
         return redirect()->route('admin.appointments.index')->with('success', 'Appointment eliminada exitosamente.');
     }
 
-    public function showSingle($id)
-    {
-        $appointments = Appointment::where('id_patient', Auth::id())
-            ->where('service_date', '>=', now())
-            ->orderBy('service_date', 'asc')
-            ->get();
-        return view('front.patient.appointments.show', compact('appointments'));
-    }
 
-
-    public function patientAppointments(Request $request)
-    {
-        //$this->authorize('viewAny', Appointment::class);
-
-        // Fetch patient data with profile fields
-        $appointments = Appointment::with('medicSchedule')
-            ->where('id_patient', Auth::id())
-            ->paginate(10);
-        //return view('admin.appointments.index', compact('appointments'));
-        return view('admin.appointments.show', compact('appointments', 'patients'));
-    }
 }

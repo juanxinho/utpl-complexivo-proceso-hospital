@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg dark:bg-gray-900 dark:text-gray-500 p-6">
-                <form action="{{ route('appointments.update', $appointment->idappointment) }}" method="POST">
+                <form action="{{ route('admin.appointments.store', $appointment->idappointment) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -22,15 +22,6 @@
                         <x-input-error for="medic_schedule_id_medic_schedule" class="mt-2" />
                     </div>
 
-                    <div class="mb-4">
-                        <x-label for="usuario_rol_idusuario_rol" value="{{ __('Select Patient Role') }}" />
-                        <select id="usuario_rol_idusuario_rol" name="usuario_rol_idusuario_rol" class="block mt-1 w-full">
-                            @foreach ($usuariosRoles as $usuarioRol)
-                                <option value="{{ $usuarioRol->idusuario_rol }}" {{ $appointment->usuario_rol_idusuario_rol == $usuarioRol->idusuario_rol ? 'selected' : '' }}>{{ $usuarioRol->usuario->first_name }} {{ $usuarioRol->usuario->last_name }}</option>
-                            @endforeach
-                        </select>
-                        <x-input-error for="usuario_rol_idusuario_rol" class="mt-2" />
-                    </div>
 
                     <div class="mb-4">
                         <x-label for="service_date" value="{{ __('Appointment Date and Time') }}" />
