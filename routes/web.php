@@ -76,6 +76,8 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
+    Route::get('patient/appointments/history', [AppointmentPatientController::class, 'history'])->name('patient.appointments.history');
+    Route::get('patient/appointments/next', [AppointmentPatientController::class, 'next'])->name('patient.appointments.next');
     Route::resource('patient/appointments', AppointmentPatientController::class)->names([
         'index' => 'patient.appointments.index',
         'create' => 'patient.appointments.create',
@@ -87,7 +89,7 @@ Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function ()
     ]);
     ///Route::get('patient/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     ///Route::get('patient/appointments', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
-    Route::get('patient/appointments/history', [AppointmentPatientController::class, 'history'])->name('patient.appointments.history');
+    
     //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
     //Route::get('/prescriptions', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('prescriptions.index');
     //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');

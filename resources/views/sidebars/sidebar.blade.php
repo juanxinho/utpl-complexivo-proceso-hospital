@@ -27,7 +27,7 @@
                 </x-nav-link>
             </li>
             <li>
-                <x-nav-link href="#">
+                <x-nav-link href="{{ route('patient.appointments.next') }}">
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="ms-3">{{ __('Next Appointments') }}</span>
                 </x-nav-link>
