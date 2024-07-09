@@ -40,7 +40,7 @@
                 </label>
             </div>
 
-            <div class="flex flex-col items-start sm:justify-start mt-4">
+            <div class="flex flex-col items-start sm:justify-start mt-5">
                 <x-button class="mt-1 mb-2 w-full">
                     {{ __('Log in') }}
                 </x-button>

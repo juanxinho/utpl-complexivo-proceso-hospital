@@ -56,7 +56,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 dark:text-red-500"
-                                            onclick="return confirm('{{ __('¿Está seguro de que desea eliminar esta specialty?') }}')">
+                                            onclick="return confirm('{{ __('Are you sure you want to delete this specialty?') }}')">
                                         <x-monoicon-delete-alt width="20" height="20"/>
                                     </button>
                                 </form>

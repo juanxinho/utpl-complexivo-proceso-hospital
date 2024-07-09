@@ -231,5 +231,20 @@
     "User successfully deactivated.": "User successfully deactivated.",
     "User successfully updated.": "User successfully updated.",
     "Users": "Users",
-    "Translation manager": "Translation manager"
+    "Translation manager": "Translation manager",
+    "Address": "Address",
+    "All roles": "All roles",
+    "City": "City",
+    "Country": "Country",
+    "Password Reset": "Password Reset",
+    "Patient Appointments": "Patient Appointments",
+    "Select a city": "Select a city",
+    "Select a country": "Select a country",
+    "Select a state": "Select a state",
+    "Select an option": "Select an option",
+    "State": "State",
+    "The :attribute field is not a valid Ecuadorian cédula or RUC or is already in use.": "The :attribute field is not a valid Ecuadorian cédula or RUC or is already in use.",
+    "The :attribute field is not a valid Ecuadorian phone number.": "The :attribute field is not a valid Ecuadorian phone number.",
+    "Translations": "Translations",
+    "Are you sure you want to delete this specialty?": "Are you sure you want to delete this specialty?"
 }

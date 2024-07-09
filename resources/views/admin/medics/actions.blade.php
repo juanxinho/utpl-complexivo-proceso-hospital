@@ -10,7 +10,7 @@
     </div>
     <div class="relative">
         <div class="flex items-center">
-            <x-select id="specialtyFilter" name="specialtyFilter" :options="$searchSpecialties" wire:model.live="selectedSpecialties" class="dark:text-gray-600" placeholder="All specialties"/>
+            <x-select id="specialtyFilter" name="specialtyFilter" :options="$searchSpecialties" wire:model.live="selectedSpecialties" class="dark:text-gray-600" placeholder="{{ __('All specialties') }}"/>
         </div>
     </div>
     <button wire:click="clearFilters" class="bg-red-500 text-white py-2 px-4 rounded">{{ __('Clear Filters') }}</button>
