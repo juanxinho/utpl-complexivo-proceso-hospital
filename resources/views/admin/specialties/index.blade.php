@@ -18,16 +18,16 @@
                     <th scope="col" class="px-6 py-3">
                         {{ __('Name') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Abbreviation') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Description') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Status') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Actions') }}
                     </th>
                 </tr>
@@ -39,10 +39,10 @@
                     @foreach ($specialties as $specialty)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4">{{ __($specialty->name) }}</td>
-                            <td class="px-6 py-4">{{ $specialty->abbreviation }}</td>
-                            <td class="px-6 py-4">{{ __($specialty->description) }}</td>
-                            <td class="px-6 py-4">{{ $specialty->status ? __('Active') : __('Inactive') }}</td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 text-center">{{ $specialty->abbreviation }}</td>
+                            <td class="px-6 py-4 text-center">{{ __($specialty->description) }}</td>
+                            <td class="px-6 py-4 text-center">{{ $specialty->status ? __('Active') : __('Inactive') }}</td>
+                            <td class="px-6 py-4 text-center">
                                 <a href="{{ route('admin.specialties.show', $specialty->id_specialty) }}"
                                    class="inline-block text-gray-600 dark:text-gray-300">
                                     <x-monoicon-eye width="20" height="20"/>

@@ -24,19 +24,19 @@
                     <th scope="col" class="px-6 py-3">
                         {{ __('Number') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Date and Time') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Medic') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Patient') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Status') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Actions') }}
                     </th>
                 </tr>
@@ -46,11 +46,11 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">{{ $loop->index + 1 }}</td>
-                        <td class="px-6 py-4">{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</td>
-                        <td class="px-6 py-4">{{ $appointment->medicSchedule->user->profile->first_name }}</td>
-                        <td class="px-6 py-4">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
-                        <td class="px-6 py-4">{{ $appointment->status }}</td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 text-center">{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</td>
+                        <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->user->profile->first_name }} {{ $appointment->medicSchedule->user->profile->last_name }}</td>
+                        <td class="px-6 py-4 text-center">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
+                        <td class="px-6 py-4 text-center">{{ ucfirst($appointment->status) }}</td>
+                        <td class="px-6 py-4 text-center">
                             <a href="{{ route('admin.appointments.show', $appointment->id_appointment) }}"
                                class="inline-block text-gray-600 dark:text-gray-300">
                                 <x-monoicon-eye width="20" height="20"/>

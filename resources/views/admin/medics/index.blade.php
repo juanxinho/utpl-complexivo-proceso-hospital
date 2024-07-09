@@ -26,19 +26,19 @@
                 <th scope="col" class="px-6 py-3">
                     {{ __('Name') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('NID') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Phone') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Gender') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Specialty') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Actions') }}
                 </th>
             </tr>
@@ -56,11 +56,11 @@
                             <div class="font-normal text-gray-500">{{ $medic->email }}</div>
                         </div>
                     </th>
-                    <td class="px-6 py-4">{{ $medic->profile->nid }}</td>
-                    <td class="px-6 py-4">{{ $medic->profile->phone }}</td>
-                    <td class="px-6 py-4">{{ $medic->profile->gender_name }}</td>
-                    <td class="px-6 py-4">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-center">{{ $medic->profile->nid }}</td>
+                    <td class="px-6 py-4 text-center">{{ $medic->profile->phone }}</td>
+                    <td class="px-6 py-4 text-center">{{ $medic->profile->gender_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
+                    <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
                         <button wire:click="delete({{ $medic->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
                     </td>

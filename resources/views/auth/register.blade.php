@@ -10,7 +10,7 @@
             @csrf
 
             <div class="mt-4">
-                <x-label for="first_name" value="{{ __('Name') }}" />
+                <x-label for="first_name" value="{{ __('First name') }}" />
                 <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="first_name" />
             </div>
 
@@ -30,18 +30,38 @@
             </div>
 
             <div class="mt-4">
+                <x-label for="gender" value="{{ __('Gender') }}" />
+                <x-select name="gender" id="gender" class="mt-1 block w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model.defer="state.gender" placeholder="{{  __('Select an option' )}}" />
+            </div>
+
+            <div class="mt-4">
                 <x-label for="dob" value="{{ __('Date of birth') }}" />
                 <x-date-picker id="dob" class="block mt-1 w-full" name="dob" :value="old('dob')" required autofocus autocomplete="dob" />
             </div>
 
             <div class="mt-4">
-                <x-label for="gender" value="{{ __('Sex') }}" />
-                <x-select name="gender" id="gender" class="mt-1 block w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model.defer="state.gender" placeholder="Select an option" />
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             </div>
 
             <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-label for="country_id" value="{{ __('Country') }}" />
+                <x-select id="country_id" name="country_id" class="block mt-1 w-full" :options="$countries" wire:model.live="state.country_id" placeholder="{{  __('Select a country' )}}"/>
+            </div>
+
+            <div class="mt-4">
+                <x-label for="state_id" value="{{ __('State') }}" />
+                <x-select id="state_id" name="state_id" class="block mt-1 w-full" :options="$states" wire:model.live="state.state_id" placeholder="{{  __('Select a state' )}}"/>
+            </div>
+
+            <div class="mt-4">
+                <x-label for="city_id" value="{{ __('City') }}" />
+                <x-select id="city_id" name="city_id" class="block mt-1 w-full" :options="$cities" wire:model.live="state.city_id" placeholder="{{  __('Select a city' )}}"/>
+            </div>
+
+            <div class="mt-4">
+                <x-label for="address" value="{{ __('Address') }}" />
+                <x-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.address" autocomplete="address" />
             </div>
 
             <div class="mt-4">

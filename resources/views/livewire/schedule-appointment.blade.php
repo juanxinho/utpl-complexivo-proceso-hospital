@@ -20,13 +20,13 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="specialty" value="{{ __('Specialty') }}" />
-                <x-select id="specialty" name="specialty" :options="$specialties" wire:model.live="specialty_id" class="mt-1 block w-full" placeholder="Select an option"/>
+                <x-select id="specialty" name="specialty" :options="$specialties" wire:model.live="specialty_id" class="mt-1 block w-full" placeholder="{{  __('Select an option' )}}"/>
                 <x-input-error for="specialty_id" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="medic" value="{{ __('Medic') }}" />
-                <x-select id="medic" name="medic" :options="$medics" wire:model.live="medic_id" class="mt-1 block w-full" placeholder="Select an option"/>
+                <x-select id="medic" name="medic" :options="$medics" wire:model.live="medic_id" class="mt-1 block w-full" placeholder="{{  __('Select an option' )}}"/>
                 <x-input-error for="medic_id" class="mt-2" />
             </div>
 
@@ -38,7 +38,7 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="time" value="{{ __('Time') }}" />
-                <x-select id="time" name="time" :options="$times" wire:model.live="time" class="mt-1 block w-full" placeholder="Select an option"/>
+                <x-select id="time" name="time" :options="$times" wire:model.live="time" class="mt-1 block w-full" placeholder="{{  __('Select an option' )}}"/>
                 <x-input-error for="time" class="mt-2" />
             </div>
         </x-slot>

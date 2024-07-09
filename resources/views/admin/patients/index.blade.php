@@ -26,25 +26,37 @@
                 <th scope="col" class="px-6 py-3">
                     {{ __('Name') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('NID') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Date of birth') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Age') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Gender') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Phone') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
+                    {{ __('Country') }}
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
+                    {{ __('State') }}
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
+                    {{ __('City') }}
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
+                    {{ __('Address') }}
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Status') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Actions') }}
                 </th>
             </tr>
@@ -61,13 +73,17 @@
                             <div class="font-normal text-gray-500">{{ $patient->email }}</div>
                         </div>
                     </th>
-                    <td class="px-6 py-4">{{ $patient->profile->nid }}</td>
-                    <td class="px-6 py-4">{{ $patient->profile->dob }}</td>
-                    <td class="px-6 py-4">{{ $patient->profile->age }} {{ __('years') }}</td>
-                    <td class="px-6 py-4">{{ $patient->profile->gender_name }}</td>
-                    <td class="px-6 py-4">{{ $patient->profile->phone }}</td>
-                    <td class="px-6 py-4">{{ $patient->status_label }}</td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-center">{{ $patient->profile->nid }}</td>
+                    <td class="px-6 py-4 text-center">{{ \Carbon\Carbon::parse($patient->profile->dob)->format('d/m/Y') }}</td>
+                    <td class="px-6 py-4 text-center">{{ $patient->profile->age }} {{ __('years') }}</td>
+                    <td class="px-6 py-4 text-center">{{ $patient->profile->gender_name }}</td>
+                    <td class="px-6 py-4 text-center">{{ $patient->profile->phone }}</td>
+                    <td class="px-6 py-4 text-center">{{ ucfirst($patient->profile->country->name) }}</td>
+                    <td class="px-6 py-4 text-center">{{ ucfirst($patient->profile->state->name) }}</td>
+                    <td class="px-6 py-4 text-center">{{ ucfirst($patient->profile->city->name) }}</td>
+                    <td class="px-6 py-4 text-center">{{ $patient->profile->address }}</td>
+                    <td class="px-6 py-4 text-center">{{ $patient->status_label }}</td>
+                    <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $patient->id }})" class="text-gray-600 dark:text-gray-300">
                             <x-monoicon-edit-alt width="20" height="20" />
                         </button>

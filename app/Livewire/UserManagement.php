@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\City;
+use App\Models\Country;
+use App\Models\State;
 use App\Rules\EcuadorCedulaOrRuc;
 use App\Rules\EcuadorPhone;
 use Livewire\Component;
@@ -18,13 +21,62 @@ class UserManagement extends Component
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
+    public $countries;
+    public $states = [];
+    public $cities = [];
 
     public function mount()
     {
         $this->searchRoles = Role::pluck('name', 'name');
         $this->searchStatuses = ['0' => 'Inactive', '1' => 'Active'];
         $this->roles = Role::all();
+        $this->countries = Country::pluck('name', 'id')->map(function ($name) {
+            return ucfirst($name);
+        });
+
+        if (isset($this->profile['country_id'])) {
+            $this->loadStates();
+        }
+
+        if (isset($this->profile['state_id'])) {
+            $this->loadCities();
+        }
     }
+
+    public function updatedstateCountryId()
+    {
+        $this->profile['state_id'] = null;
+        $this->cities = [];
+        $this->profile['city_id'] = null;
+        $this->states = [];
+        $this->loadStates();
+
+    }
+    public function updatedstateStateId()
+    {
+        $this->profile['city_id'] = null;
+        $this->cities = [];
+        $this->loadCities();
+    }
+
+    protected function loadStates()
+    {
+        $this->states = State::where('country_id', $this->profile['country_id'])
+            ->pluck('name', 'id')
+            ->map(function ($name) {
+                return ucfirst($name);
+            });
+    }
+
+    protected function loadCities()
+    {
+        $this->cities = City::where('state_id', $this->profile['state_id'])
+            ->pluck('name', 'id')
+            ->map(function ($name) {
+                return ucfirst($name);
+            });
+    }
+
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
@@ -85,6 +137,10 @@ class UserManagement extends Component
         $this->profile['phone'] = '';
         $this->profile['gender'] = '';
         $this->profile['dob'] = null;
+        $this->profile['country_id'] = null;
+        $this->profile['state_id'] = null;
+        $this->profile['city_id'] = null;
+        $this->profile['address'] = '';
         $this->id_roles = [];
     }
 
@@ -105,6 +161,9 @@ class UserManagement extends Component
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
+            'country_id' => ['required', 'exists:countries,id'],
+            'state_id' => ['required', 'exists:states,id'],
+            'city_id' => ['required', 'exists:cities,id'],
             'id_roles' => 'required|array|min:1',
         ]);
 
@@ -115,6 +174,10 @@ class UserManagement extends Component
             'phone' => $this->profile['phone'],
             'gender' => $this->profile['gender'],
             'dob' => $this->profile['dob'],
+            'country_id' => $this->profile['country_id'],
+            'state_id' => $this->profile['state_id'],
+            'city_id' => $this->profile['city_id'],
+            'address' => $this->profile['address'],
             'user_register' => auth()->user()->id,
         ]);
 
@@ -147,6 +210,9 @@ class UserManagement extends Component
         $this->email = $user->email;
         //$this->password = $user->password;
         $this->id_roles = $user->roles->pluck('id')->toArray();
+        // Load states and cities for the selected country and state
+        $this->loadStates();
+        $this->loadCities();
         $this->isOpenEdit = true;
     }
 

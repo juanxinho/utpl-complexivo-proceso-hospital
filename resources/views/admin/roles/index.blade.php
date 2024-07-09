@@ -26,10 +26,10 @@
                     <th scope="col" class="px-6 py-3">
                         {{ __('Name') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Description') }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         {{ __('Actions') }}
                     </th>
                 </tr>
@@ -43,7 +43,7 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $role->description }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 text-center">
                             <a href="{{ route('admin.roles.edit', $role) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
                             <form action="{{ route('admin.roles.destroy', $role) }}" method="POST" class="inline">
                                 @csrf

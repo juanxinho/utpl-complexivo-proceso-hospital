@@ -26,16 +26,16 @@
                 <th scope="col" class="px-6 py-3">
                     {{ __('Name') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    {{ __('Roles') }}
-                </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Date created') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
+                    {{ __('Roles') }}
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Status') }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Actions') }}
                 </th>
             </tr>
@@ -52,20 +52,16 @@
                             <div class="font-normal text-gray-500">{{ $user->email }}</div>
                         </div>
                     </th>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-center">
+                        {{ $user->created_at }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
                         {{ implode(', ', $user->getRoleNames()->toArray()) }}
                     </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            {{ $user->created_at }}
-                        </div>
+                    <td class="px-6 py-4 text-center">
+                        {{ $user->status_label }}
                     </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            {{ $user->status_label }}
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $user->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
                         <button wire:click="delete({{ $user->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
                     </td>

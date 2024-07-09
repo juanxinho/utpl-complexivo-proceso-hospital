@@ -2,15 +2,17 @@
 
 namespace App\Livewire;
 
+use App\Models\City;
+use App\Models\Country;
+use App\Models\State;
 use App\Rules\EcuadorCedulaOrRuc;
 use App\Rules\EcuadorPhone;
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Specialty;
+use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\UserController;
 
 class MedicManagement extends Component
 {
@@ -20,11 +22,58 @@ class MedicManagement extends Component
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
+    public $countries;
+    public $states = [];
+    public $cities = [];
 
     public function mount()
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
         $this->specialties = Specialty::where('status', 1)->get();
+        $this->countries = Country::pluck('name', 'id')->map(function ($name) {
+            return ucfirst($name);
+        });
+
+        if (isset($this->profile['country_id'])) {
+            $this->loadStates();
+        }
+
+        if (isset($this->profile['state_id'])) {
+            $this->loadCities();
+        }
+    }
+    public function updatedstateCountryId()
+    {
+        $this->profile['state_id'] = null;
+        $this->cities = [];
+        $this->profile['city_id'] = null;
+        $this->states = [];
+        $this->loadStates();
+
+    }
+    public function updatedstateStateId()
+    {
+        $this->profile['city_id'] = null;
+        $this->cities = [];
+        $this->loadCities();
+    }
+
+    protected function loadStates()
+    {
+        $this->states = State::where('country_id', $this->profile['country_id'])
+            ->pluck('name', 'id')
+            ->map(function ($name) {
+                return ucfirst($name);
+            });
+    }
+
+    protected function loadCities()
+    {
+        $this->cities = City::where('state_id', $this->profile['state_id'])
+            ->pluck('name', 'id')
+            ->map(function ($name) {
+                return ucfirst($name);
+            });
     }
     public function render()
     {
@@ -80,6 +129,10 @@ class MedicManagement extends Component
         $this->profile['phone'] = '';
         $this->profile['gender'] = '';
         $this->profile['dob'] = null;
+        $this->profile['country_id'] = null;
+        $this->profile['state_id'] = null;
+        $this->profile['city_id'] = null;
+        $this->profile['address'] = '';
         $this->id_specialties = [];
         $this->selectedSpecialties = [];
     }
@@ -101,6 +154,9 @@ class MedicManagement extends Component
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
+            'country_id' => ['required', 'exists:countries,id'],
+            'state_id' => ['required', 'exists:states,id'],
+            'city_id' => ['required', 'exists:cities,id'],
             'id_specialties' => 'required|array|min:1',
         ]);
 
@@ -111,6 +167,10 @@ class MedicManagement extends Component
             'phone' => $this->profile['phone'],
             'gender' => $this->profile['gender'],
             'dob' => $this->profile['dob'],
+            'country_id' => $this->profile['country_id'],
+            'state_id' => $this->profile['state_id'],
+            'city_id' => $this->profile['city_id'],
+            'address' => $this->profile['address'],
             'user_register' => auth()->user()->id,
         ]);
 
@@ -143,6 +203,9 @@ class MedicManagement extends Component
         $this->roles = Role::where('name', 'medic')->get();
         $this->id_specialties = $medic->specialties()->pluck('specialty.id_specialty')->toArray();
         //$this->password = $user->password;
+        // Load states and cities for the selected country and state
+        $this->loadStates();
+        $this->loadCities();
         $this->isOpenEdit = true;
     }
 
