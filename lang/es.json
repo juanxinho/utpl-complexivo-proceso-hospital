@@ -21,7 +21,7 @@
     "Schedule an appointment": "Agendar una cita",
     "Next Appointments": "Próximas citas",
     "Appointment History": "Historial de citas",
-    "Appointments": "Gestión de citas",
+    "Appointments": "Citas",
     "Patient management": "Gestión de pacientes",
     "Physician management": "Gestión de médicos",
     "Medics": "Médicos",
@@ -84,7 +84,7 @@
     "Create new user": "Crear nuevo usuario",
     "First name": "Nombres",
     "Gender": "Género",
-    "Role": "Role",
+    "Role": "Rol",
     "Save": "Guardar",
     "Cancel": "Cancelar",
     "Edit user": "Editar usuario",
@@ -138,7 +138,7 @@
     "Add new specialty": "Agregar nueva especialidad",
     "Schedule Appointment": "Programar una cita",
     "Schedule a new appointment with a doctor.": "Programe una nueva cita con un médico.",
-    "Time": "Tiempo",
+    "Time": "Hora",
     "Scheduled.": "Programado.",
     "Schedule": "Agendar",
     "Profile Information": "Información del perfil",
@@ -246,5 +246,7 @@
     "Select a city": "Selecciona una ciudad",
     "Address": "Dirección",
     "Patient Appointments": "Citas de pacientes",
-    "Are you sure you want to delete this specialty?": "¿Está seguro de que desea eliminar esta especialidad?"
+    "Are you sure you want to delete this specialty?": "¿Está seguro de que desea eliminar esta especialidad?",
+    "Appointment management": "Gestión de citas",
+    "All specialties": "Todas las especialidades"
 }

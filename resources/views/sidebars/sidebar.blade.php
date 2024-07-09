@@ -9,7 +9,7 @@
                     <span class="ms-3">{{ __('Dashboard') }}</span>
                 </x-nav-link>
             </li>
-            @hasanyrole('medic|admin|super-admin')
+            @hasanyrole('medic')
             <li>
                 <x-nav-link href="{{ route('medic.appointments.index') }}"
                             :active="request()->routeIs('medic.appointments.index')">
@@ -18,26 +18,40 @@
                 </x-nav-link>
             </li>
             @endhasanyrole
-            @hasanyrole('super-admin|admin|patient')
+            @hasanyrole('patient')
             <li>
-                <x-nav-link href="{{ route('front.patient.appointments.create') }}"
-                            :active="request()->routeIs('front.patient.appointments.create')">
+                <button type="button"
+                        class="inline-flex items-center p-2 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-white hover:text-gray-700 dark:hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out w-full rounded-md"
+                        aria-controls="dropdown-appointments"
+                        data-collapse-toggle="dropdown-appointments"
+                        aria-expanded="{{ request()->routeIs('patient.appointments.*', 'front.patient.appointments.*') ? 'true' : 'false' }}">
                     <x-monoicon-calendar width="20" height="20"/>
-                    <span class="ms-3">{{ __('Schedule an appointment') }}</span>
-                </x-nav-link>
-            </li>
-            <li>
-                <x-nav-link href="{{ route('patient.appointments.next') }}">
-                    <x-monoicon-calendar width="20" height="20"/>
-                    <span class="ms-3">{{ __('Next Appointments') }}</span>
-                </x-nav-link>
-            </li>
-            <li>
-                <x-nav-link href="{{ route('patient.appointments.history') }}"
-                            :active="request()->routeIs('patient.appointments.history')">
-                    <x-monoicon-calendar width="20" height="20"/>
-                    <span class="ms-3">{{ __('Appointment History') }}</span>
-                </x-nav-link>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Appointments') }}</span>
+                    <x-monoicon-chevron-down width="20" height="20"/>
+                </button>
+                <ul id="dropdown-appointments" class="py-2 space-y-2 {{ request()->routeIs('patient.appointments.*', 'front.patient.appointments.*') ? 'show' : 'hidden' }}">
+                    <li>
+                        <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
+                                    href="{{ route('front.patient.appointments.create') }}"
+                                    :active="request()->routeIs('front.patient.appointments.create')">
+                            {{ __('Schedule an appointment') }}
+                        </x-nav-link>
+                    </li>
+                    <li>
+                        <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
+                                    href="{{ route('patient.appointments.next') }}"
+                                    :active="request()->routeIs('patient.appointments.next')">
+                            {{ __('Next Appointments') }}
+                        </x-nav-link>
+                    </li>
+                    <li>
+                        <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
+                                    href="{{ route('patient.appointments.history') }}"
+                                    :active="request()->routeIs('patient.appointments.history')">
+                            {{ __('Appointment History') }}
+                        </x-nav-link>
+                    </li>
+                </ul>
             </li>
             @endhasanyrole
             @hasanyrole('admin|super-admin')
@@ -45,7 +59,7 @@
                 <x-nav-link href="{{ route('admin.appointments.index') }}"
                             :active="request()->routeIs('admin.appointments.index')">
                     <x-monoicon-calendar width="20" height="20"/>
-                    <span class="ms-3">{{ __('Appointments') }}</span>
+                    <span class="ms-3">{{ __('Appointment management') }}</span>
                 </x-nav-link>
             </li>
             @endhasanyrole

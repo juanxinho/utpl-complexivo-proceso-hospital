@@ -246,5 +246,7 @@
     "The :attribute field is not a valid Ecuadorian cédula or RUC or is already in use.": "The :attribute field is not a valid Ecuadorian cédula or RUC or is already in use.",
     "The :attribute field is not a valid Ecuadorian phone number.": "The :attribute field is not a valid Ecuadorian phone number.",
     "Translations": "Translations",
-    "Are you sure you want to delete this specialty?": "Are you sure you want to delete this specialty?"
+    "Are you sure you want to delete this specialty?": "Are you sure you want to delete this specialty?",
+    "All specialties": "All specialties",
+    "Appointment management": "Appointment management"
 }
