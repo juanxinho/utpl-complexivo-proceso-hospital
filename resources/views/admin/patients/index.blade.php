@@ -30,6 +30,9 @@
                     {{ __('NID') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    {{ __('Date of birth') }}
+                </th>
+                <th scope="col" class="px-6 py-3">
                     {{ __('Age') }}
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -59,6 +62,7 @@
                         </div>
                     </th>
                     <td class="px-6 py-4">{{ $patient->profile->nid }}</td>
+                    <td class="px-6 py-4">{{ $patient->profile->dob }}</td>
                     <td class="px-6 py-4">{{ $patient->profile->age }} {{ __('years') }}</td>
                     <td class="px-6 py-4">{{ $patient->profile->gender_name }}</td>
                     <td class="px-6 py-4">{{ $patient->profile->phone }}</td>
