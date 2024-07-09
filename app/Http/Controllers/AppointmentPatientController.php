@@ -17,7 +17,7 @@ class AppointmentPatientController extends Controller
     * @return view front.patient.appointments.next
     */
     public function next()
-    { 
+    {
         $appointments = Appointment::where('id_patient', Auth::id())
             ->where('service_date', '>=', now())
             ->orderBy('service_date', 'asc')
@@ -42,9 +42,7 @@ class AppointmentPatientController extends Controller
 
     public function create()
     {
-        $medicosHorarios = MedicSchedule::all();
-        $usuariosRoles = UsuarioRol::all();
-        return view('admin.appointments.create', compact('medicosHorarios', 'usuariosRoles'));
+        return view('livewire.schedule-appointment');
     }
 
     public function store(Request $request)

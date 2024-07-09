@@ -26,6 +26,6 @@ class EcuadorPhone implements Rule
      */
     public function message()
     {
-        return 'The :attribute field is not a valid Ecuadorian phone number.';
+        return __('The :attribute field is not a valid Ecuadorian phone number.');
     }
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('country_id')->nullable()->constrained('countries');
             $table->foreignId('state_id')->nullable()->constrained('states');
             $table->foreignId('city_id')->nullable()->constrained('cities');
-            $table->string('address', 255);
+            $table->string('address', 255)->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('user_register')->nullable();
             $table->unsignedBigInteger('user_modification')->nullable();

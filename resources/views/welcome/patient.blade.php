@@ -6,7 +6,7 @@
     <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <div class="p-5">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ __('Schedule an appointment') }}</h5>
-            <x-button-link href="{{ route('patient.appointments.create') }}" >
+            <x-button-link href="{{ route('front.patient.appointments.create') }}" >
                 {{ __('Schedule an appointment') }}
             </x-button-link>
         </div>

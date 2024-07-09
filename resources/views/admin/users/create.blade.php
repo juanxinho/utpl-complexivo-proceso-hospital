@@ -61,7 +61,6 @@
                                 <x-label for="city_id" value="{{ __('City') }}" />
                                 <x-select id="city_id" name="city_id" class="block mt-1 w-full" :options="$cities" wire:model.live="state.city_id" placeholder="{{  __('Select a city' )}}"/>
                             </div>
-
                             <div class="col-span-6 sm:col-span-3">
                                 <x-label for="address" value="{{ __('Address') }}" />
                                 <x-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.address" autocomplete="address" />

@@ -48,7 +48,7 @@ class CreateNewUser implements CreatesNewUsers
             'country_id' => $input['country_id'],
             'state_id' => $input['state_id'],
             'city_id' => $input['city_id'],
-            'address' => $input['address'],
+            'address' => $input['address'] ?? null,
         ]);
 
         $user = User::create([

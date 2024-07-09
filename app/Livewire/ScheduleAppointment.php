@@ -88,7 +88,7 @@ class ScheduleAppointment extends Component
                 $query->where('appointment.medic_schedule_id_medic_schedule', '!=', 'medic_shedule.id_medic_schedule')
                       ->where('appointment.status', '=', 'scheduled')
                       ->where('appointment.service_date', '=', $this->date);
-            });        
+            });
 
         // Get the raw SQL query
         $sql = $query->toSql();
@@ -117,7 +117,7 @@ class ScheduleAppointment extends Component
             'date' => 'required|date',
             'time' => 'required',
         ]);
-        
+
         $appointmentCount = Appointment::where('id_patient', $this->patient->id)
             ->whereDate('service_date', Carbon::parse($this->date))
             ->count();

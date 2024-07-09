@@ -20,8 +20,8 @@
             @endhasanyrole
             @hasanyrole('super-admin|admin|patient')
             <li>
-                <x-nav-link href="{{ route('patient.appointments.create') }}"
-                            :active="request()->routeIs('patient.appointments.create')">
+                <x-nav-link href="{{ route('front.patient.appointments.create') }}"
+                            :active="request()->routeIs('front.patient.appointments.create')">
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="ms-3">{{ __('Schedule an appointment') }}</span>
                 </x-nav-link>
