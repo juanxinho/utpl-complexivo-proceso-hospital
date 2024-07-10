@@ -248,5 +248,14 @@
     "Translations": "Translations",
     "Are you sure you want to delete this specialty?": "Are you sure you want to delete this specialty?",
     "All specialties": "All specialties",
-    "Appointment management": "Appointment management"
+    "Appointment management": "Appointment management",
+    "Create new schedule": "Create new schedule",
+    "Day": "Day",
+    "Edit Schedule": "Edit Schedule",
+    "Schedule deleted successfully.": "Schedule deleted successfully.",
+    "Schedule updated successfully.": "Schedule updated successfully.",
+    "Schedules": "Schedules",
+    "Schedules management": "Schedules management",
+    "The :attribute field is not a valid Ecuadorian cédula or RUC": "The :attribute field is not a valid Ecuadorian cédula or RUC",
+    "Time range": "Time range"
 }

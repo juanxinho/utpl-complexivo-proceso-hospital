@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ScheduleController;
 use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
@@ -71,6 +72,15 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'edit' => 'admin.specialties.edit',
         'update' => 'admin.specialties.update',
         'destroy' => 'admin.specialties.destroy',
+    ]);
+    Route::resource('admin/schedules', ScheduleController::class)->names([
+        'index' => 'admin.schedules.index',
+        'create' => 'admin.schedules.create',
+        'store' => 'admin.schedules.store',
+        'show' => 'admin.schedules.show',
+        'edit' => 'admin.schedules.edit',
+        'update' => 'admin.schedules.update',
+        'destroy' => 'admin.schedules.destroy',
     ]);
     //Route::get('admin/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     //Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
