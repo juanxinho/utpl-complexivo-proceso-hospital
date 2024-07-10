@@ -39,7 +39,7 @@ class PatientManagement extends Component
             $this->loadCities();
         }
     }
-    public function updatedstateCountryId()
+    public function updatedprofileCountryId()
     {
         $this->profile['state_id'] = null;
         $this->cities = [];
@@ -48,7 +48,7 @@ class PatientManagement extends Component
         $this->loadStates();
 
     }
-    public function updatedstateStateId()
+    public function updatedprofileStateId()
     {
         $this->profile['city_id'] = null;
         $this->cities = [];
@@ -115,6 +115,7 @@ class PatientManagement extends Component
 
     private function resetInputFields()
     {
+        $this->id = null;
         $this->email = '';
         $this->password = '';
         $this->profile['first_name'] = '';
@@ -147,9 +148,9 @@ class PatientManagement extends Component
             'profile.phone' => ['required', 'string', 'max:10', new EcuadorPhone],
             'profile.gender' => 'required|string|in:M,F',
             'profile.dob' => 'required|date',
-            'country_id' => ['required', 'exists:countries,id'],
-            'state_id' => ['required', 'exists:states,id'],
-            'city_id' => ['required', 'exists:cities,id'],
+            'profile.country_id' => ['required', 'exists:countries,id'],
+            'profile.state_id' => ['required', 'exists:states,id'],
+            'profile.city_id' => ['required', 'exists:cities,id'],
         ]);
 
         $profile = Profile::updateOrCreate(['id_profile' => $this->id], [
@@ -162,11 +163,11 @@ class PatientManagement extends Component
             'country_id' => $this->profile['country_id'],
             'state_id' => $this->profile['state_id'],
             'city_id' => $this->profile['city_id'],
-            'address' => $this->profile['address'],
+            'address' => $this->profile['address'] ?? null,
             'user_register' => auth()->user()->id,
         ]);
 
-        $user = User::updateOrCreate([
+        $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
             'password' => bcrypt($this->password),
             'status' => 1,

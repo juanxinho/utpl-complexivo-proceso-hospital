@@ -19,13 +19,6 @@ class EcuadorCedulaOrRuc implements Rule
      */
     public function passes($attribute, $value)
     {
-        $this->value = $value;
-
-        // Check for duplicate NID in the database
-        if (!$this->checkForDuplicateNid($value)) {
-            return false;
-        }
-
         if (strlen($value) === 10) {
             return $this->validateCedula($value);
         } elseif (strlen($value) === 13) {
@@ -93,30 +86,13 @@ class EcuadorCedulaOrRuc implements Rule
     }
 
     /**
-     * Custom method to check for duplicate NID in the database.
-     *
-     * @param  mixed  $value
-     * @return bool
-     */
-    protected function checkForDuplicateNid($value)
-    {
-        try {
-            $exists = Profile::where('nid', $value)->exists();
-            return !$exists;
-        } catch (QueryException $e) {
-            // Handle the exception if needed
-            return false;
-        }
-    }
-
-    /**
      * Get the validation error message.
      *
      * @return string
      */
     public function message()
     {
-        return __('The :attribute field is not a valid Ecuadorian cédula or RUC or is already in use.');
+        return __('The :attribute field is not a valid Ecuadorian cédula or RUC');
     }
 }
 
