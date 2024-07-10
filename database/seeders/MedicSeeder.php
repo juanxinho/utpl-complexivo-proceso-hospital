@@ -35,6 +35,10 @@ class MedicSeeder extends Seeder
                 'first_name' => $faker->firstName . ' M' . $index,
                 'last_name' => $faker->lastName,
                 'dob' => $faker->date(),
+                'country_id' => 63,
+                'state_id' => 1033,
+                'city_id' => 15368,
+                'address' => $faker->address,
                 'phone' => $faker->unique()->numerify('##########'),//$faker->phoneNumber,
                 'gender' => $faker->randomElement(['M', 'F']),
                 'user_register' => 1, // Ajustar según sea necesario

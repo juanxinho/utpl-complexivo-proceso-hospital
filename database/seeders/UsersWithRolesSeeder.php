@@ -26,6 +26,10 @@ class UsersWithRolesSeeder extends Seeder
                 'dob' => '1986-05-04',
                 'phone' => '0995767405',
                 'gender' => 'M',
+                'country_id' => 63,
+                'state_id' => 1031,
+                'city_id' => 15342,
+                'address' => 'Urb. Bosquetto Mz3350 V29',
                 'user_register' => 1, // Ajustar según sea necesario
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -52,6 +56,10 @@ class UsersWithRolesSeeder extends Seeder
                 'dob' => '1986-05-04',
                 'phone' => '0995767405',
                 'gender' => 'M',
+                'country_id' => 63,
+                'state_id' => 1031,
+                'city_id' => 15342,
+                'address' => 'Urb. Bosquetto Mz3350 V29',
                 'user_register' => 1, // Ajustar según sea necesario
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -78,6 +86,10 @@ class UsersWithRolesSeeder extends Seeder
                 'dob' => '1986-05-04',
                 'phone' => '0995767405',
                 'gender' => 'M',
+                'country_id' => 63,
+                'state_id' => 1031,
+                'city_id' => 15342,
+                'address' => 'Urb. Bosquetto Mz3350 V29',
                 'user_register' => 1, // Ajustar según sea necesario
                 'created_at' => now(),
                 'updated_at' => now(),
