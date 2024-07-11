@@ -10,4 +10,9 @@ class Diagnostics extends Model
     use HasFactory;
 
     protected $fillable = ['code', 'description'];
+
+    public function medicalDiagnostics()
+    {
+        return $this->belongsToMany(MedicalDiagnostic::class, 'diagnostic_medical_diagnostic', 'diagnostic_id', 'medical_diagnostic_id');
+    }
 }

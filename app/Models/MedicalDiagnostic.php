@@ -21,6 +21,6 @@ class MedicalDiagnostic extends Model
 
     public function diagnostics()
     {
-        return $this->hasMany(Diagnostics::class, 'id_diagnostic');
+        return $this->belongsToMany(Diagnostics::class, 'diagnostic_medical_diagnostic', 'medical_diagnostic_id', 'diagnostic_id');
     }
 }

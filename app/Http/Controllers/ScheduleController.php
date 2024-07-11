@@ -9,7 +9,7 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::all();
+        $schedules = Schedule::paginate(10);
         return view('admin.schedules.index', compact('schedules'));
     }
 

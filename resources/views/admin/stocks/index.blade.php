@@ -66,6 +66,10 @@
                 </tbody>
             </table>
         </div>
-        {{ $stocks->links() }}
+
+        <div class="mt-4">
+            {{ $stocks->links() }}
+        </div>
+
     </div>
 </x-app-layout>
