@@ -21,6 +21,13 @@ class CreateDiagnosticTable extends Migration
 
             $table->foreign('id_clinical_history')->references('id_clinical_history')->on('clinical_history')->onDelete('cascade');
         });
+
+        Schema::create('diagnostic_details', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('code')->unique();
+            $table->json('description'); // This will store translations in JSON format
+            $table->timestamps();
+        });
     }
 
     /**
@@ -28,6 +35,6 @@ class CreateDiagnosticTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diagnostic');
-    }
+        Schema::dropIfExists('diagnostic_details');
+        Schema::dropIfExists('diagnostic');    }
 };
