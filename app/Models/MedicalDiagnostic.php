@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Diagnostic extends Model
+class MedicalDiagnostic extends Model
 {
     use HasFactory;
 
     protected $fillable = ['id_clinical_history', 'description', 'user_register', 'date'];
 
-    protected $table = 'diagnostic';
+    protected $table = 'medical_diagnostic';
     protected $primaryKey = 'id_diagnostic';
 
     public function clinicalHistory()
@@ -19,8 +19,8 @@ class Diagnostic extends Model
         return $this->belongsTo(ClinicalHistory::class, 'id_clinical_history', 'id_clinical_history');
     }
 
-    public function details()
+    public function diagnostics()
     {
-        return $this->hasMany(DiagnosticDetail::class, 'id_diagnostic');
+        return $this->hasMany(Diagnostics::class, 'id_diagnostic');
     }
 }

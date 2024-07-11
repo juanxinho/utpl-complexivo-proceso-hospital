@@ -21,9 +21,9 @@ class ClinicalHistory extends Model
         return $this->hasMany(Appointment::class, 'clinical_history_id_clinical_history');
     }
 
-    public function diagnostics()
+    public function medical_diagnostics()
     {
-        return $this->hasMany(Diagnostic::class, 'id_clinical_history', 'id_clinical_history');
+        return $this->hasMany(MedicalDiagnostic::class, 'id_clinical_history', 'id_clinical_history');
     }
 }
 

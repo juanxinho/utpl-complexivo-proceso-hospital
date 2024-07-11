@@ -11,7 +11,7 @@ class CreateDiagnosticTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('diagnostic', function (Blueprint $table) {
+        Schema::create('medical_diagnostic', function (Blueprint $table) {
             $table->bigIncrements('id_diagnostic');
             $table->unsignedBigInteger('id_clinical_history');
             $table->string('description', 255)->nullable();
@@ -22,7 +22,7 @@ class CreateDiagnosticTable extends Migration
             $table->foreign('id_clinical_history')->references('id_clinical_history')->on('clinical_history')->onDelete('cascade');
         });
 
-        Schema::create('diagnostic_details', function (Blueprint $table) {
+        Schema::create('diagnostics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
             $table->json('description'); // This will store translations in JSON format
@@ -35,6 +35,7 @@ class CreateDiagnosticTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diagnostic_details');
-        Schema::dropIfExists('diagnostic');    }
+        Schema::dropIfExists('diagnostics');
+        Schema::dropIfExists('medical_diagnostic');
+    }
 };

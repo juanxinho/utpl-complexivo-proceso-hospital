@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\DiagnosticsController;
 use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
@@ -101,6 +102,15 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'edit' => 'admin.stocks.edit',
         'update' => 'admin.stocks.update',
         'destroy' => 'admin.stocks.destroy',
+    ]);
+    Route::resource('admin/diagnostics', DiagnosticsController::class)->names([
+        'index' => 'admin.diagnostics.index',
+        'create' => 'admin.diagnostics.create',
+        'store' => 'admin.diagnostics.store',
+        'show' => 'admin.diagnostics.show',
+        'edit' => 'admin.diagnostics.edit',
+        'update' => 'admin.diagnostics.update',
+        'destroy' => 'admin.diagnostics.destroy',
     ]);
     //Route::get('admin/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     //Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');

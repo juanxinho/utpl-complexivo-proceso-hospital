@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             ScheduleSeeder::class,
             RolesAndPermissionsSeeder::class,
             SpecialtiesSeeder::class,
-            DiagnosticDetailSeeder::class,
+            DiagnosticsSeeder::class,
             CountryStateCityTableSeeder::class,
             UsersWithRolesSeeder::class,
             PatientSeeder::class,

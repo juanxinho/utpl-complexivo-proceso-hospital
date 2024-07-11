@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DiagnosticDetail extends Model
+class Diagnostics extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_diagnostic', 'code', 'description'];
-
+    protected $fillable = ['code', 'description'];
+    protected $casts = [
+        'description' => 'array',
+    ];
 }
