@@ -17,7 +17,7 @@
                 @foreach ($diagnosticDetails as $diagnosticDetail)
                     <tr>
                         <td>{{ $diagnosticDetail->code }}</td>
-                        <td>{{ json_encode($diagnosticDetail->description) }}</td>
+                        <td>{{ $diagnosticDetail->description }}</td>
                         <td>
                             <form action="{{ route('admin.diagnostics.destroy',$diagnosticDetail->id) }}" method="POST">
                                 <a class="btn btn-info" href="{{ route('admin.diagnostics.show',$diagnosticDetail->id) }}">Show</a>
