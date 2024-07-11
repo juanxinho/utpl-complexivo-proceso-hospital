@@ -24,7 +24,7 @@ class AppointmentSeeder extends Seeder
         $medicSchedules = MedicSchedule::all()->pluck('id_medic_schedule')->toArray();
         $patients = User::role('patient')->pluck('id')->toArray();
 
-        // Create 50 random new appointments
+        // Create random new appointments
         foreach (range(1, 10) as $index) {
             $medicScheduleId = MedicSchedule::inRandomOrder()->first()->id_medic_schedule;
             $patientId = User::role('patient')->inRandomOrder()->first()->id;
@@ -37,7 +37,7 @@ class AppointmentSeeder extends Seeder
             ]);
         }
 
-        // Create 50 random old appointments
+        // Create random old appointments
         foreach (range(1, 10) as $index) {
             $medicScheduleId = MedicSchedule::inRandomOrder()->first()->id_medic_schedule;
             $patientId = User::role('patient')->inRandomOrder()->first()->id;

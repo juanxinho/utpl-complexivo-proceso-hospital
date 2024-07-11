@@ -32,7 +32,7 @@ class MedicSeeder extends Seeder
         foreach (range(1, 10) as $index) {
             $profile = Profile::create([
                 'nid' => $faker->unique()->numerify('##########'),
-                'first_name' => $faker->firstName . ' M' . $index,
+                'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'dob' => $faker->date(),
                 'country_id' => 63,
