@@ -1,0 +1,2 @@
+<x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('admin.stocks.index') }}" :active="request()->routeIs('admin.stocks.index')">{{ __('List') }}</x-menu-link>
+<x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('admin.stocks.create') }}" :active="request()->routeIs('admin.stocks.create')">{{ __('Add new item') }}</x-menu-link>

@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class Stock extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['patient_id', 'notes'];
+    protected $fillable = [
+        'item_name', 'quantity', 'price'
+    ];
 
     public function items()
     {

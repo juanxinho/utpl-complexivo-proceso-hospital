@@ -257,5 +257,18 @@
     "Schedules": "Schedules",
     "Schedules management": "Schedules management",
     "The :attribute field is not a valid Ecuadorian cédula or RUC": "The :attribute field is not a valid Ecuadorian cédula or RUC",
-    "Time range": "Time range"
+    "Time range": "Time range",
+    "Add New Stock Item": "Add New Stock Item",
+    "Add new item": "Add new item",
+    "Edit Stock Item": "Edit Stock Item",
+    "ID": "ID",
+    "Invoice details": "Invoice details",
+    "Invoices Management": "Invoices Management",
+    "Item Name": "Item Name",
+    "Price": "Price",
+    "Quantity": "Quantity",
+    "Stock Items": "Stock Items",
+    "Stocks": "Stocks",
+    "Total": "Total",
+    "Update": "Update"
 }

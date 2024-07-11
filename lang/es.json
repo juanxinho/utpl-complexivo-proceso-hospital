@@ -257,5 +257,18 @@
     "Create new schedule": "Crear nuevo horario",
     "Day": "Día",
     "Time range": "Rango de horario",
-    "Edit Schedule": "Editar horario"
+    "Edit Schedule": "Editar horario",
+    "Stocks": "Existencias",
+    "Invoice details": "Detalles de la factura",
+    "Invoices Management": "Gestión de Facturas",
+    "ID": "ID",
+    "Total": "Total",
+    "Edit Stock Item": "Editar artículo en stock",
+    "Add New Stock Item": "Agregar nuevo artículo en stock",
+    "Item Name": "Artículo",
+    "Quantity": "Cantidad",
+    "Price": "Precio",
+    "Update": "Actualizar",
+    "Stock Items": "Artículos en stock",
+    "Add new item": "Agregar ítem nuevo"
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\InvoiceController;
 use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
@@ -81,6 +83,24 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'edit' => 'admin.schedules.edit',
         'update' => 'admin.schedules.update',
         'destroy' => 'admin.schedules.destroy',
+    ]);
+    Route::resource('admin/invoices', InvoiceController::class)->names([
+        'index' => 'admin.invoices.index',
+        'create' => 'admin.invoices.create',
+        'store' => 'admin.invoices.store',
+        'show' => 'admin.invoices.show',
+        'edit' => 'admin.invoices.edit',
+        'update' => 'admin.invoices.update',
+        'destroy' => 'admin.invoices.destroy',
+    ]);
+    Route::resource('admin/stocks', StockController::class)->names([
+        'index' => 'admin.stocks.index',
+        'create' => 'admin.stocks.create',
+        'store' => 'admin.stocks.store',
+        'show' => 'admin.stocks.show',
+        'edit' => 'admin.stocks.edit',
+        'update' => 'admin.stocks.update',
+        'destroy' => 'admin.stocks.destroy',
     ]);
     //Route::get('admin/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     //Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
