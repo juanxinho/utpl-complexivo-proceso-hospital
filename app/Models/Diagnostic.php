@@ -13,4 +13,12 @@ class Diagnostic extends Model
         'description',
         'date',
     ];
+    
+    protected $table = 'diagnostic';
+    protected $primaryKey = 'id_diagnostic';
+
+    public function clinicalHistory()
+    {
+        return $this->belongsTo(ClinicalHistory::class, 'id_clinical_history', 'id_clinical_history');
+    }
 }

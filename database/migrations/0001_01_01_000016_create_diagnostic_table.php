@@ -12,10 +12,14 @@ class CreateDiagnosticTable extends Migration
     public function up(): void
     {
         Schema::create('diagnostic', function (Blueprint $table) {
-            $table->id('id_diagnostic');
+            $table->bigIncrements('id_diagnostic');
+            $table->unsignedBigInteger('id_clinical_history');
             $table->string('description', 255)->nullable();
+            $table->unsignedBigInteger('user_register');
             $table->date('date');
             $table->timestamps();
+
+            $table->foreign('id_clinical_history')->references('id_clinical_history')->on('clinical_history')->onDelete('cascade');
         });
     }
 

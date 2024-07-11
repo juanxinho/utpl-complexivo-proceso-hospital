@@ -23,7 +23,7 @@ class ClinicalHistory extends Model
 
     public function diagnostics()
     {
-        return $this->belongsToMany(Diagnostic::class, 'diagnostic_has_clinical_history', 'clinical_history_id_clinical_history', 'diagnostic_id_diagnostic');
+        return $this->hasMany(Diagnostic::class, 'id_clinical_history', 'id_clinical_history');
     }
 }
 
