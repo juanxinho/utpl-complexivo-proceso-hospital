@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
 
 class SpecialtiesSeeder extends Seeder
 {
@@ -13,7 +12,7 @@ class SpecialtiesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('specialty')->insert([
+        $specialties = [
             [
                 'name' => __('specialties.cardiology'),
                 'abbreviation' => 'CARD',
@@ -174,6 +173,9 @@ class SpecialtiesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+            // Add more specialties if needed
+        ];
+
+        DB::table('specialty')->insert($specialties);
     }
 }

@@ -29,7 +29,7 @@ class MedicSeeder extends Seeder
             ->toArray();
 
         // Create 50 Medic Users with different Specialties
-        foreach (range(1, 50) as $index) {
+        foreach (range(1, 10) as $index) {
             $profile = Profile::create([
                 'nid' => $faker->unique()->numerify('##########'),
                 'first_name' => $faker->firstName . ' M' . $index,
