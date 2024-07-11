@@ -25,7 +25,7 @@ class CreateDiagnosticTable extends Migration
         Schema::create('diagnostics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->json('description'); // This will store translations in JSON format
+            $table->string('description', 255); // This will store translations in JSON format
             $table->timestamps();
         });
     }

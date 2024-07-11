@@ -68,7 +68,7 @@ class DiagnosticsSeeder extends Seeder
         ];
 
         foreach ($diagnostics as $diagnostic) {
-            DB::table('diagnostic_details')->insert($diagnostic);
+            DB::table('diagnostics')->insert($diagnostic);
         }
     }
 }
