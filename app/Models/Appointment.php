@@ -24,6 +24,8 @@ class Appointment extends Model
         'clinical_history_id_clinical_history',
         'service_date',
         'reason',
+        'next_control_date',
+        'rating',
     ];
 
     public function medicSchedule()

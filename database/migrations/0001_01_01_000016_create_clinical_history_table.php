@@ -10,10 +10,13 @@ class CreateClinicalHistoryTable extends Migration
     {
         Schema::create('clinical_history', function (Blueprint $table) {
             $table->id('id_clinical_history');
-            $table->string('recommendations', 45);
+            $table->unsignedBigInteger('patient_id');
             $table->timestamp('record_date')->useCurrent();
             $table->unsignedBigInteger('user_register');
             $table->timestamps();
+
+            // Add foreign key constraint for user_id
+            $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
