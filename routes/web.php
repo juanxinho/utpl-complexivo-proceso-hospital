@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentPatientController;
 use App\Http\Controllers\AppointmentMedicController;
@@ -14,9 +15,9 @@ use App\Http\Controllers\DiagnosticsController;
 use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
-use Illuminate\Support\Facades\Route;
 use App\Livewire\ScheduleAppointment;
 use App\Livewire\PatientHistory;
+use App\Livewire\AttendPatient;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -148,4 +149,5 @@ Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {
         'destroy' => 'medic.appointments.destroy',
     ]);
     Route::get('patient/{id}/history', PatientHistory::class)->name('patient.history');
+    Route::get('/attend-patient/{appointmentId}', AttendPatient::class)->name('attend-patient');
 });

@@ -45,10 +45,13 @@
                             <td class="px-6 py-4 text-center">{{ $appointment->user->profile->first_name}} {{ $appointment->user->profile->last_name }}</td>
                             <td class="px-6 py-4 text-center">{{ $appointment->user->profile->age }} {{ __('years') }}</td>
                             <td class="px-6 py-4 text-center">
+                                <x-button class="">{{ __('View history' )}}</x-button>
+                                <x-secondary-button type="button" class="{{ $appointment->service_date != now()->format('Y-m-d') ? 'opacity-50 cursor-not-allowed' : '' }}">
+                                    {{ __('Attend') }}
+                                </x-secondary-button>
+
                                 <a href="{{ route('patient.history', $appointment->user->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">View history</a>
-                                @if($appointment->service_date==now()->format('Y-m-d'))
-                                    <a href="{{ route('medic.appointments.show', $appointment->id_appointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">Attend</a>
-                                @endif
+                                <a href="{{ route('attend-patient', $appointment->id_appointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">Attend</a>
                             </td>
                         </tr>
                     @endforeach
