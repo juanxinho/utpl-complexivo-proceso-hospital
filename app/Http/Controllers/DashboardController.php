@@ -25,8 +25,13 @@ class DashboardController extends Controller
 
             return view('welcome.patient', compact('user', 'nextAppointment', 'appointmentHistory'));
         } elseif ($user->hasRole('medic')) {
-            // Add logic specific to 'medic' role if needed
-            return view('welcome.medic', compact('user'));
+            $nextAppointment = Appointment::whereMonth('service_date', now()->month)
+                ->where('status', '!=', 'attended')
+                ->whereHas('medicSchedule', function ($query) {
+                            $query->where('medic_schedule.id_medic', Auth::id());})
+                ->orderBy('service_date', 'asc')
+                ->first();
+            return view('welcome.medic', compact('user', 'nextAppointment'));
         } else {
             // For other roles
             return view('welcome.welcome', compact('user'));
