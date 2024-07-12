@@ -34,7 +34,7 @@
                             @method('PUT')
                             <div class="mb-4">
                                 <x-label for="days" value="{{ __('Day') }}"/>
-                                <x-input id="name" class="block mt-1 w-full" type="text" name="days"
+                                <x-input id="days" class="block mt-1 w-full" type="text" name="days"
                                          value="{{ $schedule->days }}" required autofocus autocomplete="days"/>
                             </div>
                             <div class="mb-4">

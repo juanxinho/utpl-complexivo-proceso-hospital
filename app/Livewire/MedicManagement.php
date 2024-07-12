@@ -18,7 +18,7 @@ class MedicManagement extends Component
 {
     use WithPagination;
 
-    public $medic, $profile, $email, $password, $roles, $id_specialties, $specialties, $searchSpecialties, $selectedSpecialties = [], $id;
+    public $medic, $profile, $email, $password, $roles, $id_specialties, $specialties, $searchSpecialties, $selectedSpecialties = [], $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
@@ -30,6 +30,7 @@ class MedicManagement extends Component
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
         $this->specialties = Specialty::where('status', 1)->get();
+        $this->searchStatuses = ['0' => 'Inactive', '1' => 'Active'];
         $this->countries = Country::pluck('name', 'id')->map(function ($name) {
             return ucfirst($name);
         });
@@ -85,6 +86,9 @@ class MedicManagement extends Component
                     $query->whereIn('specialty.id_specialty', (array) $this->selectedSpecialties);
                 });
             })
+            ->when($this->selectedStatus !== null && $this->selectedStatus !== '', function ($query) {
+                $query->where('status', $this->selectedStatus);
+            })
             ->where(function($query) use ($searchTerm) {
                 $query->where('email', 'like', $searchTerm)
                     ->orWhereHas('profile', function($query) use ($searchTerm) {
@@ -104,6 +108,10 @@ class MedicManagement extends Component
         $this->render();
     }
 
+    public function updatedSelectedStatus() {
+        $this->render();
+    }
+
     public function updatedSearchTerm() {
         $this->render();
     }
@@ -111,6 +119,8 @@ class MedicManagement extends Component
     public function clearFilters()
     {
         $this->searchTerm = '';
+        $this->searchSpecialties = null;
+        $this->selectedStatus = null;
     }
 
     public function closeModal()

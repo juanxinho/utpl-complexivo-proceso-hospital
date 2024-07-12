@@ -15,6 +15,7 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->string('item_code')->unique(); // Adding item code field
             $table->string('item_name');
             $table->integer('quantity');
             $table->decimal('price', 8, 2);

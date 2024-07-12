@@ -20,11 +20,13 @@ class CreateAppointmentTable extends Migration
             $table->unsignedBigInteger('invoice_id_invoice')->nullable();
             $table->unsignedBigInteger('clinical_history_id_clinical_history')->nullable();
             $table->date('service_date');
+            $table->text('reason'); // Adding long text field for reason
             $table->timestamps();
 
-            $table->foreign('medic_schedule_id_medic_schedule')->references('id_medic_schedule')->on('medic_schedule');
-            $table->foreign('invoice_id_invoice')->references('id_invoice')->on('invoice');
-            $table->foreign('clinical_history_id_clinical_history')->references('id_clinical_history')->on('clinical_history');
+            $table->foreign('id_patient')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('medic_schedule_id_medic_schedule')->references('id_medic_schedule')->on('medic_schedule')->onDelete('cascade');
+            $table->foreign('invoice_id_invoice')->references('id_invoice')->on('invoice')->onDelete('cascade');
+            $table->foreign('clinical_history_id_clinical_history')->references('id_clinical_history')->on('clinical_history')->onDelete('cascade');
         });
     }
 
