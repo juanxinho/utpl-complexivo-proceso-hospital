@@ -22,7 +22,8 @@ class Appointment extends Model
         'medic_schedule_id_medic_schedule',
         'invoice_id_invoice',
         'clinical_history_id_clinical_history',
-        'service_date'
+        'service_date',
+        'reason',
     ];
 
     public function medicSchedule()
@@ -40,9 +41,14 @@ class Appointment extends Model
         return $this->belongsTo(ClinicalHistory::class, 'clinical_history_id_clinical_history');
     }
 
-    public function user()
+    public function patient()
     {
-        return $this->hasOne(User::class, 'id', 'id_patient');
+        return $this->belongsTo(User::class, 'id', 'id_patient');
+    }
+
+    public function medicalDiagnostics()
+    {
+        return $this->hasMany(MedicalDiagnostic::class);
     }
 }
 

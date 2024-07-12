@@ -11,6 +11,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\DiagnosticsController;
+use App\Http\Controllers\PatientCareController;
 use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
@@ -145,6 +146,15 @@ Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {
         'edit' => 'medic.appointments.edit',
         'update' => 'medic.appointments.update',
         'destroy' => 'medic.appointments.destroy',
+    ]);
+    Route::resource('medic/patient_care', PatientCareController::class)->names([
+        'index' => 'medic.patient_care.index',
+        'create' => 'medic.patient_care.create',
+        'store' => 'medic.patient_care.store',
+        'show' => 'medic.patient_care.show',
+        'edit' => 'medic.patient_care.edit',
+        'update' => 'medic.patient_care.update',
+        'destroy' => 'medic.patient_care.destroy',
     ]);
     ///Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('front.medic.appointments.index');
     //Route::get('medic/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');

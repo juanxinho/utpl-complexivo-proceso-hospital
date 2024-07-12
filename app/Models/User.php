@@ -78,8 +78,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Specialty::class, 'specialty_user','id_user', 'id_specialty');
     }
 
-    public function medicoHorarios()
+    public function medicSchedule()
     {
-        return $this->hasMany(MedicoHorario::class);
+        return $this->hasMany(MedicSchedule::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
     }
 }
