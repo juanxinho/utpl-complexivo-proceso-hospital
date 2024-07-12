@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class AppointmentMedicController extends Controller
 {
     /**
-    * Obtiene la vista de consultas citas 
+    * Obtiene la vista de consultas citas
     *
     * @return view front.medic.appointments.index
     */
@@ -24,7 +24,7 @@ class AppointmentMedicController extends Controller
                                     $query->where('medic_schedule.id_medic', Auth::id());})
                         ->orderBy('service_date', 'asc')
                         ->paginate(10);
-
+dd($appointments);
         return view('front.medic.appointments.index', compact('appointments'));
     }
 
