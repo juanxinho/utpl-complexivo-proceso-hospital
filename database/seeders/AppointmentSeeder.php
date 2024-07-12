@@ -67,7 +67,7 @@ class AppointmentSeeder extends Seeder
                     'medic_schedule_id_medic_schedule' => $medicScheduleId,
                     'id_patient' => 2,
                     'service_date' => $date,
-                    'status' => 'pendiente',
+                    'status' => 'scheduled',
                     'reason' => $faker->realText,
                 ]);
             }
@@ -88,7 +88,7 @@ class AppointmentSeeder extends Seeder
                     'medic_schedule_id_medic_schedule' => $medicScheduleId,
                     'id_patient' => 2,
                     'service_date' => $date,
-                    'status' => 'completada',
+                    'status' => 'attended',
                     'reason' => $faker->realText,
                 ]);
             }
