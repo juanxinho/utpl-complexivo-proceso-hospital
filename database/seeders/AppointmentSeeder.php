@@ -5,13 +5,8 @@ namespace Database\Seeders;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Profile;
-use App\Models\Specialty;
-use App\Models\Schedule;
 use App\Models\MedicSchedule;
 use App\Models\Appointment;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class AppointmentSeeder extends Seeder

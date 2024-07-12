@@ -28,4 +28,9 @@ class MedicalDiagnostic extends Model
     {
         return $this->belongsToMany(Diagnostics::class, 'diagnostic_medical_diagnostic', 'medical_diagnostic_id', 'diagnostic_id');
     }
+
+    public function medicalTests()
+    {
+        return $this->belongsToMany(MedicalTest::class, 'diagnostic_medical_test', 'medical_diagnostic_id', 'medical_test_id');
+    }
 }

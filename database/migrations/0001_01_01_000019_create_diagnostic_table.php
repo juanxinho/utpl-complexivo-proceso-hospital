@@ -21,7 +21,6 @@ class CreateDiagnosticTable extends Migration
         Schema::create('medical_diagnostic', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('appointment_id');
-            $table->unsignedBigInteger('diagnostic_id');
             $table->unsignedBigInteger('id_clinical_history');
             $table->string('description', 255)->nullable();
             $table->unsignedBigInteger('user_register');
@@ -29,7 +28,6 @@ class CreateDiagnosticTable extends Migration
             $table->timestamps();
 
             $table->foreign('appointment_id')->references('id_appointment')->on('appointment')->onDelete('cascade');
-            $table->foreign('diagnostic_id')->references('id')->on('diagnostics')->onDelete('cascade');
             $table->foreign('id_clinical_history')->references('id_clinical_history')->on('clinical_history')->onDelete('cascade');
         });
     }
