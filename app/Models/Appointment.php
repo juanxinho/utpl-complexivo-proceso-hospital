@@ -41,14 +41,19 @@ class Appointment extends Model
         return $this->belongsTo(ClinicalHistory::class, 'clinical_history_id_clinical_history');
     }
 
-    public function patient()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'id_patient');
+        return $this->hasOne(User::class, 'id', 'id_patient');
     }
 
     public function medicalDiagnostics()
     {
-        return $this->hasMany(MedicalDiagnostic::class);
+        return $this->hasMany(MedicalDiagnostic::class, 'appointment_id', 'id_appointment');
+    }
+
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class, 'appointment_id', 'id_appointment');
     }
 }
 

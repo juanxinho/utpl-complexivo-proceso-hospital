@@ -12,11 +12,13 @@ class CreatePrescriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->date('date');
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('appointment_id');
             $table->unsignedBigInteger('doctor_id');
             $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('appointment_id')->references('id_appointment')->on('appointment')->onDelete('cascade');
             $table->foreign('doctor_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

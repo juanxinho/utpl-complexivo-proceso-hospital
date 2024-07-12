@@ -107,7 +107,7 @@ class ScheduleAppointment extends Component
 
     public function render()
     {
-        return view('livewire.schedule-appointment') ->layout('layouts.app');
+        return view('livewire.schedule-appointment')->layout('layouts.app');
     }
 
     public function schedule()

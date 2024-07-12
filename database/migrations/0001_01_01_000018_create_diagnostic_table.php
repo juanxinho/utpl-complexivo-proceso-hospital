@@ -17,7 +17,7 @@ class CreateDiagnosticTable extends Migration
             $table->string('description', 255); // This will store translations in JSON format
             $table->timestamps();
         });
-        
+
         Schema::create('medical_diagnostic', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('appointment_id');
