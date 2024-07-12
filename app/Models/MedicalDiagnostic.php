@@ -9,7 +9,7 @@ class MedicalDiagnostic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_clinical_history', 'recommendations', 'user_register', 'date'];
+    protected $fillable = ['id_clinical_history', 'appointment_id', 'recommendations', 'user_register', 'date'];
 
     protected $table = 'medical_diagnostic';
     protected $primaryKey = 'id';
@@ -21,7 +21,7 @@ class MedicalDiagnostic extends Model
 
     public function appointment()
     {
-        return $this->belongsTo(Appointment::class);
+        return $this->belongsTo(Appointment::class, 'id_appointment', 'appointment_id');
     }
 
     public function diagnostics()

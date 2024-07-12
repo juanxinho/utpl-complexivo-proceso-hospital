@@ -12,18 +12,21 @@ class ClinicalHistory extends Model
     protected $table = 'clinical_history';
     protected $primaryKey = 'id_clinical_history';
 
-    protected $fillable = [
-        'recommendations', 'user_register'
-    ];
+    protected $fillable = ['user_register'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'patient_id');
+    }
 
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'clinical_history_id_clinical_history');
     }
 
-    public function medical_diagnostics()
+    public function medicalDiagnostics()
     {
-        return $this->hasMany(MedicalDiagnostic::class, 'id_clinical_history', 'id_clinical_history');
+        return $this->hasMany(MedicalDiagnostic::class, 'id', 'id_clinical_history');
     }
 }
 

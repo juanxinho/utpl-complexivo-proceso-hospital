@@ -4,29 +4,60 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Diagnostic;
+use App\Models\Stock;
+use App\Models\MedicalDiagnostic;
+use App\Models\Diagnostics;
+use App\Models\MedicalTest;
+use App\Models\Appointment;
 use App\Models\Prescription;
 use App\Models\PrescriptionItem;
-use App\Models\Stock;
-use App\Models\MedicalExam;
-use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 
 class AttendPatient extends Component
 {
+    public $appointment;
     public $patient;
-    public $diagnosis;
-    public $labTests = [];
-    public $imagingTests = [];
+    public $diagnostics = [];
+    public $diagnosticIds = [];
+    public $medicalTests = [];
+    public $medicalTestIds = [];
+    public $recommendations;
     public $prescriptionItems = [];
     public $nextControlDate;
-    public $appointmentId;
+
+    protected $rules = [
+        'diagnosticIds' => 'required|array|min:1',
+        'medicalTestIds' => 'required|array|min:1',
+        'recommendations' => 'nullable|string',
+        'prescriptionItems' => 'required|array|min:1',
+    ];
 
     public function mount($appointmentId)
     {
-        $this->appointmentId = $appointmentId;
-        $appointment = Appointment::with('user.profile')->findOrFail($appointmentId);
-        $this->patient = $appointment->user;
+        $this->appointment = Appointment::with('user.profile', 'medicalDiagnostics.diagnostics', 'medicalDiagnostics.medicalTests')->findOrFail($appointmentId);
+        $this->patient = $this->appointment->user;
+    }
+
+    public function addDiagnostic()
+    {
+        $this->diagnostics[] = ['id' => '', 'description' => ''];
+    }
+
+    public function removeDiagnostic($index)
+    {
+        unset($this->diagnostics[$index]);
+        $this->diagnostics = array_values($this->diagnostics);
+    }
+
+    public function addMedicalTest()
+    {
+        $this->medicalTests[] = ['id' => '', 'name' => ''];
+    }
+
+    public function removeMedicalTest($index)
+    {
+        unset($this->medicalTests[$index]);
+        $this->medicalTests = array_values($this->medicalTests);
     }
 
     public function addPrescriptionItem()
@@ -42,66 +73,42 @@ class AttendPatient extends Component
 
     public function save()
     {
-        $this->validate([
-            'diagnosis' => 'required|string|max:255',
-            'prescriptionItems.*.stock_id' => 'required|exists:stocks,id',
-            'prescriptionItems.*.quantity' => 'required|integer|min:1',
-            'nextControlDate' => 'nullable|date',
-        ]);
+        $this->validate();
+
+        $clinicalHistory = $this->appointment->user->clinicalHistory;
+        if (!$clinicalHistory) {
+            $clinicalHistory = $this->appointment->user->clinicalHistory()->create([
+                'user_register' => auth()->id(),
+            ]);
+        }
 
         // Guardar el diagnóstico
-        Diagnostic::create([
-            'id_clinical_history' => $this->patient->profile->id_clinical_history,
-            'description' => $this->diagnosis,
+        $medicalDiagnostic = MedicalDiagnostic::create([
+            'id_clinical_history' => $clinicalHistory->id_clinical_history,
+            'appointment_id' => $this->appointment->id_appointment,
+            'description' => $this->recommendations,
             'user_register' => Auth::id(),
             'date' => now(),
         ]);
 
-        // Guardar la receta médica
-        $prescription = Prescription::create([
-            'patient_id' => $this->patient->id,
-            'doctor_id' => Auth::id(),
-            'notes' => $this->diagnosis,
-        ]);
-
-        foreach ($this->prescriptionItems as $item) {
-            PrescriptionItem::create([
-                'prescription_id' => $prescription->id,
-                'stock_id' => $item['stock_id'],
-                'quantity' => $item['quantity'],
-            ]);
-        }
-
-        // Solicitar exámenes de laboratorio e imagen
-        foreach ($this->labTests as $test) {
-            MedicalExam::create([
-                'appointment_id' => $this->appointmentId,
-                'type' => 'lab',
-                'name' => $test,
-            ]);
-        }
-
-        foreach ($this->imagingTests as $test) {
-            MedicalExam::create([
-                'appointment_id' => $this->appointmentId,
-                'type' => 'imaging',
-                'name' => $test,
-            ]);
-        }
-
         // Actualizar la fecha de próximo control
         if ($this->nextControlDate) {
-            $appointment->next_control_date = $this->nextControlDate;
-            $appointment->save();
+            $this->appointment->next_control_date = $this->nextControlDate;
+            $this->appointment->save();
         }
 
-        session()->flash('message', 'Patient attended successfully!');
-        return redirect()->route('medic.appointments');
+        $medicalDiagnostic->diagnostics()->attach($this->diagnosticIds);
+        $medicalDiagnostic->medicalTests()->attach($this->medicalTestIds);
+
+        session()->flash('message', 'Patient attended successfully.');
+        return redirect()->route('medic.appointments.index');
     }
 
     public function render()
     {
         return view('front.medic.appointments.attend-patient', [
+            'availableDiagnostics' => Diagnostics::all(),
+            'availableMedicalTests' => MedicalTest::all(),
             'stocks' => Stock::all(),
         ])->layout('layouts.app');
     }

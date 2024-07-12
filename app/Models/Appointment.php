@@ -28,14 +28,14 @@ class Appointment extends Model
         'rating',
     ];
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'id_patient');
+    }
+
     public function medicSchedule()
     {
         return $this->belongsTo(MedicSchedule::class, 'medic_schedule_id_medic_schedule');
-    }
-
-    public function invoice()
-    {
-        return $this->belongsTo(Invoice::class, 'invoice_id_invoice');
     }
 
     public function clinicalHistory()
@@ -43,9 +43,19 @@ class Appointment extends Model
         return $this->belongsTo(ClinicalHistory::class, 'clinical_history_id_clinical_history');
     }
 
-    public function user()
+    public function diagnostics()
     {
-        return $this->hasOne(User::class, 'id', 'id_patient');
+        return $this->hasMany(Diagnostics::class, 'id_appointment');
+    }
+
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class, 'appointment_id', 'id_appointment');
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class, 'invoice_id_invoice');
     }
 
     public function medicalDiagnostics()
@@ -53,9 +63,5 @@ class Appointment extends Model
         return $this->hasMany(MedicalDiagnostic::class, 'appointment_id', 'id_appointment');
     }
 
-    public function prescriptions()
-    {
-        return $this->hasMany(Prescription::class, 'appointment_id', 'id_appointment');
-    }
 }
 

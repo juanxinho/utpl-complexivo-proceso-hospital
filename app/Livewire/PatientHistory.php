@@ -8,28 +8,27 @@ use Livewire\Component;
 class PatientHistory extends Component
 {
     public $patient;
-    public $id;
 
     public function mount($id)
     {
-        $this->id = $id;
-        $this->loadPatientHistory();
+        $this->loadPatientHistory($id);
     }
 
-    public function loadPatientHistory()
+    public function loadPatientHistory($id)
     {
         $this->patient = User::with([
             'profile',
-            'appointments' => function($query) {
-                $query->where('id_patient', $this->id);
-            },
             'appointments.medicSchedule.specialty',
-            'appointments.medicalDiagnostics',
-            'appointments.prescriptions.items'
-        ])->findOrFail($this->id);    }
+            'appointments.medicalDiagnostics.diagnostics',
+            'appointments.medicalDiagnostics.medicalTests',
+            'appointments.prescriptions.items.stock'
+        ])->findOrFail($id);
+    }
 
     public function render()
     {
-        return view('front.medic.appointments.patient-history')->layout('layouts.app');
+        return view('front.medic.appointments.patient-history', [
+            'patient' => $this->patient
+        ])->layout('layouts.app');
     }
 }

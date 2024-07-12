@@ -14,7 +14,7 @@ class CreateDiagnosticTable extends Migration
         Schema::create('diagnostics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
-            $table->string('recommendations', 255); // This will store translations in JSON format
+            $table->string('description', 255); // This will store translations in JSON format
             $table->timestamps();
         });
 
@@ -22,7 +22,7 @@ class CreateDiagnosticTable extends Migration
             $table->id();
             $table->unsignedBigInteger('appointment_id');
             $table->unsignedBigInteger('id_clinical_history');
-            $table->string('description', 255)->nullable();
+            $table->string('recommendations', 255)->nullable();
             $table->unsignedBigInteger('user_register');
             $table->date('date');
             $table->timestamps();
