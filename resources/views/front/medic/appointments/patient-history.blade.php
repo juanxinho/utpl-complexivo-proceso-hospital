@@ -16,33 +16,28 @@
                     <h4 class="mt-6 text-md font-medium text-gray-900">{{ __('Previous Diagnoses') }}</h4>
                     <ul class="mt-2">
                         @foreach ($patient->appointments as $appointment)
+                        {{ $appointment->service_date }} - {{ $appointment->medicSchedule->specialty->name }}
+                            <h4 class="mt-4 text-md font-medium text-gray-900">{{ __('Diagnoses') }}</h4>
                             @foreach ($appointment->medicalDiagnostics as $medicalDiagnostic)
                                 @foreach ($medicalDiagnostic->diagnostics as $diagnostic)
                                     <li>{{ $diagnostic->description }}</li>
                                 @endforeach
                             @endforeach
-                        @endforeach
-                    </ul>
 
-                    <h4 class="mt-6 text-md font-medium text-gray-900">{{ __('Medical Exams') }}</h4>
-                    <ul class="mt-2">
-                        @foreach ($patient->appointments as $appointment)
+                            <h4 class="mt-4 text-md font-medium text-gray-900">{{ __('Medical Exams') }}</h4>
                             @foreach ($appointment->medicalDiagnostics as $medicalDiagnostic)
                                 @foreach ($medicalDiagnostic->medicalTests as $medicalTest)
                                     <li>{{ $medicalTest->name }}</li>
                                 @endforeach
                             @endforeach
-                        @endforeach
-                    </ul>
 
-                    <h4 class="mt-6 text-md font-medium text-gray-900">{{ __('Prescriptions') }}</h4>
-                    <ul class="mt-2">
-                        @foreach ($patient->appointments as $appointment)
+                            <h4 class="mt-4 text-md font-medium text-gray-900">{{ __('Prescriptions') }}</h4>
                             @foreach ($appointment->prescriptions as $prescription)
                                 @foreach ($prescription->items as $item)
                                     <li>{{ $item->stockItem->item_name }} - {{ $item->quantity }} units</li>
                                 @endforeach
                             @endforeach
+
                         @endforeach
                     </ul>
                 @else
