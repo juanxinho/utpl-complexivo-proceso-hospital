@@ -18,9 +18,11 @@
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>Date and Time</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Specialty</th>
                         <th>Patient</th>
-                        <th>Status</th>
+                        <th>Age</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -28,19 +30,16 @@
                     @foreach ($appointments as $appointment)
                         <tr>
                             <td class="border px-4 py-2">{{ $loop->index + 1 }}</td>
-                            <td class="border px-4 py-2">{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->service_date }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->medicSchedule->schedule->time_range }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->medicSchedule->specialty->name }}</td>
                             <td class="border px-4 py-2">{{ $appointment->user->profile->first_name}} {{ $appointment->user->profile->last_name }}</td>
-                            <td class="border px-4 py-2">{{ $appointment->status }}</td>
+                            <td class="border px-4 py-2">{{ $appointment->user->profile->age }} {{ __('years') }}</td>
                             <td class="border px-4 py-2">
-                                <a href="" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">View</a>
-                                @if($appointment->status!='attended')
-                                    <a href="" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                <a href="" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">View history</a>
+                                @if($appointment->service_date==now()->format('Y-m-d'))
+                                    <a href="{{ route('medic.appointments.show', $appointment->id_appointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">Attend</a>
                                 @endif
-                                <form action="" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                                </form>
                             </td>
                         </tr>
                     @endforeach

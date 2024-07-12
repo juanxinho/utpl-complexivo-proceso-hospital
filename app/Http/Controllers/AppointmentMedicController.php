@@ -18,9 +18,12 @@ class AppointmentMedicController extends Controller
     */
     public function index()
     {
-        $appointments = Appointment::whereHas('medicSchedule', function ($query) {
-                        $query->where('medic_schedule.id_medic', Auth::id());
-                        })->paginate(10);
+        $appointments = Appointment::whereMonth('service_date', now()->month)
+                        ->where('status', '!=', 'attended')
+                        ->whereHas('medicSchedule', function ($query) {
+                                    $query->where('medic_schedule.id_medic', Auth::id());})
+                        ->orderBy('service_date', 'asc')
+                        ->paginate(10);
 
         return view('front.medic.appointments.index', compact('appointments'));
     }
@@ -31,10 +34,10 @@ class AppointmentMedicController extends Controller
     *
     * @return view front.patient.appointments.show
     */
-    public function show()
+    public function show($id)
     {
         $appointment = Appointment::findOrFail($id);
-        return view('admin.appointments.show', compact('appointment'));
+        return view('front.medic.appointments.show', compact('appointment'));
     }
 
     public function create()
