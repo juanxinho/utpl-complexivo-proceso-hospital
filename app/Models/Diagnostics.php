@@ -10,6 +10,7 @@ class Diagnostics extends Model
     use HasFactory;
 
     protected $fillable = ['code', 'description'];
+    protected $primaryKey = 'id';
 
     public function medicalDiagnostics()
     {

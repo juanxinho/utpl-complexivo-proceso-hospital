@@ -9,7 +9,9 @@ class Prescription extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['patient_id', 'doctor_id', 'date', 'notes'];
+    protected $fillable = ['date', 'patient_id', 'appointment_id', 'doctor_id',  'notes'];
+    protected $table = 'prescriptions';
+    protected $primaryKey = 'id';
 
     public function items()
     {

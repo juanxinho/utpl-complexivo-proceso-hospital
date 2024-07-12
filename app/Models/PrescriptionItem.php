@@ -10,10 +10,11 @@ class PrescriptionItem extends Model
     use HasFactory;
 
     protected $fillable = ['prescription_id', 'stock_item_id', 'quantity'];
+    protected $primaryKey = 'id';
 
     public function stockItem()
     {
-        return $this->belongsTo(Stock::class, 'stock_id');
+        return $this->belongsTo(Stock::class, 'stock_item_id', 'id');
     }
 }
 

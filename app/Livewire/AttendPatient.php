@@ -73,23 +73,39 @@ class AttendPatient extends Component
 
     public function save()
     {
-        $this->validate();
-
+        //$this->validate();
         $clinicalHistory = $this->appointment->user->clinicalHistory;
+        
         if (!$clinicalHistory) {
             $clinicalHistory = $this->appointment->user->clinicalHistory()->create([
                 'user_register' => auth()->id(),
             ]);
         }
+        
 
         // Guardar el diagnóstico
         $medicalDiagnostic = MedicalDiagnostic::create([
             'id_clinical_history' => $clinicalHistory->id_clinical_history,
             'appointment_id' => $this->appointment->id_appointment,
-            'description' => $this->recommendations,
+            'recommendations' => $this->recommendations,
             'user_register' => Auth::id(),
             'date' => now(),
         ]);
+
+        $prescription = Prescription::create([
+            'date' => now(),
+            'patient_id' => $this->patient->id,
+            'appointment_id' => $this->appointment->id_appointment,
+            'doctor_id' => Auth::id(),
+        ]);
+
+        foreach ($this->prescriptionItems as $item) {
+            PrescriptionItem::create([
+                'prescription_id' => $prescription->id,
+                'stock_item_id' => $item['stock_id'],
+                'quantity' => $item['quantity'],
+            ]);
+        }
 
         // Actualizar la fecha de próximo control
         if ($this->nextControlDate) {

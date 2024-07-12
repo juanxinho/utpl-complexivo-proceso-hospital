@@ -10,6 +10,7 @@ class MedicalTest extends Model
     use HasFactory;
 
     protected $fillable = ['code', 'name', 'category'];
+    protected $primaryKey = 'id';
 
     public function medicalDiagnostics()
     {

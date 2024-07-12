@@ -9,6 +9,7 @@ class Stock extends Model
     protected $fillable = [
         'item_name', 'quantity', 'price'
     ];
+    protected $primaryKey = 'id';
 
     public function items()
     {

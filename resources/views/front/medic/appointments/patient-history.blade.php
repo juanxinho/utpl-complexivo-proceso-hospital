@@ -40,7 +40,7 @@
                         @foreach ($patient->appointments as $appointment)
                             @foreach ($appointment->prescriptions as $prescription)
                                 @foreach ($prescription->items as $item)
-                                    <li>{{ $item->stock->item_name }} - {{ $item->quantity }} units</li>
+                                    <li>{{ $item->stockItem->item_name }} - {{ $item->quantity }} units</li>
                                 @endforeach
                             @endforeach
                         @endforeach

@@ -21,7 +21,7 @@ class PatientHistory extends Component
             'appointments.medicSchedule.specialty',
             'appointments.medicalDiagnostics.diagnostics',
             'appointments.medicalDiagnostics.medicalTests',
-            'appointments.prescriptions.items.stock'
+            'appointments.prescriptions.items'
         ])->findOrFail($id);
     }
 
