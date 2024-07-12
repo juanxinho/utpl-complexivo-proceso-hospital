@@ -9,7 +9,7 @@ class MedicalDiagnostic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_clinical_history', 'description', 'user_register', 'date'];
+    protected $fillable = ['id_clinical_history', 'recommendations', 'user_register', 'date'];
 
     protected $table = 'medical_diagnostic';
     protected $primaryKey = 'id';

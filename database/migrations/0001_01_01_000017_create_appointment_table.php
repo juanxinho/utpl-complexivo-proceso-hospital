@@ -21,6 +21,8 @@ class CreateAppointmentTable extends Migration
             $table->unsignedBigInteger('invoice_id_invoice')->nullable();
             $table->unsignedBigInteger('clinical_history_id_clinical_history')->nullable();
             $table->date('service_date');
+            $table->date('next_control_date')->nullable(); // Adding next control date
+            $table->unsignedTinyInteger('rating')->nullable(); // Adding rating field
             $table->timestamps();
 
             $table->foreign('id_patient')->references('id')->on('users')->onDelete('cascade');

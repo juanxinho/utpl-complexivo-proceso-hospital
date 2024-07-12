@@ -34,7 +34,9 @@ class AppointmentSeeder extends Seeder
                 'id_patient' => $patientId,
                 'service_date' => $faker->dateTimeBetween('+1 week', '+1 month'),
                 'status' => 'scheduled',
-                'reason' => $faker->realText,
+                'reason' => $faker->text,
+                'next_control_date' => $faker->dateTimeBetween('+1 month', '+2 months'),
+                'rating' => null,
             ]);
         }
 
@@ -48,7 +50,9 @@ class AppointmentSeeder extends Seeder
                 'id_patient' => $patientId,
                 'service_date' => $faker->dateTimeBetween('-1 month', '-1 week'),
                 'status' => 'attended',
-                'reason' => $faker->realText,
+                'reason' => $faker->text,
+                'next_control_date' => $faker->dateTimeBetween('+1 month', '+2 months'),
+                'rating' => $faker->numberBetween(1, 5),
             ]);
         }
 
@@ -68,7 +72,9 @@ class AppointmentSeeder extends Seeder
                     'id_patient' => 2,
                     'service_date' => $date,
                     'status' => 'scheduled',
-                    'reason' => $faker->realText,
+                    'reason' => $faker->text,
+                    'next_control_date' => $faker->dateTimeBetween('+1 month', '+2 months'),
+                    'rating' => null,
                 ]);
             }
         }
@@ -89,7 +95,9 @@ class AppointmentSeeder extends Seeder
                     'id_patient' => 2,
                     'service_date' => $date,
                     'status' => 'attended',
-                    'reason' => $faker->realText,
+                    'reason' => $faker->text,
+                    'next_control_date' => $faker->dateTimeBetween('+1 month', '+2 months'),
+                    'rating' => $faker->numberBetween(1, 5),
                 ]);
             }
         }

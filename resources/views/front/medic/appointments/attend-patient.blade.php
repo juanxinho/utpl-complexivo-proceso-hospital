@@ -24,7 +24,7 @@
             <x-label value="{{ __('Prescription') }}" />
             @foreach($prescriptionItems as $index => $item)
                 <div class="flex items-center mt-2">
-                    <x-select wire:model.defer="prescriptionItems.{{ $index }}.stock_id" class="block w-full" :options="$stocks->pluck('item_name', 'id')" required />
+                    <x-select id="prescriptionItems" name="prescriptionItems" wire:model.defer="prescriptionItems.{{ $index }}.stock_id" class="block w-full" :options="$stocks->pluck('item_name', 'id')" required />
                     <x-input wire:model.defer="prescriptionItems.{{ $index }}.quantity" type="number" class="ml-2 block w-20" min="1" required />
                     <x-button wire:click.prevent="removePrescriptionItem({{ $index }})" class="ml-2 bg-red-500 hover:bg-red-700">-</x-button>
                 </div>

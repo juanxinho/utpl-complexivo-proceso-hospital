@@ -101,9 +101,9 @@ class AttendPatient extends Component
 
     public function render()
     {
-        return view('livewire.attend-patient', [
+        return view('front.medic.appointments.attend-patient', [
             'stocks' => Stock::all(),
-        ]);
+        ])->layout('layouts.app');
     }
 }
 
