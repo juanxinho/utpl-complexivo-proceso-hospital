@@ -13,6 +13,7 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->unsignedBigInteger('patient_id');
             $table->text('notes')->nullable();
+            $table->integer('total');
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');

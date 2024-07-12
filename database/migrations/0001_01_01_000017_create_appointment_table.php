@@ -25,7 +25,7 @@ class CreateAppointmentTable extends Migration
 
             $table->foreign('id_patient')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('medic_schedule_id_medic_schedule')->references('id_medic_schedule')->on('medic_schedule')->onDelete('cascade');
-            $table->foreign('invoice_id_invoice')->references('id_invoice')->on('invoice')->onDelete('cascade');
+            $table->foreign('invoice_id_invoice')->references('id')->on('invoices')->onDelete('cascade');
             $table->foreign('clinical_history_id_clinical_history')->references('id_clinical_history')->on('clinical_history')->onDelete('cascade');
         });
     }
