@@ -45,13 +45,14 @@
                             <td class="px-6 py-4 text-center">{{ $appointment->user->profile->first_name}} {{ $appointment->user->profile->last_name }}</td>
                             <td class="px-6 py-4 text-center">{{ $appointment->user->profile->age }} {{ __('years') }}</td>
                             <td class="px-6 py-4 text-center">
-                                <x-button class="">{{ __('View history' )}}</x-button>
-                                <x-secondary-button type="button" class="{{ $appointment->service_date != now()->format('Y-m-d') ? 'opacity-50 cursor-not-allowed' : '' }}">
+                                <a href="{{ route('patient.history', $appointment->user->id) }}"
+                                   class="inline-block mb-2 xl:mb-0 xl:me-2 items-center px-4 py-2 bg-malachite-600 dark:bg-malachite-300 border border-transparent rounded-md font-semibold text-sm text-white dark:text-gray-800 tracking-widest hover:bg-malachite-700 dark:hover:bg-malachite-400 focus:bg-malachite-700 active:bg-malachite-900 focus:outline-none focus:ring-2 focus:ring-malachite-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">
+                                    {{ __('View history' )}}
+                                </a>
+                                <a href="{{ route('attend-patient', $appointment->id_appointment) }}"
+                                   class="inline-block items-center px-4 py-2 bg-white md:dark:bg-transparent border border-malachite-600 dark:border-malachite-300 rounded-md font-bold text-sm text-malachite-600 dark:text-malachite-300 tracking-widest shadow-sm hover:bg-malachite-600 hover:text-white dark:hover:text-gray-800 dark:hover:bg-malachite-300 focus:outline-none focus:ring-2 dark:focus:ring-malachite-300 focus:ring-malachite-600 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150 {{ $appointment->service_date != now()->format('Y-m-d') ? 'opacity-50 cursor-not-allowed' : '' }}">
                                     {{ __('Attend') }}
-                                </x-secondary-button>
-
-                                <a href="{{ route('patient.history', $appointment->user->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">View history</a>
-                                <a href="{{ route('attend-patient', $appointment->id_appointment) }}" class="bg-malachite-500 hover:bg-malachite-700 text-white font-bold py-2 px-4 rounded">Attend</a>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

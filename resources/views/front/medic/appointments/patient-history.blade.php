@@ -5,13 +5,13 @@
         </h1>
     </x-slot>
     @if($patient)
-        <div class="mx-auto sm:px-6 lg:px-2 pb-4 pt-3">
+        <div class="max-w-7xl mx-auto px-0 md:p-2">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white h-[1.9rem]">
                 {{ __('Patient information') }}
             </h2>
         </div>
         <div class="py-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-0 md:p-2">
                 <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg p-6">
                     <h3 class="text-lg font-medium text-malachite-600 dark:text-malachite-300">{{ $patient->profile->first_name }} {{ $patient->profile->last_name }}</h3>
                     <p class="mt-1 text-sm text-gray-600">{{ $patient->profile->age }} {{ __('years') }}</p>
@@ -20,13 +20,13 @@
                 </div>
             </div>
         </div>
-        <div class="mx-auto sm:px-6 lg:px-2 pb-4 pt-3">
+        <div class="max-w-7xl mx-auto px-0 md:p-2">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white h-[1.9rem]">
                 {{ __('Past appointments') }}
             </h2>
         </div>
         <div class="py-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-0 md:p-2">
                 <div id="accordion-collapse" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-t-lg" data-accordion="collapse">
                     @foreach ($patient->appointments as $index => $appointment)
                         <h2 id="accordion-collapse-heading-{{ $index }}">
@@ -75,9 +75,9 @@
         </div>
     @else
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-0 md:p-2">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-        <p>{{ __('Patient not found') }}</p>
+                    <p>{{ __('Patient not found') }}</p>
                 </div>
                 <div class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
                     <x-button onclick="window.history.back()">{{ __('Back') }}</x-button>
