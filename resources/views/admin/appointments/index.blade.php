@@ -63,7 +63,7 @@
                                class="inline-block text-gray-600 dark:text-gray-300">
                                 <x-monoicon-eye width="20" height="20"/>
                             </a>
-                            <a href="{{ route('admin.appointments.edit', $appointment->id_appointment) }}"
+                            <a href="{{ route('admin.appointments.editadmin', $appointment->id_appointment) }}"
                                class="inline-block text-gray-600 dark:text-gray-300">
                                 <x-monoicon-edit-alt width="20" height="20"/>
                             </a>

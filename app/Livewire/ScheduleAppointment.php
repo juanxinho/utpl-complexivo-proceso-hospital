@@ -110,6 +110,26 @@ class ScheduleAppointment extends Component
         return view('livewire.schedule-appointment')->layout('layouts.app');
     }
 
+    public function editadmin($id)
+    {
+        $appointment = Appointment::find($id);
+        $patient = $appointment->user;
+        $specialties = Specialty::pluck('name', 'id_specialty');
+        $this->specialty_id = $appointment->medicSchedule->specialty->id_specialty; 
+        $this->medic_id = $appointment->medicSchedule->user->id;
+        $this->date = $appointment->service_date;
+        $this->time = $appointment->medic_schedule_id_medic_schedule;
+
+        $this->updatedSpecialtyId($this->specialty_id);
+        $this->updatedMedicId($this->medic_id);
+        $this->updatedDate($this->date);
+
+        $medics = $this->medics;
+        $times = $this->times;
+
+        return view('livewire.schedule-appointment-edit', compact('patient','specialties','medics','times'))->layout('layouts.app');
+    }
+
     public function schedule()
     {
         $this->validate([

@@ -116,6 +116,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
     ]);
     //Route::get('admin/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
     //Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
+    Route::get('admin/appointments/editadmin/{appointmentId}', [ScheduleAppointment::class, 'editadmin'])->name('admin.appointments.editadmin');
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
