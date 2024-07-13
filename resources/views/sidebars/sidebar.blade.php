@@ -62,7 +62,7 @@
                         data-collapse-toggle="dropdown-admin-appointments"
                         aria-expanded="{{ request()->routeIs('admin.appointments.index') ? 'true' : 'false' }}">
                     <x-monoicon-calendar width="20" height="20"/>
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Physician management') }}</span>
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Appointment management') }}</span>
                     <x-monoicon-chevron-down width="20" height="20"/>
                 </button>
                 <ul id="dropdown-admin-appointments" class="py-2 space-y-2 {{ request()->routeIs('admin.appointments.index') ? 'show' : 'hidden' }}">
