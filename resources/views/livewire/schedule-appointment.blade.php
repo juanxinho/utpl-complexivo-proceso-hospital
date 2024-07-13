@@ -2,7 +2,9 @@
 <div class="w-full mx-auto py-10 sm:px-6 lg:px-8">
     <x-form-section submit="schedule">
         <x-slot name="title">
-            {{ __('Schedule Appointment') }}
+            <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
+                {{ __('Schedule Appointment') }}
+            </h1>
         </x-slot>
 
         <x-slot name="description">

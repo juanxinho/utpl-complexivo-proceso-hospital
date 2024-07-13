@@ -7,7 +7,7 @@
 
     <div class="py-2">
 
-        {{--@include('admin.appointments.actions')--}}
+        @include('admin.appointments.actions')
         @include('admin.appointments.menu')
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -57,13 +57,13 @@
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->specialty->name }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->user->profile->first_name }} {{ $appointment->medicSchedule->user->profile->last_name }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
-                        <td class="px-6 py-4 text-center">{{ ucfirst($appointment->status) }}</td>
+                        <td class="px-6 py-4 text-center">{{ __(ucfirst($appointment->status)) }}</td>
                         <td class="px-6 py-4 text-center">
                             <a href="{{ route('admin.appointments.show', $appointment->id_appointment) }}"
                                class="inline-block text-gray-600 dark:text-gray-300">
                                 <x-monoicon-eye width="20" height="20"/>
                             </a>
-                            <a href="{{ route('admin.appointments.editadmin', $appointment->id_appointment) }}"
+                            <a href="{{ route('admin.appointments.edit', $appointment->id_appointment) }}"
                                class="inline-block text-gray-600 dark:text-gray-300">
                                 <x-monoicon-edit-alt width="20" height="20"/>
                             </a>
@@ -72,8 +72,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 dark:text-red-500"
-                                        onclick="return confirm('{{ __('Are you sure you want to delete this specialty?') }}')">
-                                    <x-monoicon-delete-alt width="20" height="20"/>
+                                        onclick="return confirm('{{ __('Are you sure you want to cancel this appointment?') }}')">
+                                    <x-monoicon-close width="20" height="20"/>
                                 </button>
                             </form>
                         </td>

@@ -97,11 +97,10 @@ class ScheduleAppointment extends Component
             });
 
         // Get the raw SQL query
-        $sql = $query->toSql();
+        /*$sql = $query->toSql();
         $bindings = $query->getBindings();
-
         // Debug: Dump the SQL and bindings
-        //dd($sql, $bindings);
+        dd($sql, $bindings);*/
 
         $schedules = $query->get();
         $availableTimes = [];
@@ -116,12 +115,12 @@ class ScheduleAppointment extends Component
         return view('livewire.schedule-appointment')->layout('layouts.app');
     }
 
-    public function editadmin($id)
+    public function edit($id)
     {
         $appointment = Appointment::find($id);
         $patient = $appointment->user;
         $specialties = Specialty::pluck('name', 'id_specialty');
-        $this->specialty_id = $appointment->medicSchedule->specialty->id_specialty; 
+        $this->specialty_id = $appointment->medicSchedule->specialty->id_specialty;
         $this->medic_id = $appointment->medicSchedule->user->id;
         $this->date = $appointment->service_date;
         $this->time = $appointment->medic_schedule_id_medic_schedule;
@@ -133,7 +132,7 @@ class ScheduleAppointment extends Component
         $medics = $this->medics;
         $times = $this->times;
 
-        return view('livewire.schedule-appointment-edit', compact('patient','specialties','medics','times'))->layout('layouts.app');
+        return view('livewire.schedule-appointment-edit', compact('patient','specialties','medics','times'));
     }
 
     public function schedule()
