@@ -17,9 +17,14 @@ class ScheduleAppointment extends Component
     public $medic_id;
     public $date;
     public $time;
+    public $reason;
     public $specialties = [];
     public $medics = [];
     public $times = [];
+
+    public $searchPatient = '';
+    public $selectedPatient = null;
+    public $patients = [];
 
     public function mount()
     {
@@ -33,6 +38,7 @@ class ScheduleAppointment extends Component
         $this->medic_id = '';
         $this->date= '';
         $this->time = '';
+        $this->reason = '';
         $this->medics = [];
         $this->times = [];
     }
@@ -134,11 +140,40 @@ class ScheduleAppointment extends Component
             'record_date' => now(),
             'medic_schedule_id_medic_schedule' => $this->time,//id de schedule_medic
             'service_date' => Carbon::parse($this->date),//fecha de la cita
+            'reason' => $this->reason,
             'status' => 'scheduled',
         ]);
 
         session()->flash('message', 'Appointment scheduled successfully!');
         $this->resetInputFields();
+    }
+
+    public function updatedsearchPatient()
+    {
+        $this->patients = User::role('patient')
+            ->join('profile', 'users.id', '=', 'profile.id_profile')
+            ->where(function ($query) {
+                $query->where('profile.first_name', 'like', '%' . $this->searchPatient . '%')
+                    ->orWhere('profile.last_name', 'like', '%' . $this->searchPatient . '%')
+                    ->orWhere('profile.nid', 'like', '%' . $this->searchPatient . '%')
+                    ->orWhere('users.email', 'like', '%' . $this->searchPatient . '%');
+
+            })
+            ->select('users.*', 'profile.first_name', 'profile.last_name', 'profile.nid')
+            ->take(5)
+            ->get();
+    }
+
+    public function selectPatient($patientId)
+    {
+        $this->selectedPatient = User::with('profile')->find($patientId);
+        $this->searchPatient = '';
+        $this->patients = [];
+    }
+
+    public function removePatient()
+    {
+        $this->selectedPatient = null;
     }
 }
 
