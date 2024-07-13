@@ -3,7 +3,7 @@
 <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2>Edit Diagnostic Detail</h2>
+                <h2>{{ __('Edit Diagnostic Detail') }}</h2>
             </div>
         </div>
         <div class="row">
@@ -30,12 +30,12 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Description:</strong>
-                            <textarea class="form-control" style="height:150px" name="description" placeholder="Description (JSON format)">{{ json_encode($diagnosticDetail->description) }}</textarea>
+                            <strong>{{ __('Description') }}:</strong>
+                            <textarea rows="3" class="form-control" style="height:150px" name="description" placeholder="Description (JSON format)">{{ json_encode($diagnosticDetail->description) }}</textarea>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
                     </div>
                 </div>
 

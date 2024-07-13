@@ -54,49 +54,49 @@
         @endif
 
         <!-- First name -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="first_name" value="{{ __('First name') }}" />
             <x-input id="first_name" type="text" class="mt-1 block w-full" wire:model.defer="state.first_name" autocomplete="first_name" />
             <x-input-error for="first_name" class="mt-2" />
         </div>
 
         <!-- Last name -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="last_name" value="{{ __('Last name') }}" />
             <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model.defer="state.last_name" autocomplete="last_name" />
             <x-input-error for="last_name" class="mt-2" />
         </div>
 
         <!-- NID -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="nid" value="{{ __('NID') }}" />
             <x-input id="nid" type="text" class="mt-1 block w-full" wire:model.defer="state.nid" autocomplete="nid" />
             <x-input-error for="nid" class="mt-2" />
         </div>
 
         <!-- Phone -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="phone" value="{{ __('Phone') }}" />
             <x-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
             <x-input-error for="phone" class="mt-2" />
         </div>
 
         <!-- Gender -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="gender" value="{{ __('Gender') }}" />
             <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model.defer="state.gender" />
             <x-input-error for="gender" class="mt-2" />
         </div>
 
         <!-- Fecha de Nacimiento -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="dob" value="{{ __('Date of birth') }}" />
             <x-date-picker id="dob" type="date" name="dob" class="block mt-1 w-full" defaultdate="{{$this->user->profile->dob }}" wire:model.defer="state.dob" />
             <x-input-error for="dob" class="mt-2" />
         </div>
 
         <!-- Email -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="email" value="{{ __('Email') }}" />
             <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email" required autocomplete="username" />
             <x-input-error for="email" class="mt-2" />
@@ -118,22 +118,22 @@
             @endif
         </div>
 
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="country_id" value="{{ __('Country') }}" />
             <x-select id="country_id" name="country_id" class="block mt-1 w-full" :options="$countries" wire:model.live="state.country_id" placeholder="{{  __('Select a country' )}}"/>
         </div>
 
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="state_id" value="{{ __('State') }}" />
             <x-select id="state_id" name="state_id" class="block mt-1 w-full" :options="$states" wire:model.live="state.state_id" placeholder="{{  __('Select a state' )}}"/>
         </div>
 
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="city_id" value="{{ __('City') }}" />
             <x-select id="city_id" name="city_id" class="block mt-1 w-full" :options="$cities" wire:model.live="state.city_id" placeholder="{{  __('Select a city' )}}"/>
         </div>
 
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-2 lg:col-span-1">
             <x-label for="address" value="{{ __('Address') }}" />
             <x-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.address" autocomplete="address" />
         </div>

@@ -16,7 +16,7 @@ class CreateAppointmentTable extends Migration
             $table->timestamp('record_date')->useCurrent();
             $table->timestamp('modification_date')->nullable();
             $table->string('status', 45);
-            $table->text('reason'); // Adding long text field for reason
+            $table->text('reason')->nullable(); // Adding long text field for reason
             $table->unsignedBigInteger('medic_schedule_id_medic_schedule');
             $table->unsignedBigInteger('invoice_id_invoice')->nullable();
             $table->unsignedBigInteger('clinical_history_id_clinical_history')->nullable();
