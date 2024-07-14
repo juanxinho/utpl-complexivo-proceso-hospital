@@ -10,7 +10,7 @@ use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-class ScheduleAppointment extends Component
+class ScheduleAppointmentEdit extends Component
 {
     public $patient;
     public $specialty_id;
@@ -26,10 +26,9 @@ class ScheduleAppointment extends Component
     public $selectedPatient = null;
     public $patients = [];
 
-    public function mount()
+    public function mount($appointmentId)
     {
-        $this->patient = Auth::user();
-        $this->specialties = Specialty::pluck('name', 'id_specialty');
+        $this->edit($appointmentId);
     }
 
     private function resetInputFields()
@@ -58,10 +57,6 @@ class ScheduleAppointment extends Component
             ->join('specialty', 'specialty_user.id_specialty', '=', 'specialty.id_specialty')
             ->selectRaw('users.id, CONCAT(profile.first_name, " ", profile.last_name) as name');
 
-        // Dump the raw SQL query
-        //dd($query->toSql(), $query->getBindings());
-
-        // Execute the query and pluck results
         $this->medics = $query->pluck('name', 'users.id');
     }
 
@@ -83,7 +78,6 @@ class ScheduleAppointment extends Component
         ]);
 
         $dayOfWeek = Carbon::parse($this->date)->format('l');
-
 
         $query = MedicSchedule::where('id_medic', $this->medic_id)
             ->whereHas('schedule', function ($query) use ($dayOfWeek) {
@@ -117,30 +111,27 @@ class ScheduleAppointment extends Component
 
     public function render()
     {
-        return view('livewire.schedule-appointment')->layout('layouts.app');
+        return view('livewire.schedule-appointment-edit')->layout('layouts.app');
     }
 
-    /*public function edit($id)
+    public function edit($id)
     {
         $appointment = Appointment::find($id);
-        $patient = $appointment->user;
-        $specialties = Specialty::pluck('name', 'id_specialty');
+        $this->patient = User::with('profile')->find($appointment->user->id);
+        $this->specialties = Specialty::pluck('name', 'id_specialty');
+
         $this->specialty_id = $appointment->medicSchedule->specialty->id_specialty;
-        $this->medic_id = $appointment->medicSchedule->user->id;
+        $this->medic_id = $appointment->medicSchedule->id_medic;
         $this->date = $appointment->service_date;
         $this->time = $appointment->medic_schedule_id_medic_schedule;
 
         $this->updatedSpecialtyId($this->specialty_id);
         $this->updatedMedicId($this->medic_id);
         $this->updatedDate($this->date);
+        $this->loadAvailableTimes($this->time);
+    }
 
-        $medics = $this->medics;
-        $times = $this->times;
-
-        return view('livewire.schedule-appointment-edit', compact('patient','specialties','medics','times'));
-    }*/
-
-    public function schedule()
+    public function reschedule()
     {
         $this->validate([
             'specialty_id' => 'required',

@@ -16,6 +16,7 @@ use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
 use App\Livewire\ScheduleAppointment;
+use App\Livewire\ScheduleAppointmentEdit;
 use App\Livewire\PatientHistory;
 use App\Livewire\AttendPatient;
 
@@ -114,9 +115,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'update' => 'admin.diagnostics.update',
         'destroy' => 'admin.diagnostics.destroy',
     ]);
-    //Route::get('admin/appointments/create', ScheduleAppointment::class)->name('front.patient.appointments.create');
-    //Route::get('medic/appointments', [AppointmentController::class, 'medicIndex'])->name('medic.appointments.index');
-    Route::get('admin/appointments/edit/{appointmentId}', [ScheduleAppointment::class, 'edit'])->name('admin.appointments.edit');
+    Route::get('admin/appointments/edit/{appointmentId}', ScheduleAppointmentEdit::class)->name('admin.appointments.edit');
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
