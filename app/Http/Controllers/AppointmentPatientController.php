@@ -42,7 +42,7 @@ class AppointmentPatientController extends Controller
 
     public function create()
     {
-        return view('livewire.schedule-appointment');
+        return view('livewire.schedule-appointment-create');
     }
 
     public function store(Request $request)

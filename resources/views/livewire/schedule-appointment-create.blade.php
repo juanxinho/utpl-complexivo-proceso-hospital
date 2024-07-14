@@ -1,4 +1,4 @@
-<!-- resources/views/livewire/schedule-appointment.blade.php-->
+<!-- resources/views/livewire/schedule-appointment-create.blade.php-->
 <div class="w-full mx-auto py-10 sm:px-6 lg:px-8">
     <x-form-section submit="schedule">
         <x-slot name="title">
