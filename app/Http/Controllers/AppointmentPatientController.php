@@ -20,6 +20,7 @@ class AppointmentPatientController extends Controller
     {
         $appointments = Appointment::where('id_patient', Auth::id())
             ->where('service_date', '>=', now())
+            ->where('status', '!=', 'cancelled')
             ->orderBy('service_date', 'asc')
             ->get();
         return view('front.patient.appointments.next', compact('appointments'));

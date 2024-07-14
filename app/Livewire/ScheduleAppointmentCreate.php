@@ -14,6 +14,31 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         $this->patient = Auth::user();
         $this->specialties = Specialty::pluck('name', 'id_specialty');
     }
+
+    public function updatedSpecialtyId($value)
+    {
+        $this->medic_id = '';
+        $this->date = '';
+        $this->time = '';
+
+        parent::updatedSpecialtyId($value);
+    }
+
+    public function updatedMedicId($value)
+    {
+        $this->date = '';
+        $this->time = '';
+
+        parent::updatedMedicId($value);
+    }
+
+    public function updatedDate($value)
+    {
+        $this->time = '';
+
+        parent::updatedDate($value);
+    }
+
     public function schedule()
     {
         $this->validate([

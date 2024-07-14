@@ -13,6 +13,45 @@ class ScheduleAppointmentEdit extends ScheduleAppointment
     {
         $this->edit($appointmentId);
     }
+
+    public function updatedSpecialtyId($value)
+    {
+        $this->medic_id = '';
+        $this->date = '';
+        $this->time = '';
+
+        parent::updatedSpecialtyId($value);
+    }
+
+    public function updatedMedicId($value)
+    {
+        $this->date = '';
+        $this->time = '';
+
+        parent::updatedMedicId($value);
+    }
+
+    public function updatedDate($value)
+    {
+        $this->time = '';
+
+        parent::updatedDate($value);
+    }
+
+    public function loadSpecialtyId($value)
+    {
+        parent::updatedSpecialtyId($value);
+    }
+
+    public function loadMedicId($value)
+    {
+        parent::updatedMedicId($value);
+    }
+
+    public function loadDate($value)
+    {
+        parent::updatedDate($value);
+    }
     public function edit($id)
     {
         $appointment = Appointment::find($id);
@@ -23,10 +62,11 @@ class ScheduleAppointmentEdit extends ScheduleAppointment
         $this->medic_id = $appointment->medicSchedule->id_medic;
         $this->date = $appointment->service_date;
         $this->time = $appointment->medic_schedule_id_medic_schedule;
+        $this->reason = $appointment->reason;
 
-        $this->updatedSpecialtyId($this->specialty_id);
-        $this->updatedMedicId($this->medic_id);
-        $this->updatedDate($this->date);
+        $this->loadSpecialtyId($this->specialty_id);
+        $this->loadMedicId($this->medic_id);
+        $this->loadDate($this->date);
         $this->loadAvailableTimes($this->time);
     }
 
