@@ -8,6 +8,7 @@ use App\Http\Controllers\AppointmentPatientController;
 use App\Http\Controllers\AppointmentMedicController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScheduleController;
@@ -117,6 +118,12 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'update' => 'admin.diagnostics.update',
         'destroy' => 'admin.diagnostics.destroy',
     ]);
+
+    
+    /* Route::resource('patient/prescriptions', PrescriptionController::class)->name([
+        'index' => 'patient.prescriptions.index',
+    ]); */
+    
     Route::get('admin/appointments/edit/{appointmentId}', ScheduleAppointmentEdit::class)->name('admin.appointments.edit');
     Route::get('/admin/medics/manage-specialties-schedules', MedicSpecialtySchedule::class)->name('admin.medics.manage-specialties-schedules');
     Route::get('/admin/medics/specialties-schedules-list', MedicSpecialtyScheduleList::class)->name('admin.medics.manage-specialties-schedules-list');
@@ -138,7 +145,7 @@ Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function ()
 
     ///Route::get('patient/appointments', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
     //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
-    //Route::get('/prescriptions', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('prescriptions.index');
+    Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
     //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
 });
 

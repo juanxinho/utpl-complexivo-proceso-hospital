@@ -15,8 +15,10 @@
                     @else
                         <ul>
                             @foreach($appointments as $appointment)
+                                <br/>
                                 <li>
-                                    <strong>{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</strong> with Dr. {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}
+                                    <strong>{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</strong> <br/>
+                                    {{ $appointment->medicSchedule->specialty->name }} with Dr. {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}
                                 </li>
                             @endforeach
                         </ul>

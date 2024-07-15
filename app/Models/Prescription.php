@@ -17,5 +17,10 @@ class Prescription extends Model
     {
         return $this->hasMany(PrescriptionItem::class, 'prescription_id', 'id');
     }
+
+    public function appointment()
+    {
+        return $this->hasOne(Appointment::class, 'id_appointment', 'appointment_id');
+    }
 }
 

@@ -113,8 +113,8 @@ class AttendPatient extends Component
             $this->appointment->save();
         }
 
-        $medicalDiagnostic->diagnostics()->attach($this->diagnosticIds);
-        $medicalDiagnostic->medicalTests()->attach($this->medicalTestIds);
+        $medicalDiagnostic->diagnostics()->attach(array_unique($this->diagnosticIds));
+        $medicalDiagnostic->medicalTests()->attach(array_unique($this->medicalTestIds));
 
         session()->flash('message', 'Patient attended successfully.');
         return redirect()->route('medic.appointments.index');
