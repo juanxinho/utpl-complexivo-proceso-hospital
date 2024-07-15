@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\MedicSpecialtySchedule;
+use App\Livewire\MedicSpecialtyScheduleList;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentPatientController;
@@ -116,6 +118,8 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'destroy' => 'admin.diagnostics.destroy',
     ]);
     Route::get('admin/appointments/edit/{appointmentId}', ScheduleAppointmentEdit::class)->name('admin.appointments.edit');
+    Route::get('/admin/medics/manage-specialties-schedules', MedicSpecialtySchedule::class)->name('admin.medics.manage-specialties-schedules');
+    Route::get('/admin/medics/specialties-schedules-list', MedicSpecialtyScheduleList::class)->name('admin.medics.manage-specialties-schedules-list');
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {

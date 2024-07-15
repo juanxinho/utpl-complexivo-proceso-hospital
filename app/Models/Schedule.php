@@ -22,4 +22,9 @@ class Schedule extends Model
     {
         return $this->belongsToMany(User::class, 'medic_schedule', 'id_schedule', 'id_medic');
     }
+
+    public function medicSchedules()
+    {
+        return $this->hasMany(MedicSchedule::class, 'id_schedule', 'id');
+    }
 }
