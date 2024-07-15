@@ -4,16 +4,17 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Specialty;
 use App\Models\Schedule;
 
 class MedicSpecialtyScheduleList extends Component
 {
     public $medics = [];
+    public $days = [];
 
     public function mount()
     {
         $medics = User::role('medic')->with('profile', 'specialties', 'medicSchedules.schedule')->get();
+        $this->days = Schedule::select('days')->distinct()->pluck('days');
 
         foreach ($medics as $medic) {
             $medicName = $medic->profile->first_name . ' ' . $medic->profile->last_name;
