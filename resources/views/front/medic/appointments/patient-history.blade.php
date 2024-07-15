@@ -61,7 +61,7 @@
                                 <h4 class="mt-4 text-md font-medium text-gray-900 text-gray-500 dark:text-gray-400">{{ __('Prescriptions') }}</h4>
                                 @foreach ($appointment->prescriptions as $prescription)
                                     @foreach ($prescription->items as $item)
-                                        <li class="text-gray-500 dark:text-gray-400">{{ $item->stock->item_name }} - {{ $item->quantity }} units</li>
+                                        <li class="text-gray-500 dark:text-gray-400">{{ $item->stockItem->item_name }}  - {{ $item->quantity }} units</li>
                                     @endforeach
                                 @endforeach
                             </div>
