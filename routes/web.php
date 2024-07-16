@@ -73,7 +73,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'update' => 'admin.roles.update',
         'destroy' => 'admin.roles.destroy',
     ]);
-    Route::resource('admin/medics/specialties', SpecialtyController::class)->names([
+    Route::resource('admin/specialties', SpecialtyController::class)->names([
         'index' => 'admin.specialties.index',
         'create' => 'admin.specialties.create',
         'store' => 'admin.specialties.store',
@@ -119,11 +119,6 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
         'destroy' => 'admin.diagnostics.destroy',
     ]);
 
-    
-    /* Route::resource('patient/prescriptions', PrescriptionController::class)->name([
-        'index' => 'patient.prescriptions.index',
-    ]); */
-    
     Route::get('admin/appointments/edit/{appointmentId}', ScheduleAppointmentEdit::class)->name('admin.appointments.edit');
     Route::get('/admin/medics/manage-specialties-schedules', MedicSpecialtySchedule::class)->name('admin.medics.manage-specialties-schedules');
     Route::get('/admin/medics/specialties-schedules-list', MedicSpecialtyScheduleList::class)->name('admin.medics.manage-specialties-schedules-list');
@@ -142,11 +137,7 @@ Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function ()
         'destroy' => 'patient.appointments.destroy',
     ]);
     Route::get('patient/appointments/create', ScheduleAppointmentCreate::class)->name('front.patient.appointments.create');
-
-    ///Route::get('patient/appointments', [AppointmentController::class, 'show'])->name('front.patient.appointments.show');
-    //Route::get('/results', [App\Http\Controllers\ResultController::class, 'index'])->name('results.index');
     Route::get('/prescriptions', [PrescriptionController::class, 'index'])->name('prescriptions.index');
-    //Route::get('/treatments', [App\Http\Controllers\TreatmentController::class, 'index'])->name('treatments.index');
 });
 
 Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {

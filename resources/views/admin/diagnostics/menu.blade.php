@@ -1,0 +1,2 @@
+<x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('admin.diagnostics.index') }}" :active="request()->routeIs('admin.diagnostics.index')">{{ __('List') }}</x-menu-link>
+<x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('admin.diagnostics.create') }}" :active="request()->routeIs('admin.diagnostics.create')">{{ __('Add new diagnostic detail') }}</x-menu-link>

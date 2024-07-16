@@ -45,7 +45,8 @@ class SpecialtyController extends Controller
 
         Specialty::create($request->all());
 
-        return redirect()->route('admin.specialties.index')->with('success', __('Specialty successfully created.'));
+        return redirect()->route('admin.specialties.index')
+            ->with('success', __('Specialty successfully created.'));
     }
 
     public function show(Specialty $specialty)
@@ -69,13 +70,15 @@ class SpecialtyController extends Controller
 
         $specialty->update($request->all());
 
-        return redirect()->route('admin.specialties.index')->with('success', __('Specialty successfully updated.'));
+        return redirect()->route('admin.specialties.index')
+            ->with('success', __('Specialty successfully updated.'));
     }
 
     public function destroy(Specialty $specialty)
     {
         $specialty->delete();
 
-        return redirect()->route('admin.specialties.index')->with('success', __('Specialty successfully eliminated.'));
+        return redirect()->route('admin.specialties.index')
+            ->with('success', __('Specialty successfully eliminated.'));
     }
 }

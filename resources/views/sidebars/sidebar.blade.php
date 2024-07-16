@@ -205,7 +205,7 @@
                     </li>
                     <li>
                         <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
-                                    href="{{ route('admin.diagnostics.index') }}" :active="request()->routeIs('admin.diagnostics.index')">
+                                    href="{{ route('admin.diagnostics.index') }}" :active="request()->routeIs('admin.diagnostics.*')">
                             {{ __('Diagnostics') }}
                         </x-nav-link>
                     </li>

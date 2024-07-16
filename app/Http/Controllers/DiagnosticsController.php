@@ -10,9 +10,20 @@ class DiagnosticsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $diagnosticDetails = Diagnostics::all();
+        $search = $request->input('searchTerm');
+
+        $diagnosticDetails = Diagnostics::query()
+            ->when($search, function ($query) use ($search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('code', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
+            });
+
+        $diagnosticDetails = $diagnosticDetails->paginate(10);
+
         return view('admin.diagnostics.index', compact('diagnosticDetails'));
     }
 
@@ -31,13 +42,13 @@ class DiagnosticsController extends Controller
     {
         $request->validate([
             'code' => 'required|unique:diagnostics|max:10',
-            'description' => 'required|json',
+            'description' => 'string|max:255',
         ]);
 
         Diagnostics::create($request->all());
 
         return redirect()->route('admin.diagnostics.index')
-            ->with('success', 'MedicalDiagnostic detail created successfully.');
+            ->with('success', __('Diagnostic detail created successfully.'));
     }
 
     /**
@@ -62,14 +73,14 @@ class DiagnosticsController extends Controller
     public function update(Request $request, Diagnostics $diagnosticDetail)
     {
         $request->validate([
-            'code' => 'required|max:10|unique:diagnostics,code,' . $diagnosticDetail->id,
-            'description' => 'required|json',
+            'code' => 'required|max:10|unique:diagnostics,code,' . $diagnosticDetail->code,
+            'description' => 'string|max:255',
         ]);
 
         $diagnosticDetail->update($request->all());
 
         return redirect()->route('admin.diagnostics.index')
-            ->with('success', 'MedicalDiagnostic detail updated successfully.');
+            ->with('success', __('Diagnostic detail updated successfully.'));
     }
 
     /**
@@ -80,6 +91,6 @@ class DiagnosticsController extends Controller
         $diagnosticDetail->delete();
 
         return redirect()->route('admin.diagnostics.index')
-            ->with('success', 'MedicalDiagnostic detail deleted successfully.');
+            ->with('success', __('Diagnostic detail deleted successfully.'));
     }
 }

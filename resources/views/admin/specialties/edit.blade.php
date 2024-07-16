@@ -24,7 +24,6 @@
                             </ul>
                         </div>
                     @endif
-
                     <form action="{{ route('admin.specialties.update', $specialty->id_specialty) }}" method="POST">
                         <div
                             class="px-4 py-5 bg-white sm:p-6 dark:bg-gray-900 dark:text-gray-400 shadow sm:rounded-tl-md sm:rounded-tr-md">

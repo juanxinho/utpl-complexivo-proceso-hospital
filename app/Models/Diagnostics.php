@@ -9,6 +9,7 @@ class Diagnostics extends Model
 {
     use HasFactory;
 
+    protected $table = 'diagnostics';
     protected $fillable = ['code', 'description'];
     protected $primaryKey = 'id';
 

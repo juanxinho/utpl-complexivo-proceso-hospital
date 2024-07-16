@@ -43,10 +43,6 @@
                             <td class="px-6 py-4 text-center">{{ __($specialty->description) }}</td>
                             <td class="px-6 py-4 text-center">{{ $specialty->status ? __('Active') : __('Inactive') }}</td>
                             <td class="px-6 py-4 text-center">
-                                <a href="{{ route('admin.specialties.show', $specialty->id_specialty) }}"
-                                   class="inline-block text-gray-600 dark:text-gray-300">
-                                    <x-monoicon-eye width="20" height="20"/>
-                                </a>
                                 <a href="{{ route('admin.specialties.edit', $specialty->id_specialty) }}"
                                    class="inline-block text-gray-600 dark:text-gray-300">
                                     <x-monoicon-edit-alt width="20" height="20"/>

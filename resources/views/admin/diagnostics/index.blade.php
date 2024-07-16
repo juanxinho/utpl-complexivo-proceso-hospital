@@ -1,36 +1,60 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
+            {{ __('Diagnostics Management') }}
+        </h1>
+    </x-slot>
 
-<div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Diagnostic Details</h2>
-                <a href="{{ route('admin.diagnostics.create') }}" class="btn btn-success">Create New Diagnostic Detail</a>
-            </div>
-        </div>
-        <div class="row">
-            <table class="table table-bordered">
+    <div class="py-2">
+
+        @include('admin.diagnostics.actions')
+        @include('admin.diagnostics.menu')
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                @if (session()->has('message'))
+                    <div>{{ session('message') }}</div>
+                @endif
+                <thead
+                    class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
                 <tr>
-                    <th>Code</th>
-                    <th>Description</th>
-                    <th width="280px">Action</th>
+                    <th scope="col" class="px-6 py-3">{{ __('Code') }}</th>
+                    <th scope="col" class="px-6 py-3 text-center">{{ __('Description') }}</th>
+                    <th scope="col" class="px-6 py-3 text-center">{{ __('Actions') }}</th>
                 </tr>
-                @foreach ($diagnosticDetails as $diagnosticDetail)
-                    <tr>
-                        <td>{{ $diagnosticDetail->code }}</td>
-                        <td>{{ $diagnosticDetail->description }}</td>
-                        <td>
-                            <form action="{{ route('admin.diagnostics.destroy',$diagnosticDetail->id) }}" method="POST">
-                                <a class="btn btn-info" href="{{ route('admin.diagnostics.show',$diagnosticDetail->id) }}">Show</a>
-                                <a class="btn btn-primary" href="{{ route('admin.diagnostics.edit',$diagnosticDetail->id) }}">Edit</a>
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+                </thead>
+                <tbody>
+                @if($diagnosticDetails->isEmpty())
+                    <p>{{ __('No diagnostics found.') }}</p>
+                @else
+                    @foreach ($diagnosticDetails as $diagnosticDetail)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4 text-center">{{ $diagnosticDetail->code }}</td>
+                            <td class="px-6 py-4 text-center">{{ $diagnosticDetail->description }}</td>
+                            <td class="px-6 py-4 text-center">
+                                <a href="{{ route('admin.diagnostics.edit',$diagnosticDetail->id) }}"
+                                   class="inline-block text-gray-600 dark:text-gray-300">
+                                    <x-monoicon-edit-alt width="20" height="20"/>
+                                </a>
+                                <form action="{{ route('admin.diagnostics.destroy', $diagnosticDetail->id) }}"
+                                      method="POST" style="display:inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 dark:text-red-500"
+                                            onclick="return confirm('{{ __('Are you sure you want to delete this diagnostic?') }}')">
+                                        <x-monoicon-delete-alt width="20" height="20"/>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                </tbody>
             </table>
         </div>
-    </div>
-    </x-app-layout>
 
+        <div class="mt-4">
+            {{ $diagnosticDetails->links() }}
+        </div>
+    </div>
+</x-app-layout>
