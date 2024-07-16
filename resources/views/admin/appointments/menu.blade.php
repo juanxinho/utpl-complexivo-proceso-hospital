@@ -1,2 +1,2 @@
 <x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('admin.appointments.index') }}" :active="request()->routeIs('admin.appointments.index')">{{ __('List') }}</x-menu-link>
-<x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('admin.appointments.create') }}" :active="request()->routeIs('admin.appointments.create')">{{ __('Schedule an appointment') }}</x-menu-link>
+<x-menu-link class="mb-4 inline-block hover:underline font-medium py-2 px-4" href="{{ route('front.patient.appointments.create') }}" :active="request()->routeIs('front.patient.appointments.create')">{{ __('Schedule an appointment') }}</x-menu-link>

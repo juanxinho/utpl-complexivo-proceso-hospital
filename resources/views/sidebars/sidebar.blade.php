@@ -60,16 +60,16 @@
                         class="inline-flex items-center p-2 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-white hover:text-gray-700 dark:hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out w-full rounded-md"
                         aria-controls="dropdown-admin-appointments"
                         data-collapse-toggle="dropdown-admin-appointments"
-                        aria-expanded="{{ request()->routeIs('admin.appointments.index') ? 'true' : 'false' }}">
+                        aria-expanded="{{ request()->routeIs('admin.appointments.index', 'front.patient.appointments.create') ? 'true' : 'false' }}">
                     <x-monoicon-calendar width="20" height="20"/>
                     <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Appointment management') }}</span>
                     <x-monoicon-chevron-down width="20" height="20"/>
                 </button>
-                <ul id="dropdown-admin-appointments" class="py-2 space-y-2 {{ request()->routeIs('admin.appointments.index') ? 'show' : 'hidden' }}">
+                <ul id="dropdown-admin-appointments" class="py-2 space-y-2 {{ request()->routeIs('admin.appointments.index', 'admin.appointments.edit', 'front.patient.appointments.create') ? 'show' : 'hidden' }}">
                     <li>
                         <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
                                     href="{{ route('admin.appointments.index') }}"
-                                    :active="request()->routeIs('admin.appointments.index')">
+                                    :active="request()->routeIs('admin.appointments.index', 'admin.appointments.edit')">
                             {{ __('Appointments') }}
                         </x-nav-link>
                     </li>

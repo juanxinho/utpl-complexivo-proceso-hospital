@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\MedicSchedule;
 use App\Models\User;
 use App\Models\Specialty;
+use App\Models\Day;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -21,6 +22,7 @@ class ScheduleAppointment extends Component
     public $specialties = [];
     public $medics = [];
     public $times = [];
+    public $days = [];
 
     public $searchPatient = '';
     public $selectedPatient = null;
@@ -28,7 +30,8 @@ class ScheduleAppointment extends Component
 
     public function mount($appointmentId = null)
     {
-
+        $this->specialties = Specialty::all()->pluck('name', 'id_specialty');
+        $this->days = Day::orderBy('id')->pluck('name', 'id')->toArray();
     }
 
     public function resetInputFields()
@@ -75,13 +78,18 @@ class ScheduleAppointment extends Component
         $this->validate([
             'specialty_id' => 'required|exists:specialty,id_specialty',
             'medic_id' => 'required|exists:users,id',
+            'date' => 'required|date',
         ]);
 
-        $dayOfWeek = Carbon::parse($this->date)->format('l');
+        if (!$this->date) {
+            return;
+        }
+
+        $dayOfWeek = Carbon::parse($this->date)->dayOfWeekIso;
 
         $query = MedicSchedule::where('id_medic', $this->medic_id)
             ->whereHas('schedule', function ($query) use ($dayOfWeek) {
-                $query->where('days', 'like', '%' . $dayOfWeek . '%')
+                $query->where('day_id', $dayOfWeek)
                     ->where('id_specialty', $this->specialty_id);
             })
             ->where(function ($query) use ($selectedTimeId) {
@@ -103,7 +111,8 @@ class ScheduleAppointment extends Component
         $this->times = $availableTimes;
     }
 
-    public function updatedsearchPatient()
+
+    public function updatedSearchPatient()
     {
         $this->patients = User::role('patient')
             ->join('profile', 'users.id', '=', 'profile.id_profile')
