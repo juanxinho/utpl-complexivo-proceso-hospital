@@ -3,66 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\Day;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::paginate(10);
+        $schedules = Schedule::with('day')->paginate(10);
         return view('admin.schedules.index', compact('schedules'));
     }
 
     public function create()
     {
-        return view('admin.schedules.create');
+        $days = Day::all()->pluck('name', 'id')->toArray();
+        return view('admin.schedules.create', compact('days'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'days' => 'required|string|max:255',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'day_id' => 'required|exists:days,id',
+            'time_range' => 'required|string|max:255',
         ]);
 
-        Schedule::create($request->all());
+        Schedule::create([
+            'day_id' => $request->day_id,
+            'time_range' => $request->time_range,
+        ]);
 
-        return redirect()->route('schedules.index')
+        return redirect()->route('admin.schedules.index')
             ->with('success', 'Schedule created successfully.');
-    }
-
-    public function show(Schedule $schedule)
-    {
-        //return view('admin.schedules.show', compact('schedule'));
     }
 
     public function edit(Schedule $schedule)
     {
-        return view('admin.schedules.edit', compact('schedule'));
+        $days = Day::all();
+        return view('admin.schedules.edit', compact('schedule', 'days'));
     }
 
     public function update(Request $request, Schedule $schedule)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'days' => 'required|string|max:255',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'day_id' => 'required|exists:days,id',
+            'time_range' => 'required|string|max:255',
         ]);
 
-        $schedule->update($request->all());
+        $schedule->update([
+            'day_id' => $request->day_id,
+            'time_range' => $request->time_range,
+        ]);
 
-        return redirect()->route('schedules.index')
-            ->with('success', __('Schedule updated successfully.'));
+        return redirect()->route('admin.schedules.index')
+            ->with('success', 'Schedule updated successfully.');
     }
 
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
 
-        return redirect()->route('schedules.index')
-            ->with('success', __('Schedule deleted successfully.'));
+        return redirect()->route('admin.schedules.index')
+            ->with('success', 'Schedule deleted successfully.');
     }
 }

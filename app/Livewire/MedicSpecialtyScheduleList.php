@@ -17,7 +17,7 @@ class MedicSpecialtyScheduleList extends Component
         $medics = User::role('medic')->with('profile', 'specialties', 'medicSchedules.schedule.day')->get();
 
         // Get the distinct day ids from the schedule table
-        $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');//Schedule::distinct()->pluck('day_id')->toArray();
+        $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');
         $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
 
 

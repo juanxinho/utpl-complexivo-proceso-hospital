@@ -35,12 +35,15 @@
                             </div>
                             <div class="col-span-2 lg:col-span-1">
                                 <x-label for="profile.gender" value="{{ __('Gender') }}:"/>
-                                <x-select id="gender" name="gender" class="block mt-1 w-full" :options="['M' => __('Male'), 'F' => __('Female')]" wire:model="profile.gender" placeholder="{{  __('Select an option' )}}" />
+                                <x-select id="gender" name="gender" class="block mt-1 w-full"
+                                          :options="['M' => __('Male'), 'F' => __('Female')]"
+                                          wire:model="profile.gender" placeholder="{{  __('Select an option' )}}"/>
                                 @error('profile.gender') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-2 lg:col-span-1">
                                 <x-label for="profile.dob" value="{{ __('Date of birth') }}:"/>
-                                <x-date-picker id="dob" type="date" name="dob" class="block mt-1 w-full" defaultdate="{{$profile['dob'] }}" wire:model="profile.dob" />
+                                <x-date-picker id="dob" type="date" name="dob" class="block mt-1 w-full"
+                                               defaultdate="{{$profile['dob'] }}" wire:model="profile.dob"/>
                                 @error('profile.dob') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-2 lg:col-span-1">
@@ -49,45 +52,56 @@
                                 @error('email') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="country_id" value="{{ __('Country') }}" />
-                                <x-select id="country_id" name="country_id" class="block mt-1 w-full" :options="$countries" wire:model.live="profile.country_id" placeholder="{{  __('Select a country' )}}"/>
+                                <x-label for="country_id" value="{{ __('Country') }}"/>
+                                <x-select id="country_id" name="country_id" class="block mt-1 w-full"
+                                          :options="$countries" wire:model.live="profile.country_id"
+                                          placeholder="{{  __('Select a country' )}}"/>
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="state_id" value="{{ __('State') }}" />
-                                <x-select id="state_id" name="state_id" class="block mt-1 w-full" :options="$states" wire:model.live="profile.state_id" placeholder="{{  __('Select a state' )}}"/>
+                                <x-label for="state_id" value="{{ __('State') }}"/>
+                                <x-select id="state_id" name="state_id" class="block mt-1 w-full" :options="$states"
+                                          wire:model.live="profile.state_id" placeholder="{{  __('Select a state' )}}"/>
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="city_id" value="{{ __('City') }}" />
-                                <x-select id="city_id" name="city_id" class="block mt-1 w-full" :options="$cities" wire:model.live="profile.city_id" placeholder="{{  __('Select a city' )}}"/>
+                                <x-label for="city_id" value="{{ __('City') }}"/>
+                                <x-select id="city_id" name="city_id" class="block mt-1 w-full" :options="$cities"
+                                          wire:model.live="profile.city_id" placeholder="{{  __('Select a city' )}}"/>
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="address" value="{{ __('Address') }}" />
-                                <x-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="profile.address" autocomplete="address" />
+                                <x-label for="address" value="{{ __('Address') }}"/>
+                                <x-input id="address" type="text" class="mt-1 block w-full"
+                                         wire:model.defer="profile.address" autocomplete="address"/>
                             </div>
-                            <div class="col-span-2 lg:col-span-1">
-                                <x-label for="id_roles" value="{{ __('Role') }}:"/>
-                                @foreach ($roles as $role)
-                                    <div class="flex items-center mb-4">
-                                        <input class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500" type="checkbox" wire:model.defer="id_roles"  value="{{ $role->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            <div class="col-span-2">
+                                <x-label for="id_roles" value="{{ __('Roles') }}:"/>
+                                <div class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1">
+                                    @foreach ($roles as $role)
+                                        <div class="flex items-center m-2">
+                                            <input
+                                                class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500"
+                                                type="checkbox" wire:model.defer="id_roles" value="{{ $role->id }}"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
 
-                                               @foreach ($id_roles as $id_role)
-                                                   @if(in_array($role->id, $id_roles)) checked @endif
+                                                @foreach ($id_roles as $id_role)
+                                                    @if(in_array($role->id, $id_roles)) checked @endif
                                                 @endforeach
-                                        />
-                                    <label class="ms-3">{{ $role->name }}</label>
-                                    </div>
-                                @endforeach
-
+                                            />
+                                            <label class="ms-3">{{ $role->name }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
                                 @error('id_roles') <span>{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+                    <div
+                        class="flex items-center justify-end px-4 py-3 bg-gray-50 dark:bg-gray-800 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
                         <x-button class="me-2" type="submit">{{ __('Save') }}</x-button>
-                        <x-secondary-button type="button" wire:click="closeModal()">{{ __('Cancel') }}</x-secondary-button>
+                        <x-secondary-button type="button"
+                                            wire:click="closeModal()">{{ __('Cancel') }}</x-secondary-button>
                     </div>
                 </form>
 

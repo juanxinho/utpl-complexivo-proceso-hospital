@@ -52,63 +52,69 @@
                                 @error('email') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="country_id" value="{{ __('Country') }}" />
-                                <x-select id="country_id" name="country_id" class="block mt-1 w-full" :options="$countries" wire:model.live="profile.country_id" placeholder="{{  __('Select a country' )}}"/>
+                                <x-label for="profile.country_id" value="{{ __('Country') }}"/>
+                                <x-select id="profile.country_id" name="profile.country_id" class="block mt-1 w-full"
+                                          :options="$countries" wire:model.live="profile.country_id"
+                                          placeholder="{{  __('Select a country' )}}"/>
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="state_id" value="{{ __('State') }}" />
-                                <x-select id="state_id" name="state_id" class="block mt-1 w-full" :options="$states" wire:model.live="profile.state_id" placeholder="{{  __('Select a state' )}}"/>
+                                <x-label for="profile.state_id" value="{{ __('State') }}"/>
+                                <x-select id="profile.state_id" name="profile.state_id" class="block mt-1 w-full" :options="$states"
+                                          wire:model.live="profile.state_id" placeholder="{{  __('Select a state' )}}"/>
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="city_id" value="{{ __('City') }}" />
-                                <x-select id="city_id" name="city_id" class="block mt-1 w-full" :options="$cities" wire:model.live="profile.city_id" placeholder="{{  __('Select a city' )}}"/>
+                                <x-label for="profile.city_id" value="{{ __('City') }}"/>
+                                <x-select id="profile.city_id" name="profile.city_id" class="block mt-1 w-full" :options="$cities"
+                                          wire:model.live="profile.city_id" placeholder="{{  __('Select a city' )}}"/>
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
-                                <x-label for="address" value="{{ __('Address') }}" />
-                                <x-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="profile.address" autocomplete="address" />
+                                <x-label for="profile.address" value="{{ __('Address') }}"/>
+                                <x-input id="profile.address" type="text" class="mt-1 block w-full"
+                                         wire:model.defer="profile.address" autocomplete="address"/>
                             </div>
-                            <div class="col-span-2 lg:col-span-1">
+                            <div class="col-span-2">
                                 <x-label for="id_specialties" value="{{ __('Specialty') }}:"/>
+                                <div
+                                    class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1">
                                 @foreach ($specialties as $specialty)
-                                    <div class="flex items-center mb-4">
-                                        <input class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500" type="checkbox" wire:model.defer="id_specialties"  value="{{ $specialty->id_specialty }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-
-                                               @foreach ($id_specialties as $id_specialty)
-                                                   @if(in_array($specialty->id_specialty, $id_specialties)) checked @endif
-                                            @endforeach
-                                        />
-                                        <label class="ms-3">{{ $specialty->name }}</label>
-                                    </div>
-                                @endforeach
-
+                                        <div class="flex items-center m-2">
+                                            <input
+                                                class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500"
+                                                type="checkbox" wire:model.defer="id_specialties"
+                                                value="{{ $specialty->id_specialty }}"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                @foreach ($id_specialties as $id_specialty)
+                                                    @if(in_array($specialty->id_specialty, $id_specialties)) checked @endif
+                                                @endforeach
+                                            />
+                                            <label class="ms-3">{{ $specialty->name }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
                                 @error('id_specialties') <span>{{ $message }}</span> @enderror
                             </div>
-{{--
-                            @foreach ($medicSpecialties as $specialtyId)
-                                <div class="bg-gray-100 p-4 mb-4 rounded-lg shadow-inner">
-                                    <h3 class="font-semibold text-lg">{{ $specialties->find($specialtyId)->name }}</h3>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div class="col-span-2">
-                                            <x-label for="days" value="{{ __('Days') }}" />
-                                            <x-select id="specialtyDays" name="specialtyDays" wire:model.live="specialtyDays.{{ $specialtyId }}" :options="$days" multiple class="form-multiselect mt-1 block w-full" />
-                                        </div>
-                                        <div class="col-span-2">
-                                            <x-label for="time_range" value="{{ __('Time range') }}" />
-                                            @foreach ($specialtyDays[$specialtyId] ?? [] as $day)
-                                                <div class="mb-2">
-                                                    <h4 class="font-medium">{{ $day }}</h4>
-                                                    <x-select wire:model.live="specialtySchedules.{{ $specialtyId }}.{{ $day }}[]" :options="$schedules" multiple class="form-multiselect mt-1 block w-full" />
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <x-button wire:click="assignSchedule({{ $specialtyId }})">{{ __('Assign Schedule') }}</x-button>
+                            {{--@foreach ($medicSpecialties as $specialtyId)
+                                <div class="col-span-2">
+                                    <x-label
+                                        value="{{ __('Select Days for ') . $specialties->find($specialtyId)->name }}"/>
+                                    <x-select id="specialtyDays" name="specialtyDays"
+                                              wire:model.live="specialtyDays.{{ $specialtyId }}" :options="$days"
+                                              multiple class="form-multiselect mt-1 block w-full"/>
                                 </div>
-                            @endforeach
-                            --}}
+
+                                @foreach ($specialtyDays[$specialtyId] ?? [] as $dayId)
+                                    <div class="col-span-2">
+                                        <x-label value="{{ __('Select Schedules for ') . $days[$dayId] }}"/>
+                                        <x-select id="specialtySchedules" name="specialtySchedules"
+                                                  wire:model.live="specialtySchedules.{{ $specialtyId }}.{{ $dayId }}"
+                                                  :options="$schedules->pluck('time_range', 'id')" multiple
+                                                  class="form-multiselect mt-1 block w-full"/>
+                                    </div>
+                                @endforeach
+                            @endforeach--}}
                         </div>
                     </div>
                     <div

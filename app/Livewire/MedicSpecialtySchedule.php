@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Specialty;
 use App\Models\Schedule;
 use App\Models\MedicSchedule;
+use App\Models\Day;
 
 class MedicSpecialtySchedule extends Component
 {
@@ -19,12 +20,14 @@ class MedicSpecialtySchedule extends Component
     public $medicSpecialties = [];
     public $specialtyDays = [];
     public $specialtySchedules = [];
+    public $days = [];
 
     public function mount()
     {
         $this->medics = User::role('medic')->with('specialties', 'medicSchedules.schedule')->get();
         $this->specialties = Specialty::all();
         $this->schedules = Schedule::all();
+        $this->days = Day::orderBy('id')->pluck('name', 'id')->toArray();
     }
 
     public function updatedSelectedMedic($medicId)
@@ -42,14 +45,13 @@ class MedicSpecialtySchedule extends Component
 
     public function assignSchedule($specialtyId)
     {
-        foreach ($this->specialtyDays[$specialtyId] as $day) {
-            $scheduleIds = $this->specialtySchedules[$specialtyId][$day] ?? [];
+        foreach ($this->specialtyDays[$specialtyId] as $dayId) {
+            $scheduleIds = $this->specialtySchedules[$specialtyId][$dayId] ?? [];
             foreach ($scheduleIds as $scheduleId) {
                 MedicSchedule::create([
                     'id_medic' => $this->selectedMedic,
                     'id_specialty' => $specialtyId,
                     'id_schedule' => $scheduleId,
-                    'day' => $day,
                 ]);
             }
         }
@@ -58,6 +60,8 @@ class MedicSpecialtySchedule extends Component
 
     public function render()
     {
-        return view('livewire.medic-specialty-schedule')->layout('layouts.app');
+        return view('livewire.medic-specialty-schedule', [
+            'days' => $this->days,
+        ])->layout('layouts.app');
     }
 }

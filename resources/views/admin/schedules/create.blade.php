@@ -32,9 +32,8 @@
                             class="px-4 py-5 bg-white sm:p-6 dark:bg-gray-900 dark:text-gray-400 shadow sm:rounded-tl-md sm:rounded-tr-md">
                             @csrf
                             <div class="mb-4">
-                                <x-label for="days" value="{{ __('Day') }}"/>
-                                <x-input id="days" class="block mt-1 w-full" type="text" name="days"
-                                         :value="old('days')" required autofocus autocomplete="days"/>
+                                <x-label for="day_id" value="{{ __('Day') }}"/>
+                                <x-select id="day_id" name="day_id" class="block mt-1 w-full" :options="$days" required placeholder="{{ __('Select an option') }}" />
                             </div>
                             <div class="mb-4">
                                 <x-label for="time_range" value="{{ __('Time range') }}"/>

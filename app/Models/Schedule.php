@@ -14,7 +14,7 @@ class Schedule extends Model
     protected $primaryKey = 'id_schedule';
 
     protected $fillable = [
-        'days',
+        'day_id',
         'time_range',
     ];
 

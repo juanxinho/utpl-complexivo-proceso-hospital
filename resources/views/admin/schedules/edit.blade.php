@@ -33,9 +33,12 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
-                                <x-label for="days" value="{{ __('Day') }}"/>
-                                <x-input id="days" class="block mt-1 w-full" type="text" name="days"
-                                         value="{{ $schedule->days }}" required autofocus autocomplete="days"/>
+                                <label for="day_id" value="{{ __('Day') }}"/>
+                                <select id="day_id" name="day_id"  placeholder="{{ __('Select an option') }}" class="block mt-1 w-full dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-malachite-600 focus:ring-malachite-600 dark:focus:border-malachite-300 dark:focus:ring-malachite-300 rounded-md shadow-sm" required>
+                                    @foreach($days as $day)
+                                        <option value="{{ $day->id }}" {{ $day->id == $schedule->day_id ? 'selected' : '' }}>{{ $day->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-4">
                                 <x-label for="time_range" value="{{ __('Time range') }}"/>

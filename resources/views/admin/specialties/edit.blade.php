@@ -53,7 +53,7 @@
 
                             <div class="mb-4">
                                 <x-label for="status" value="{{ __('Status') }}"/>
-                                <select id="status" name="status" class="block mt-1 w-full dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-malachite-600 focus:ring-malachite-600 dark:focus:border-malachite-300 dark:focus:ring-malachite-300 rounded-md shadow-sm'">
+                                <select id="status" name="status" placeholder="{{ __('Select an option') }}" class="block mt-1 w-full dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-malachite-600 focus:ring-malachite-600 dark:focus:border-malachite-300 dark:focus:ring-malachite-300 rounded-md shadow-sm">
                                     <option value="1" {{ $specialty->status ? 'selected' : '' }}>{{ __('Active') }}</option>
                                     <option value="0" {{ !$specialty->status ? 'selected' : '' }}>{{ __('Inactive') }}</option>
                                 </select>
