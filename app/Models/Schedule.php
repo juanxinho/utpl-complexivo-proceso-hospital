@@ -18,6 +18,11 @@ class Schedule extends Model
         'time_range',
     ];
 
+    public function days()
+    {
+        return $this->belongsToMany(Day::class, 'day_schedule');
+    }
+
     public function medics()
     {
         return $this->belongsToMany(User::class, 'medic_schedule', 'id_schedule', 'id_medic');

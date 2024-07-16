@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Day;
 
 class ScheduleSeeder extends Seeder
 {
@@ -17,14 +18,14 @@ class ScheduleSeeder extends Seeder
         ];
 
         // Define days of the week (Monday to Friday)
-        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        $days = Day::all();
 
         // Define appointment duration in minutes
         $appointmentDuration = 30;
 
         // Get all doctors (assuming doctors have the 'medic' role)
 
-        foreach ($daysOfWeek as $day) {
+        foreach ($days as $day) {
             foreach ($defaultSchedules as $schedule) {
                 $startTime = Carbon::parse($schedule['start']);
                 $endTime = Carbon::parse($schedule['end']);
@@ -33,7 +34,7 @@ class ScheduleSeeder extends Seeder
                     $timeRange = $startTime->format('H:i') . ' - ' . $startTime->copy()->addMinutes($appointmentDuration)->format('H:i');
 
                     DB::table('schedule')->insert([
-                        'days' => $day,
+                        'day_id' => $day->id,
                         'time_range' => $timeRange,
                         'created_at' => now(),
                         'updated_at' => now(),

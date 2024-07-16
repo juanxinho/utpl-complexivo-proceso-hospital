@@ -10,9 +10,11 @@ class CreateScheduleTable extends Migration
     {
         Schema::create('schedule', function (Blueprint $table) {
             $table->id('id_schedule');
-            $table->enum('days', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
+            $table->unsignedBigInteger('day_id');
             $table->string('time_range', 45);
             $table->timestamps();
+
+            $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade');
         });
     }
 
