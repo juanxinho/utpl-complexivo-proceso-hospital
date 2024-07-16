@@ -14,7 +14,7 @@ class DiagnosticsController extends Controller
     {
         $search = $request->input('searchTerm');
 
-        $diagnosticDetails = Diagnostics::query()
+        $diagnostics = Diagnostics::query()
             ->when($search, function ($query) use ($search) {
                 return $query->where(function ($query) use ($search) {
                     $query->where('code', 'like', '%' . $search . '%')
@@ -22,9 +22,9 @@ class DiagnosticsController extends Controller
                 });
             });
 
-        $diagnosticDetails = $diagnosticDetails->paginate(10);
+        $diagnostics = $diagnostics->paginate(10);
 
-        return view('admin.diagnostics.index', compact('diagnosticDetails'));
+        return view('admin.diagnostics.index', compact('diagnostics'));
     }
 
     /**
@@ -54,30 +54,30 @@ class DiagnosticsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Diagnostics $diagnosticDetail)
+    public function show(Diagnostics $diagnostic)
     {
-        return view('admin.diagnostics.show', compact('diagnosticDetail'));
+        return view('admin.diagnostics.show', compact('diagnostic'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Diagnostics $diagnosticDetail)
+    public function edit(Diagnostics $diagnostic)
     {
-        return view('admin.diagnostics.edit', compact('diagnosticDetail'));
+        return view('admin.diagnostics.edit', compact('diagnostic'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Diagnostics $diagnosticDetail)
+    public function update(Request $request, Diagnostics $diagnostic)
     {
         $request->validate([
-            'code' => 'required|max:10|unique:diagnostics,code,' . $diagnosticDetail->code,
+            'code' => 'required|max:10|unique:diagnostics,code,' . $diagnostic->code,
             'description' => 'string|max:255',
         ]);
 
-        $diagnosticDetail->update($request->all());
+        $diagnostic->update($request->all());
 
         return redirect()->route('admin.diagnostics.index')
             ->with('success', __('Diagnostic detail updated successfully.'));
@@ -86,9 +86,9 @@ class DiagnosticsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Diagnostics $diagnosticDetail)
+    public function destroy(Diagnostics $diagnostic)
     {
-        $diagnosticDetail->delete();
+        $diagnostic->delete();
 
         return redirect()->route('admin.diagnostics.index')
             ->with('success', __('Diagnostic detail deleted successfully.'));

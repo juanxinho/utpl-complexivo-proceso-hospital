@@ -62,7 +62,7 @@
 
         <x-slot name="actions">
             <x-action-message class="mr-3" on="saved">
-                {{ __('Scheduled.') }}
+                {{ __('Scheduled') }}.
             </x-action-message>
 
             <x-button>

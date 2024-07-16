@@ -38,7 +38,7 @@
                                 </select>
                             </div>
                             <div class="col-span-2">
-                                <x-label for="time_range" value="{{ __('Time Range') }}" />
+                                <x-label for="time_range" value="{{ __('Time range') }}" />
                                 @foreach ($specialtyDays[$specialtyId] ?? [] as $day)
                                     <div class="mb-2">
                                         <h4 class="font-medium">{{ $day }}</h4>

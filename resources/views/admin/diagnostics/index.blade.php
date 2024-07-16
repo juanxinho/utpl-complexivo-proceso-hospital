@@ -24,19 +24,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if($diagnosticDetails->isEmpty())
+                @if($diagnostics->isEmpty())
                     <p>{{ __('No diagnostics found.') }}</p>
                 @else
-                    @foreach ($diagnosticDetails as $diagnosticDetail)
+                    @foreach ($diagnostics as $diagnostic)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="px-6 py-4 text-center">{{ $diagnosticDetail->code }}</td>
-                            <td class="px-6 py-4 text-center">{{ $diagnosticDetail->description }}</td>
+                            <td class="px-6 py-4 text-center">{{ $diagnostic->code }}</td>
+                            <td class="px-6 py-4 text-center">{{ $diagnostic->description }}</td>
                             <td class="px-6 py-4 text-center">
-                                <a href="{{ route('admin.diagnostics.edit',$diagnosticDetail->id) }}"
+                                <a href="{{ route('admin.diagnostics.edit',$diagnostic->id) }}"
                                    class="inline-block text-gray-600 dark:text-gray-300">
                                     <x-monoicon-edit-alt width="20" height="20"/>
                                 </a>
-                                <form action="{{ route('admin.diagnostics.destroy', $diagnosticDetail->id) }}"
+                                <form action="{{ route('admin.diagnostics.destroy', $diagnostic->id) }}"
                                       method="POST" style="display:inline">
                                     @csrf
                                     @method('DELETE')
@@ -54,7 +54,7 @@
         </div>
 
         <div class="mt-4">
-            {{ $diagnosticDetails->links() }}
+            {{ $diagnostics->links() }}
         </div>
     </div>
 </x-app-layout>

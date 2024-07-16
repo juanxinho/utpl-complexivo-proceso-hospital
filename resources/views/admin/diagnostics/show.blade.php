@@ -11,13 +11,13 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Code:</strong>
-                    {{ $diagnosticDetail->code }}
+                    {{ $diagnostic->code }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Description:</strong>
-                    {{ json_encode($diagnosticDetail->description) }}
+                    {{ json_encode($diagnostic->description) }}
                 </div>
             </div>
         </div>

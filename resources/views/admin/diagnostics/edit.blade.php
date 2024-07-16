@@ -25,7 +25,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ route('admin.diagnostics.update', $diagnosticDetail->id) }}" method="POST">
+                    <form action="{{ route('admin.diagnostics.update', $diagnostic->id) }}" method="POST">
                         <div
                             class="px-4 py-5 bg-white sm:p-6 dark:bg-gray-900 dark:text-gray-400 shadow sm:rounded-tl-md sm:rounded-tr-md">
                             @csrf
@@ -33,7 +33,7 @@
                             <div class="mb-4">
                                 <x-label for="code" value="{{ __('Code') }}"/>
                                 <x-input id="code" class="block mt-1 w-full" type="text" name="code"
-                                         value="{{ $diagnosticDetail->code }}"
+                                         value="{{ $diagnostic->code }}"
                                          required autofocus/>
                                 <x-input-error for="code" class="mt-2"/>
                             </div>
@@ -41,7 +41,7 @@
                                 <x-label for="description" value="{{ __('Description') }}"/>
                                 <textarea rows="3" id="description" name="description"
                                           class="dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-malachite-600 focus:ring-malachite-600 dark:focus:border-malachite-300 dark:focus:ring-malachite-300 rounded-md shadow-sm w-full">
-                                    {{ $diagnosticDetail->description }}
+                                    {{ $diagnostic->description }}
                                 </textarea>
                                 <x-input-error for="description" class="mt-2"/>
                             </div>
