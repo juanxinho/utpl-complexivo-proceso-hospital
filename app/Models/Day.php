@@ -9,8 +9,10 @@ class Day extends Model
 {
     use HasFactory;
 
+    protected $table = 'days';
+
     public function schedules()
     {
-        return $this->belongsToMany(Schedule::class, 'schedule', 'day_id');
+        return $this->hasMany(Schedule::class, 'day_id');
     }
 }

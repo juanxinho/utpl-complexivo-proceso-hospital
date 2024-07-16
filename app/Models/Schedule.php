@@ -18,9 +18,9 @@ class Schedule extends Model
         'time_range',
     ];
 
-    public function days()
+    public function day()
     {
-        return $this->belongsToMany(Day::class, 'day_schedule');
+        return $this->belongsTo(Day::class, 'day_id');
     }
 
     public function medics()

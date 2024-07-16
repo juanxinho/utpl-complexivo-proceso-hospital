@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Day;
 use App\Models\Schedule;
 
 class MedicSpecialtyScheduleList extends Component
@@ -13,8 +14,12 @@ class MedicSpecialtyScheduleList extends Component
 
     public function mount()
     {
-        $medics = User::role('medic')->with('profile', 'specialties', 'medicSchedules.schedule')->get();
-        $this->days = Schedule::select('days')->distinct()->pluck('days');
+        $medics = User::role('medic')->with('profile', 'specialties', 'medicSchedules.schedule.day')->get();
+
+        // Get the distinct day ids from the schedule table
+        $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');//Schedule::distinct()->pluck('day_id')->toArray();
+        $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
+
 
         foreach ($medics as $medic) {
             $medicName = $medic->profile->first_name . ' ' . $medic->profile->last_name;
@@ -22,11 +27,13 @@ class MedicSpecialtyScheduleList extends Component
             foreach ($medic->specialties as $specialty) {
                 foreach ($medic->medicSchedules as $medicSchedule) {
                     if ($medicSchedule->id_specialty == $specialty->id_specialty) {
-                        $day = $medicSchedule->schedule->days;
-                        $specialtyName = $specialty->name;
-                        $timeRange = $medicSchedule->schedule->time_range;
+                        if ($medicSchedule->schedule && $medicSchedule->schedule->day) {
+                            $dayName = $medicSchedule->schedule->day->name;
+                            $specialtyName = $specialty->name;
+                            $timeRange = $medicSchedule->schedule->time_range;
 
-                        $this->medics[$medicName][$specialtyName][$day][] = $timeRange;
+                            $this->medics[$medicName][$specialtyName][$dayName][] = $timeRange;
+                        }
                     }
                 }
             }

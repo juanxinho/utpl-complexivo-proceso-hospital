@@ -18,7 +18,7 @@ class ScheduleSeeder extends Seeder
         ];
 
         // Define days of the week (Monday to Friday)
-        $days = Day::all();
+        $days = [1,2,3,4,5];
 
         // Define appointment duration in minutes
         $appointmentDuration = 30;

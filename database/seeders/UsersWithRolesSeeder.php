@@ -23,11 +23,11 @@ class UsersWithRolesSeeder extends Seeder
             $specialtyIds = Specialty::pluck('id_specialty')->toArray();
 
             // Define schedules
-            $morningSchedules = Schedule::whereIn('days', ['Monday', 'Wednesday', 'Friday'])
+            $morningSchedules = Schedule::whereIn('day_id', [1,3,5])
                 ->pluck('id_schedule')
                 ->toArray();
 
-            $afternoonSchedules = Schedule::whereIn('days', ['Tuesday', 'Thursday'])
+            $afternoonSchedules = Schedule::whereIn('day_id', [2,4])
                 ->pluck('id_schedule')
                 ->toArray();
 
