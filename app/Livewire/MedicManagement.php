@@ -4,12 +4,14 @@ namespace App\Livewire;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Schedule;
 use App\Models\State;
 use App\Rules\EcuadorCedulaOrRuc;
 use App\Rules\EcuadorPhone;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Specialty;
+use App\Models\MedicSchedule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
@@ -25,6 +27,9 @@ class MedicManagement extends Component
     public $countries;
     public $states = [];
     public $cities = [];
+    //public $days = [];
+    //public $medicSpecialties = [];
+    //public $medicSchedules = [];
 
     public function mount()
     {
@@ -80,6 +85,7 @@ class MedicManagement extends Component
     {
         $searchTerm = '%' . $this->searchTerm . '%';
 
+        //$medics = User::with('profile', 'medicSchedules.schedule')
         $medics = User::with('profile')
             ->when(!empty($this->selectedSpecialties), function ($query) {
                 $query->whereHas('specialties', function ($query) {
@@ -207,6 +213,13 @@ class MedicManagement extends Component
     public function edit($id)
     {
         $medic = User::with('profile', 'roles', 'specialties')->findOrFail($id);
+        /*
+        $medic = User::with('profile', 'roles', 'specialties', 'medicSchedules.schedule')->findOrFail($id);
+        $this->medicSpecialties = $medic->specialties->pluck('id_specialty')->toArray();
+        $this->days = Schedule::select('days')->distinct()->pluck('days');
+        $this->medicSchedules = $medic->medicSchedules;
+        dd($this->medicSchedules);
+         * */
 
         $this->id = $id;
         $this->profile = $medic->profile->toArray();

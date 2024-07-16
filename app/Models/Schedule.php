@@ -25,6 +25,6 @@ class Schedule extends Model
 
     public function medicSchedules()
     {
-        return $this->hasMany(MedicSchedule::class, 'id_schedule', 'id');
+        return $this->hasMany(MedicSchedule::class, 'id_schedule', 'id_schedule');
     }
 }

@@ -86,6 +86,29 @@
 
                                 @error('id_specialties') <span>{{ $message }}</span> @enderror
                             </div>
+{{--
+                            @foreach ($medicSpecialties as $specialtyId)
+                                <div class="bg-gray-100 p-4 mb-4 rounded-lg shadow-inner">
+                                    <h3 class="font-semibold text-lg">{{ $specialties->find($specialtyId)->name }}</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="col-span-2">
+                                            <x-label for="days" value="{{ __('Days') }}" />
+                                            <x-select id="specialtyDays" name="specialtyDays" wire:model.live="specialtyDays.{{ $specialtyId }}" :options="$days" multiple class="form-multiselect mt-1 block w-full" />
+                                        </div>
+                                        <div class="col-span-2">
+                                            <x-label for="time_range" value="{{ __('Time range') }}" />
+                                            @foreach ($specialtyDays[$specialtyId] ?? [] as $day)
+                                                <div class="mb-2">
+                                                    <h4 class="font-medium">{{ $day }}</h4>
+                                                    <x-select wire:model.live="specialtySchedules.{{ $specialtyId }}.{{ $day }}[]" :options="$schedules" multiple class="form-multiselect mt-1 block w-full" />
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <x-button wire:click="assignSchedule({{ $specialtyId }})">{{ __('Assign Schedule') }}</x-button>
+                                </div>
+                            @endforeach
+                            --}}
                         </div>
                     </div>
                     <div

@@ -23,7 +23,7 @@ class MedicSchedule extends Model
 
     public function schedule()
     {
-        return $this->belongsTo(Schedule::class, 'id_schedule');
+        return $this->belongsTo(Schedule::class, 'id_schedule', 'id_schedule');
     }
 
     public function appointments()
