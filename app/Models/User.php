@@ -73,6 +73,11 @@ class User extends Authenticatable
         return $this->belongsTo(Profile::class, 'id_profile', 'id_profile');
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->profile->first_name . ' ' . $this->profile->last_name;
+    }
+
     public function specialties()
     {
         return $this->belongsToMany(Specialty::class, 'specialty_user','id_user', 'id_specialty');

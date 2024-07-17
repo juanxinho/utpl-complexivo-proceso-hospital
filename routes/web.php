@@ -123,6 +123,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
     Route::get('admin/appointments/edit/{appointmentId}', ScheduleAppointmentEdit::class)->name('admin.appointments.edit');
     Route::get('/admin/medics/manage-specialties-schedules', MedicSpecialtySchedule::class)->name('admin.medics.manage-specialties-schedules');
     Route::get('/admin/medics/specialties-schedules-list', MedicSpecialtyScheduleList::class)->name('admin.medics.manage-specialties-schedules-list');
+    Route::get('/admin/medics/assign-rooms', MedicManagement::class)->name('admin.medics.assign-rooms');
     Route::get('/admin/rooms', RoomManagement::class)->name('admin.rooms.index');
 });
 

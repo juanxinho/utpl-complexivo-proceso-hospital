@@ -4,6 +4,9 @@
 @if($isOpenEdit)
     @include('admin.medics.edit')
 @endif
+@if($isOpenAssign)
+    @include('admin.medics.assign-room')
+@endif
 
 <x-slot name="header">
     <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">

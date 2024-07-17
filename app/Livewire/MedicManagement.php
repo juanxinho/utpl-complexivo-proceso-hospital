@@ -26,14 +26,17 @@ class MedicManagement extends Component
     public $medic, $profile, $email, $password, $roles, $id_specialties, $specialties, $searchSpecialties, $selectedSpecialties = [], $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
     public $isOpenEdit = false;
+    public $isOpenAssign = false;
     public $searchTerm = '';
     public $countries;
     public $states = [];
     public $cities = [];
-    //public $selectedRoom;
-    //public $rooms = [];
-    //public $selectedMedic = null;
-    //public $assignmentDate;
+    public $rooms = [];
+    public $medicsRoom = [];
+    public $selectedMedic = null;
+    public $selectedRoom;
+    public $availableRooms = [];
+    public $assignmentDate;
     //public $days = [];
     //public $medicSpecialties = [];
     //public $medicSchedules = [];
@@ -140,6 +143,7 @@ class MedicManagement extends Component
     {
         $this->isOpenCreate = false;
         $this->isOpenEdit = false;
+        $this->isOpenAssign = false;
     }
 
     private function resetInputFields()
@@ -159,6 +163,9 @@ class MedicManagement extends Component
         $this->profile['address'] = '';
         $this->id_specialties = [];
         $this->selectedSpecialties = [];
+        $this->selectedMedic = null;
+        $this->availableRooms = null;
+        $this->assignmentDate = null;
     }
 
     public function create()
@@ -251,19 +258,45 @@ class MedicManagement extends Component
         session()->flash('message', __('Medic successfully deactivated.'));
     }
 
-    public function assign_room () {
+    public function assignRooms () {
+        $this->resetInputFields();
+        $this->medicsRoom = User::with('profile', 'medicRooms.room')
+            ->where('status', 1)
+            ->role('medic')
+            ->get()
+            ->pluck('full_name', 'id');
+
+        $this->availableRooms = Room::where('status', 1)->orWhereHas('room', function ($query) {
+            $query->where('user_id', $this->selectedMedic);
+        })->pluck('name', 'id');
+        $this->isOpenAssign = true;
+    }
+
+    public function updatedSelectedMedic($medicId)
+    {
+        $this->selectedRoom = MedicRoom::where('user_id', $medicId)->value('room_id');
+        $this->availableRooms = Room::where('status', 1)
+            ->orWhere('id', $this->selectedRoom)
+            ->pluck('name', 'id');
+    }
+
+    public function storeAssignRoom() {
         $this->validate([
-            'selectedRoom' => 'required|exists:rooms,id',
+            'availableRooms' => 'required|exists:rooms,id',
             'selectedMedic' => 'required|exists:users,id',
             'assignmentDate' => 'required|date',
         ]);
 
-        MedicRoom::create([
-            'user_id' => $this->selectedMedic,
-            'room_id' => $this->selectedRoom,
-            'assigned_date' => $this->assignmentDate,
-        ]);
+        MedicRoom::updateOrCreate(
+            ['user_id' => $this->selectedMedic],
+            ['room_id' => $this->availableRooms, 'assigned_date' => now()]
+        );
+
+        Room::where('id', $this->availableRooms)->update(['status' => 0]);
 
         session()->flash('message', 'Room assigned successfully.');
+
+        $this->closeModal();
+        $this->resetInputFields();
     }
 }
