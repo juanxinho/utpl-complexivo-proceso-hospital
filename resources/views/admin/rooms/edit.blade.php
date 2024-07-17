@@ -9,7 +9,7 @@
     <div class="mx-auto sm:px-6 lg:px-2">
         <div class="flex flex-col">
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form wire:submit.prevent="store">
+                <form wire:submit.prevent="update">
                     <div
                         class="px-4 py-5 bg-white sm:p-6 dark:bg-gray-900 dark:text-gray-400 shadow sm:rounded-tl-md sm:rounded-tr-md">
                         <div class="grid grid-cols-2 gap-4">
