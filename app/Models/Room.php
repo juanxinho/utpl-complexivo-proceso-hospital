@@ -15,8 +15,11 @@ class Room extends Model
 
     public function medics()
     {
-        return $this->belongsToMany(User::class, 'medic_room')
-            ->withPivot('assigned_date')
-            ->withTimestamps();
+        return $this->belongsToMany(User::class, 'medic_room');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(MedicRoom::class, 'id');
     }
 }

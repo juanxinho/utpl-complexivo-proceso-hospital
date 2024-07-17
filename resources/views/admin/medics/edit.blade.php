@@ -75,6 +75,12 @@
                                 <x-input id="profile.address" type="text" class="mt-1 block w-full"
                                          wire:model.defer="profile.address" autocomplete="address"/>
                             </div>
+
+                            {{--<div class="col-span-2 lg:col-span-1">
+                                <x-label for="room" value="{{ __('Room') }}"/>
+                                <x-select id="medicRooms.room" name="medicRooms.room" class="block mt-1 w-full" :options="$rooms"
+                                          wire:model.live="medicRooms.room" placeholder="{{  __('Select a room' )}}"/>
+                            </div>--}}
                             <div class="col-span-2">
                                 <x-label for="id_specialties" value="{{ __('Specialty') }}:"/>
                                 <div
