@@ -34,7 +34,7 @@ class ScheduleSeeder extends Seeder
                     $timeRange = $startTime->format('H:i') . ' - ' . $startTime->copy()->addMinutes($appointmentDuration)->format('H:i');
 
                     DB::table('schedule')->insert([
-                        'day_id' => $day->id,
+                        'day_id' => $day,
                         'time_range' => $timeRange,
                         'created_at' => now(),
                         'updated_at' => now(),

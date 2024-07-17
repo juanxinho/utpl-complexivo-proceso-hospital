@@ -7,7 +7,7 @@
 
 <x-slot name="header">
     <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
-        {{ __('Medic Management') }}
+        {{ __('Physician management') }}
     </h1>
 </x-slot>
 

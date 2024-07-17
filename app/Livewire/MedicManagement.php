@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Day;
+use App\Models\MedicRoom;
 use App\Models\Schedule;
 use App\Models\State;
 use App\Rules\EcuadorCedulaOrRuc;
@@ -36,7 +37,7 @@ class MedicManagement extends Component
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
         $this->specialties = Specialty::where('status', 1)->get();
-        $this->searchStatuses = ['0' => 'Inactive', '1' => 'Active'];
+        $this->searchStatuses = ['0' => __('Inactive'), '1' => __('Active')];
         $this->countries = Country::pluck('name', 'id')->map(function ($name) {
             return ucfirst($name);
         });
@@ -242,5 +243,21 @@ class MedicManagement extends Component
         }
 
         session()->flash('message', __('Medic successfully deactivated.'));
+    }
+
+    public function assign_room () {
+        $this->validate([
+            'selectedRoom' => 'required|exists:rooms,id',
+            'selectedMedic' => 'required|exists:users,id',
+            'assignmentDate' => 'required|date',
+        ]);
+
+        MedicRoom::create([
+            'user_id' => $this->selectedMedic,
+            'room_id' => $this->selectedRoom,
+            'assigned_date' => $this->assignmentDate,
+        ]);
+
+        session()->flash('message', 'Room assigned successfully.');
     }
 }
