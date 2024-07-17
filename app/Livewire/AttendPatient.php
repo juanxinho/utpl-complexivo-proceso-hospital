@@ -78,7 +78,7 @@ class AttendPatient extends Component
         
         if (!$clinicalHistory) {
             $clinicalHistory = $this->appointment->user->clinicalHistory()->create([
-                'user_register' => auth()->id(),
+                'user_register' => Auth::id(),
             ]);
         }
         
@@ -107,11 +107,12 @@ class AttendPatient extends Component
             ]);
         }
 
-        // Actualizar la fecha de próximo control
+        // Actualizar la fecha de próximo control y estado
         if ($this->nextControlDate) {
             $this->appointment->next_control_date = $this->nextControlDate;
-            $this->appointment->save();
         }
+        $this->appointment->status = 'attended';
+        $this->appointment->save();
 
         $medicalDiagnostic->diagnostics()->attach(array_unique($this->diagnosticIds));
         $medicalDiagnostic->medicalTests()->attach(array_unique($this->medicalTestIds));
