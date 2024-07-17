@@ -92,4 +92,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(ClinicalHistory::class, 'patient_id', 'id');
     }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class, 'medic_room')
+            ->withPivot('assigned_date')
+            ->withTimestamps();
+    }
 }

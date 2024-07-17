@@ -34,7 +34,7 @@
                                     class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border-b border-gray-100 dark:border-gray-700 text-gray-600 hover:bg-gray-100 hover:dark:bg-gray-300 dark:text-white gap-3"
                                     data-accordion-target="#accordion-collapse-body-{{ $index }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}"
                                     aria-controls="accordion-collapse-body-{{ $index }}">
-                                <span><b>{{ __('Date')  }}:</b> {{ \Carbon\Carbon::parse($appointment->service_date)->translatedFormat('F j, Y') }} - <b>{{ $appointment->medicSchedule->specialty->name }}</b></span>
+                                <span><b>{{ __('Date')  }}:</b> {{ ucfirst(\Carbon\Carbon::parse($appointment->service_date)->translatedFormat('l, F j Y')) }} - <b>{{ $appointment->medicSchedule->specialty->name }}</b></span>
                                 <svg width="20" height="20" data-accordion-icon class="w-3 h-3 rotate-180 shrink-0"
                                      aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

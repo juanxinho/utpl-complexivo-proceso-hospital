@@ -52,7 +52,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">{{ $loop->index + 1 }}</td>
-                        <td class="px-6 py-4 text-center">{{ $appointment->service_date }}</td>
+                        <td class="px-6 py-4 text-center">{{ ucfirst(\Carbon\Carbon::parse($appointment->service_date)->translatedFormat('l, j \d\e F \d\e Y')) }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->schedule->time_range }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->specialty->name }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->user->profile->first_name }} {{ $appointment->medicSchedule->user->profile->last_name }}</td>

@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             MedicSeeder::class,
             AppointmentSeeder::class,
             MedicalTests::class,
+            RoomSeeder::class,
+            AssignRoomsSeeder::class,
         ]);
     }
 }
