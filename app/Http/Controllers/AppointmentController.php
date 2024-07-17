@@ -29,7 +29,8 @@ class AppointmentController extends Controller
             })*/
             ->when($status !== null, function ($query) use ($status) {
                 return $query->where('status', $status);
-            });
+            })
+            ->orderBy('service_date', 'desc');
 
         $appointments = $appointments->paginate(10);
 

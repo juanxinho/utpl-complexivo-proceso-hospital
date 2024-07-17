@@ -6,14 +6,14 @@
         <!-- Next Appointment Card -->
         <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="p-5">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ __('Next Appointments') }}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ __('Next Appointment') }}</h5>
                 @if($nextAppointment)
-                    <p class="mb-3 font-normal text-gray-700">{{ $nextAppointment->service_date}}</p>
+                    <p class="mb-3 font-normal text-gray-700">{{ ucfirst(\Carbon\Carbon::parse($nextAppointment->service_date)->translatedFormat('l, j \d\e F \d\e Y')) }} / {{ $nextAppointment->medicSchedule->schedule->time_range }} / {{ $nextAppointment->medicSchedule->specialty->name }}</p>
                     <a href="{{ route('medic.appointments.index') }}" >
                         {{ __('View Details') }}
                     </a>
                 @else
-                    <p class="mb-3 font-normal text-gray-700">{{ __('No upcoming appointments') }}</p>
+                    <p class="mb-3 font-normal text-gray-700">{{ __('No upcoming appointment') }}</p>
                 @endif
             </div>
         </div>

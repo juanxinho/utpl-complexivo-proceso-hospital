@@ -28,7 +28,7 @@
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-0 md:p-2">
                 <div id="accordion-collapse" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-t-lg" data-accordion="collapse">
-                    @foreach ($patient->appointments as $index => $appointment)
+                    @foreach ($appointments as $index => $appointment)
                         <h2 id="accordion-collapse-heading-{{ $index }}">
                             <button type="button"
                                     class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border-b border-gray-100 dark:border-gray-700 text-gray-600 hover:bg-gray-100 hover:dark:bg-gray-300 dark:text-white gap-3"
