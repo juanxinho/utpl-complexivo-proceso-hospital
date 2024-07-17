@@ -20,7 +20,7 @@
                                     <p><strong> {{ $prescription->appointment->medicSchedule->specialty->name }} 
                                        with Dr. {{ $prescription->appointment->medicSchedule->user->profile->first_name}} {{ $prescription->appointment->medicSchedule->user->profile->last_name }}</strong>
                                     </p>
-                                    <p>{{ __('Date') }}: {{ $prescription->date}}</p>
+                                    <p>{{ __('Date') }}: {{ ucfirst(\Carbon\Carbon::parse($prescription->date)->translatedFormat('l, j \d\e F \d\e Y')) }}</p>
                                     <p>{{ __('Items') }}:
                                         @foreach($prescription->items as $item)
                                             <li class="text-gray-500 dark:text-gray-400">{{ $item->stockItem->item_name }}  - {{ $item->quantity }} units</li>

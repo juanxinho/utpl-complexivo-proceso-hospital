@@ -13,25 +13,35 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         if ($user->hasRole('patient')) {
+
             $nextAppointment = Appointment::where('id_patient', $user->id)
-                ->where('service_date', '>=', now())
+                ->whereNotIn('status', ['attended','cancelled'])
+                ->where('service_date', '>=', now()->format('Y-m-d'))
+                ->join('medic_schedule', 'appointment.medic_schedule_id_medic_schedule', '=', 'medic_schedule.id_medic_schedule')
+                ->join('schedule', 'medic_schedule.id_schedule', '=', 'schedule.id_schedule')
+                ->select('appointment.*', 'schedule.time_range')
                 ->orderBy('service_date', 'asc')
-                ->first();
+                ->orderBy('schedule.time_range', 'asc')
+                ->first();    
 
-            $appointmentHistory = Appointment::where('id_patient', $user->id)
-                ->where('service_date', '<', now())
-                ->orderBy('service_date', 'desc')
-                ->get();
+            return view('welcome.patient', compact('user', 'nextAppointment'));
 
-            return view('welcome.patient', compact('user', 'nextAppointment', 'appointmentHistory'));
         } elseif ($user->hasRole('medic')) {
+
             $nextAppointment = Appointment::whereMonth('service_date', now()->month)
-                ->where('status', '!=', 'attended')
+                ->whereNotIn('status', ['attended','cancelled'])
+                ->where('service_date', '=', now()->format('Y-m-d'))
                 ->whereHas('medicSchedule', function ($query) {
-                            $query->where('medic_schedule.id_medic', Auth::id());})
-                ->orderBy('service_date', 'asc')
+                    $query->where('medic_schedule.id_medic', Auth::id());
+                })
+                ->join('medic_schedule', 'appointment.medic_schedule_id_medic_schedule', '=', 'medic_schedule.id_medic_schedule')
+                ->join('schedule', 'medic_schedule.id_schedule', '=', 'schedule.id_schedule')
+                ->select('appointment.*', 'schedule.time_range')
+                ->orderBy('schedule.time_range', 'asc')
                 ->first();
+
             return view('welcome.medic', compact('user', 'nextAppointment'));
+
         } else {
             // For other roles
             return view('welcome.welcome', compact('user'));

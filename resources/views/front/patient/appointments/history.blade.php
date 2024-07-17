@@ -17,8 +17,9 @@
                             @foreach($appointments as $appointment)
                                 <br/>
                                 <li>
-                                    <strong>{{ $appointment->service_date }} / {{ $appointment->medicSchedule->schedule->time_range }}</strong> <br/>
-                                    {{ $appointment->medicSchedule->specialty->name }} with Dr. {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}
+                                    <strong>{{ ucfirst(\Carbon\Carbon::parse($appointment->service_date)->translatedFormat('l, j \d\e F \d\e Y')) }} / {{ $appointment->medicSchedule->schedule->time_range }}</strong> <br/>
+                                    {{ $appointment->medicSchedule->specialty->name }} with Dr. {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}<br/>
+                                    {{ $appointment->status }}
                                 </li>
                             @endforeach
                         </ul>

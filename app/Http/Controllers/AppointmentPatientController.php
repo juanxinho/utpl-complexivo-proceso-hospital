@@ -12,17 +12,23 @@ use Illuminate\Support\Facades\DB;
 class AppointmentPatientController extends Controller
 {
     /**
-    * Obtiene la vista de proximas citas paciente
+    * Obtiene la vista de proximas citas paciente sin considerar 
+    * las citas en estado atendidas y canceladas
     *
     * @return view front.patient.appointments.next
     */
     public function next()
     {
         $appointments = Appointment::where('id_patient', Auth::id())
-                                    ->where('service_date', '>=', now())
-                                    ->where('status', '!=', 'cancelled')
+                                    ->whereNotIn('status', ['attended','cancelled'])
+                                    ->where('service_date', '>=', now()->format('Y-m-d'))
+                                    ->join('medic_schedule', 'appointment.medic_schedule_id_medic_schedule', '=', 'medic_schedule.id_medic_schedule')
+                                    ->join('schedule', 'medic_schedule.id_schedule', '=', 'schedule.id_schedule')
+                                    ->select('appointment.*', 'schedule.time_range')
                                     ->orderBy('service_date', 'asc')
-                                    ->get();
+                                    ->orderBy('schedule.time_range', 'asc')
+                                    ->get();       
+
         return view('front.patient.appointments.next', compact('appointments'));
     }
 
@@ -34,9 +40,14 @@ class AppointmentPatientController extends Controller
     public function history()
     {
         $appointments = Appointment::where('id_patient', Auth::id())
-                                    ->where('service_date', '<=', now())
-                                    ->orderBy('service_date', 'asc')
-                                    ->paginate(10);
+                                    ->whereIn('status', ['attended','cancelled'])
+                                    ->where('service_date', '<=', now()->format('Y-m-d'))
+                                    ->join('medic_schedule', 'appointment.medic_schedule_id_medic_schedule', '=', 'medic_schedule.id_medic_schedule')
+                                    ->join('schedule', 'medic_schedule.id_schedule', '=', 'schedule.id_schedule')
+                                    ->select('appointment.*', 'schedule.time_range')
+                                    ->orderBy('service_date', 'desc')
+                                    ->orderBy('schedule.time_range', 'asc')
+                                    ->get(); 
 
         return view('front.patient.appointments.history', compact('appointments'));
     }

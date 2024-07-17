@@ -13,7 +13,9 @@ class PrescriptionController extends Controller
 
     public function index()
     {
-        $prescriptions = Prescription::where('patient_id', Auth::id())->get();
+        $prescriptions = Prescription::where('patient_id', Auth::id())
+                                    ->orderBy('date', 'desc')
+                                    ->get();
         return view('front.prescriptions.index', compact('prescriptions'));
     }
 }
