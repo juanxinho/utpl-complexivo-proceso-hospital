@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
 use App\Rules\EcuadorCedulaOrRuc;
 use App\Rules\EcuadorPhone;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
@@ -16,6 +18,7 @@ use Spatie\Permission\Models\Role;
 class UserManagement extends Component
 {
     use WithPagination;
+    use PasswordValidationRules;
 
     public $profile, $email, $password, $roles, $id_roles, $searchRoles, $selectedRole, $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
@@ -156,6 +159,7 @@ class UserManagement extends Component
 
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
+            //'password' => $this->passwordRules(),
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
             'profile.nid' => ['required', 'string', 'max:13', 'unique:profile,nid,' . $this->id . ',id_profile', new EcuadorCedulaOrRuc],
@@ -184,7 +188,7 @@ class UserManagement extends Component
 
         $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
-            'password' => bcrypt($this->password),
+            'password' => Hash::make($this->password),
             'status' => 1,
             'id_profile' => $profile->id_profile,
             'user_register' => auth()->user()->id,

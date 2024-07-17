@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
@@ -9,12 +10,14 @@ use App\Rules\EcuadorCedulaOrRuc;
 use App\Rules\EcuadorPhone;
 use App\Models\User;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class PatientManagement extends Component
 {
     use WithPagination;
+    use PasswordValidationRules;
 
     public $patient, $profile, $email, $password, $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
@@ -142,6 +145,7 @@ class PatientManagement extends Component
     {
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
+            //'password' => $this->passwordRules(),
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
             'profile.nid' => ['required', 'string', 'max:13', 'unique:profile,nid,' . $this->id . ',id_profile', new EcuadorCedulaOrRuc],
@@ -169,7 +173,7 @@ class PatientManagement extends Component
 
         $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
-            'password' => bcrypt($this->password),
+            'password' => Hash::make($this->password),
             'status' => 1,
             'id_profile' => $profile->id_profile,
             'user_register' => auth()->user()->id,

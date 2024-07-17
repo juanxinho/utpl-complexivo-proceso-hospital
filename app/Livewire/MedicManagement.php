@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Day;
@@ -15,6 +16,7 @@ use App\Models\Profile;
 use App\Models\Specialty;
 use App\Models\MedicSchedule;
 use App\Models\Room;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
@@ -22,6 +24,7 @@ use Spatie\Permission\Models\Role;
 class MedicManagement extends Component
 {
     use WithPagination;
+    use PasswordValidationRules;
 
     public $medic, $profile, $email, $password, $roles, $id_specialties, $specialties, $searchSpecialties, $selectedSpecialties = [], $searchStatuses, $selectedStatus, $id;
     public $isOpenCreate = false;
@@ -179,6 +182,7 @@ class MedicManagement extends Component
     {
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
+            //'password' => $this->passwordRules(),
             'profile.first_name' => 'required|string|max:255',
             'profile.last_name' => 'required|string|max:255',
             'profile.nid' => ['required', 'string', 'max:13', 'unique:profile,nid,' . $this->id . ',id_profile', new EcuadorCedulaOrRuc],
@@ -207,7 +211,7 @@ class MedicManagement extends Component
 
         $user = User::updateOrCreate(['id' => $this->id], [
             'email' => $this->email,
-            'password' => bcrypt($this->password),
+            'password' => Hash::make($this->password),
             'status' => 1,
             'id_profile' => $profile->id_profile,
             'user_register' => auth()->user()->id,
