@@ -138,7 +138,7 @@ class MedicManagement extends Component
     public function clearFilters()
     {
         $this->searchTerm = '';
-        $this->searchSpecialties = null;
+        $this->selectedSpecialties = null;
         $this->selectedStatus = null;
     }
 
