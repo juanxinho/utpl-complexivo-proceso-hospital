@@ -27,6 +27,7 @@ class MedicsRooms extends Component
     public $sortBy = 'code';
     public $sortDirection = 'asc';
     public $medicsRoom = [];
+    public $availableRooms = [];
 
     protected $rules = [
         'code' => 'required|string|max:255',
@@ -146,39 +147,61 @@ class MedicsRooms extends Component
     public function create()
     {
         $this->resetInputFields();
+
+        //Obtener lista de consultorios que no  están asignados
+        $this->availableRooms = Room::where('status', 1)->pluck('name', 'id');
+        
+        //Obtener lista de médicos que no tienen consultorio asignado
+        $medicRoomUserIds = MedicRoom::pluck('user_id');
+        $this->medicsRoom = User::with('profile', 'medicRooms.room')
+            ->where('status', 1)
+            ->role('medic')
+            ->whereNotIn('id', $medicRoomUserIds)
+            ->get()
+            ->pluck('full_name', 'id');
+
         $this->isOpenCreate = true;
+
     }
 
     public function store()
     {
-        $this->validate();
+        //$this->validate();
 
-        Room::create([
-            'code' => $this->code,
-            'name' => $this->name,
-            'description' => $this->description,
-            'location' => $this->location,
-            'status' => 1,
+        MedicRoom::create([
+            'user_id' => $this->selectedMedic,
+            'room_id' => $this->selectedRoom,
+            'assigned_date' => now(),
         ]);
 
-        session()->flash('message', 'Room created successfully.');
+        //Actualizando el estado del consultario a no disponible
+        $room = Room::findOrFail($this->selectedRoom);
+        $room->update([
+            'status' => 0,
+        ]);
+
+        session()->flash('message', 'Room Medic created successfully.');
 
         $this->resetInputFields();
+        $this->isOpenCreate = false;
     }
 
     public function edit($id)
     {
         $room = Room::findOrFail($id);
         $medicroom = MedicRoom::where('room_id', $id)->first();
+        $medicRoomUserIds = MedicRoom::whereNotIn('id', [$medicroom->id])->pluck('user_id');
         $this->idMedicRoom = $medicroom->id;
         $this->code = $room->code;
         $this->name = $room->name;
         $this->status = $room->status;
         $this->selectedMedic= $medicroom->user_id;
 
+        //Obtener lista de médicos que no tienen consultorio asignado
         $this->medicsRoom = User::with('profile', 'medicRooms.room')
             ->where('status', 1)
             ->role('medic')
+            ->whereNotIn('id', $medicRoomUserIds)
             ->get()
             ->pluck('full_name', 'id');
 
@@ -203,9 +226,15 @@ class MedicsRooms extends Component
 
     public function delete($id)
     {
-        $room = Room::findOrFail($id);
-        $room->delete();
+        $medicroom = MedicRoom::where('room_id', $id)->first();
+        $medicroom->delete();
 
-        session()->flash('message', 'Room deleted successfully.');
+        //Actualizando el estado del consultario a disponible
+        $room = Room::findOrFail($id);
+        $room->update([
+            'status' => 1,
+        ]);
+
+        session()->flash('message', 'Room Medic deleted successfully.');
     }
 }
