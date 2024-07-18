@@ -24,7 +24,7 @@
             @hasanyrole('patient')
             <div class="col-span-2 lg:col-span-1">
                 <x-label for="patient" value="{{ __('Patient') }}" />
-                <x-input id="patient" type="text" class="mt-1 block w-full" value="{{ $patient->profile->first_name }} {{ $patient->profile->last_name }}" readonly />
+                <x-input id="patient" type="text" class="mt-1 block w-full cursor-not-allowed" value="{{ $patient->profile->first_name }} {{ $patient->profile->last_name }}" disabled readonly />
             </div>
             @endhasanyrole
 

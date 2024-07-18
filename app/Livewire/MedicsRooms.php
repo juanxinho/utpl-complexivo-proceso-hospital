@@ -88,7 +88,14 @@ class MedicsRooms extends Component
             ->leftJoin('profile', 'users.id_profile', '=', 'profile.id_profile')
             ->leftJoin('specialty_user', 'users.id', '=', 'specialty_user.id_user')
             ->leftJoin('specialty', 'specialty_user.id_specialty', '=', 'specialty.id_specialty')
-            ->select('rooms.*', 'users.id as user_id', 'profile.first_name', 'profile.last_name', 'specialty.name as specialty_name', 'medic_room.assigned_date')
+            ->select(
+                'rooms.*',
+                'users.id as user_id',
+                'profile.first_name',
+                'profile.last_name',
+                DB::raw('GROUP_CONCAT(specialty.name SEPARATOR ", ") as specialties'),
+                'medic_room.assigned_date'
+            )
             ->when(!empty($this->selectedSpecialties), function ($query) {
                 $query->whereIn('specialty.id_specialty', (array) $this->selectedSpecialties);
             })
@@ -103,6 +110,7 @@ class MedicsRooms extends Component
                     ->orWhere('profile.first_name', 'like', $searchTerm)
                     ->orWhere('profile.last_name', 'like', $searchTerm);
             })
+            ->groupBy('rooms.id', 'users.id', 'profile.first_name', 'profile.last_name', 'medic_room.assigned_date')
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(10);
 
