@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\EcuadorianIdGenerator;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Profile;
@@ -15,13 +16,13 @@ class PatientSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            // Crear 10 usuarios adicionales con rol patient
+            // Crear 20 usuarios adicionales con rol patient
             $faker = Faker::create();
             $roles = Role::all()->pluck('name')->toArray();
 
-            foreach (range(1, 10) as $index) {
+            foreach (range(1, 20) as $index) {
                 $profile = Profile::create([
-                    'nid' => $faker->unique()->numerify('##########'),
+                    'nid' => EcuadorianIdGenerator::generateId(),
                     'first_name' => $faker->firstName,
                     'last_name' => $faker->lastName,
                     'dob' => $faker->date(),

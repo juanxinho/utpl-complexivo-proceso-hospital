@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\EcuadorianIdGenerator;
 use App\Models\MedicSchedule;
 use App\Models\Schedule;
 use App\Models\Specialty;
@@ -54,6 +55,7 @@ class UsersWithRolesSeeder extends Seeder
                 'status' => 1,
                 'user_register' => 1, // Ajustar según sea necesario
                 'id_profile' => $profile->id_profile,
+                'profile_photo_path' => 'profile-photos/profile_1.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -63,7 +65,56 @@ class UsersWithRolesSeeder extends Seeder
 
             // Crear el usuario por defecto con rol patient
             $profile = Profile::create([
-                'nid' => $faker->unique()->numerify('##########'),
+                'nid' => EcuadorianIdGenerator::generateId(),
+                'first_name' => 'Juan',
+                'last_name' => 'Nieto',
+                'dob' => '1986-05-04',
+                'phone' => '0995767405',
+                'gender' => 'M',
+                'country_id' => 63,
+                'state_id' => 1031,
+                'city_id' => 15342,
+                'address' => 'Urb. Bosquetto Mz3350 V29',
+                'user_register' => 1, // Ajustar según sea necesario
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $user = User::create([
+                'email' => 'juan.nieto@hiayoraloja.gob.ec',
+                'password' => Hash::make('prncs135'),
+                'status' => 1,
+                'user_register' => 1, // Ajustar según sea necesario
+                'id_profile' => $profile->id_profile,
+                'profile_photo_path' => 'profile-photos/profile_2.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $medicRole = Role::firstOrCreate(['name' => 'medic']);
+            $user->assignRole($medicRole);
+
+            // Assign random specialties to each medic
+            $assignedSpecialties = array_rand(array_flip($specialtyIds), rand(1, 1));
+            $user->specialties()->sync($assignedSpecialties);
+
+            // Assign schedules to each medic's specialties
+            foreach ((array) $assignedSpecialties as $specialtyId) {
+                $scheduleType = rand(0, 1) ? $morningSchedules : $afternoonSchedules;
+                foreach ($scheduleType as $scheduleId) {
+                    MedicSchedule::create([
+                        'id_medic' => $user->id,
+                        'id_specialty' => $specialtyId,
+                        'id_schedule' => $scheduleId,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
+
+            // Crear el usuario por defecto con rol medic
+            $profile = Profile::create([
+                'nid' => EcuadorianIdGenerator::generateId(),
                 'first_name' => 'Juan',
                 'last_name' => 'Nieto',
                 'dob' => '1986-05-04',
@@ -90,54 +141,6 @@ class UsersWithRolesSeeder extends Seeder
 
             $patientRole = Role::firstOrCreate(['name' => 'patient']);
             $user->assignRole($patientRole);
-
-            // Crear el usuario por defecto con rol medic
-            $profile = Profile::create([
-                'nid' => $faker->unique()->numerify('##########'),
-                'first_name' => 'Juan',
-                'last_name' => 'Nieto',
-                'dob' => '1986-05-04',
-                'phone' => '0995767405',
-                'gender' => 'M',
-                'country_id' => 63,
-                'state_id' => 1031,
-                'city_id' => 15342,
-                'address' => 'Urb. Bosquetto Mz3350 V29',
-                'user_register' => 1, // Ajustar según sea necesario
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $user = User::create([
-                'email' => 'juanxinho@gmail.com',
-                'password' => Hash::make('prncs135'),
-                'status' => 1,
-                'user_register' => 1, // Ajustar según sea necesario
-                'id_profile' => $profile->id_profile,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            $medicRole = Role::firstOrCreate(['name' => 'medic']);
-            $user->assignRole($medicRole);
-
-            // Assign random specialties to each medic
-            $assignedSpecialties = array_rand(array_flip($specialtyIds), rand(1, 3));
-            $user->specialties()->sync($assignedSpecialties);
-
-            // Assign schedules to each medic's specialties
-            foreach ((array) $assignedSpecialties as $specialtyId) {
-                $scheduleType = rand(0, 1) ? $morningSchedules : $afternoonSchedules;
-                foreach ($scheduleType as $scheduleId) {
-                    MedicSchedule::create([
-                        'id_medic' => $user->id,
-                        'id_specialty' => $specialtyId,
-                        'id_schedule' => $scheduleId,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
-            }
         });
     }
 }

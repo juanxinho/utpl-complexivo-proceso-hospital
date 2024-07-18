@@ -11,10 +11,11 @@
 
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-            {{--<div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-6">
+            @hasanyrole('medic|admin|super-admin')
+            <div x-data="{photoName: null, photoPreview: null}" class="col-span-2">
                 <!-- Profile Photo File Input -->
                 <input type="file" id="photo" class="hidden"
-                       wire:model.live="photo"
+                       wire:model.live="state.photo"
                        x-ref="photo"
                        x-on:change="
                                     photoName = $refs.photo.files[0].name;
@@ -50,7 +51,8 @@
                 @endif
 
                 <x-input-error for="photo" class="mt-2" />
-            </div>--}}
+            </div>
+            @endhasanyrole
         @endif
 
         <!-- First name -->

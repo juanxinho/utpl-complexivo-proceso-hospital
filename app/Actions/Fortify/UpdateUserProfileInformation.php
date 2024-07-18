@@ -15,7 +15,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update(User $user, array $input): void
     {
-        //var_dump($input);die;
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
         }

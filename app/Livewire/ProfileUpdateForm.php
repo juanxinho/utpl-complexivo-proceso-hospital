@@ -11,9 +11,12 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class ProfileUpdateForm extends Component
 {
+    use WithFileUploads;
+
     public $state = [];
     public $countries;
     public $states = [];
