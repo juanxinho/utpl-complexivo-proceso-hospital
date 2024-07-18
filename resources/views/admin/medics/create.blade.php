@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-span-2 lg:col-span-1">
                                 <x-label for="password" value="{{ __('Password') }}:" />
-                                <x-input id="password" class="mt-1 block w-full" type="password" name="password" autocomplete="new-password" />
+                                <x-input id="password" class="mt-1 block w-full" wire:model="password" type="password" name="password" required autocomplete="new-password" />
                                 @error('password') <span>{{ $message }}</span> @enderror
                             </div>
                             <div class="col-span-2">
