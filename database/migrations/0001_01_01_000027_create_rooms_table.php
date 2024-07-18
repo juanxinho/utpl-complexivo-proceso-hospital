@@ -15,6 +15,7 @@ class CreateRoomsTable extends Migration
             $table->text('description');
             $table->string('location');
             $table->boolean('status')->default(1); //Disponible
+            $table->timestamps();
         });
     }
 
