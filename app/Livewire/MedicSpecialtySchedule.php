@@ -60,7 +60,7 @@ class MedicSpecialtySchedule extends Component
 
     public function render()
     {
-        return view('livewire.medic-specialty-schedule', [
+        return view('admin.medics.schedules.assign', [
             'days' => $this->days,
         ])->layout('layouts.app');
     }

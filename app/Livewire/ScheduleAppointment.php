@@ -101,6 +101,11 @@ class ScheduleAppointment extends Component
                 if ($selectedTimeId) {
                     $query->orWhere('id_medic_schedule', $selectedTimeId);
                 }
+            })
+            ->whereDoesntHave('appointments', function ($query) {
+                $query->where('appointment.medic_schedule_id_medic_schedule', '!=', 'medic_shedule.id_medic_schedule')
+                    ->where('appointment.status', '=', 'scheduled')
+                    ->where('appointment.service_date', '=', $this->date);
             });
 
         $schedules = $query->get();

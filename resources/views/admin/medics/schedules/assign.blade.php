@@ -1,4 +1,4 @@
-<!-- resources/views/livewire/medic-specialty-schedule.blade.php -->
+<!-- resources/views/admin/medics/schedules/assign.blade.php -->
 <div>
     <x-slot name="header">
         <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">

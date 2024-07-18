@@ -26,16 +26,6 @@ class RoomSeeder extends Seeder
             ['code' => 'R013', 'name' => 'Consultorio 13', 'description' => 'Consultorio de Nutrición', 'location' => 'Planta Alta'],
             ['code' => 'R014', 'name' => 'Consultorio 14', 'description' => 'Consultorio de Fisioterapia', 'location' => 'Planta Alta'],
             ['code' => 'R015', 'name' => 'Consultorio 15', 'description' => 'Consultorio de Medicina General', 'location' => 'Planta Alta'],
-            ['code' => 'R016', 'name' => 'Consultorio 16', 'description' => 'Consultorio de Medicina Interna', 'location' => 'Planta Alta'],
-            ['code' => 'R017', 'name' => 'Consultorio 17', 'description' => 'Consultorio de Nefrología', 'location' => 'Planta Alta'],
-            ['code' => 'R018', 'name' => 'Consultorio 18', 'description' => 'Consultorio de Oncología', 'location' => 'Planta Alta'],
-            ['code' => 'R019', 'name' => 'Consultorio 19', 'description' => 'Consultorio de Hematología', 'location' => 'Planta Alta'],
-            ['code' => 'R020', 'name' => 'Consultorio 20', 'description' => 'Consultorio de Inmunología', 'location' => 'Planta Alta'],
-            ['code' => 'R021', 'name' => 'Consultorio 21', 'description' => 'Consultorio de Gastroenterología', 'location' => 'Planta Alta'],
-            ['code' => 'R022', 'name' => 'Consultorio 22', 'description' => 'Consultorio de Hepatología', 'location' => 'Planta Alta'],
-            ['code' => 'R023', 'name' => 'Consultorio 23', 'description' => 'Consultorio de Proctología', 'location' => 'Planta Alta'],
-            ['code' => 'R024', 'name' => 'Consultorio 24', 'description' => 'Consultorio de Neumología', 'location' => 'Planta Alta'],
-            ['code' => 'R025', 'name' => 'Consultorio 25', 'description' => 'Consultorio de Cirugía General', 'location' => 'Planta Alta'],
         ];
 
         foreach ($rooms as $room) {

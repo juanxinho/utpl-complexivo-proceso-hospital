@@ -41,9 +41,9 @@
                 <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Specialty') }}
                 </th>
-                <th scope="col" class="px-6 py-3 text-center">
+                {{--<th scope="col" class="px-6 py-3 text-center">
                     {{ __('Room') }}
-                </th>
+                </th>--}}
                 <th scope="col" class="px-6 py-3 text-center">
                     {{ __('Status') }}
                 </th>
@@ -69,7 +69,7 @@
                     <td class="px-6 py-4 text-center">{{ $medic->profile->phone }}</td>
                     <td class="px-6 py-4 text-center">{{ $medic->profile->gender_name }}</td>
                     <td class="px-6 py-4 text-center">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
-                    <td class="px-6 py-4 text-center">{{ $medic->medicRooms ? $medic->medicRooms->room->name : '-' }}</td>
+{{--                    <td class="px-6 py-4 text-center">{{ $medic->medicRooms ? $medic->medicRooms : '-' }}</td>--}}
                     <td class="px-6 py-4 text-center">{{ $medic->status_label }}</td>
                     <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>

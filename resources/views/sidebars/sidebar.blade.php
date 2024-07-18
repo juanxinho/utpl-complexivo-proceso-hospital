@@ -111,8 +111,8 @@
                     </li>
                     <li>
                         <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
-                                    href="{{ route('admin.medics.manage-specialties-schedules-list') }}"
-                                    :active="request()->routeIs('admin.medics.manage-specialties-schedules-list')">
+                                    href="{{ route('admin.medics.schedules.index') }}"
+                                    :active="request()->routeIs('admin.medics.schedules.index')">
                             {{ __('Schedules') }}
                         </x-nav-link>
                     </li>

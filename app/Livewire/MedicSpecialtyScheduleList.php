@@ -14,34 +14,41 @@ class MedicSpecialtyScheduleList extends Component
 
     public function mount()
     {
-        $medics = User::role('medic')->with('profile', 'specialties', 'medicSchedules.schedule.day')->get();
+        $medics = User::role('medic')
+            ->with(['profile', 'specialties', 'medicSchedules.schedule.day'])
+            ->get();
 
         // Get the distinct day ids from the schedule table
         $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');
         $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
 
-
         foreach ($medics as $medic) {
             $medicName = $medic->profile->first_name . ' ' . $medic->profile->last_name;
+            $specialtySchedules = [];
 
             foreach ($medic->specialties as $specialty) {
+                $specialtyName = $specialty->name;
+                $daySchedule = [];
+
                 foreach ($medic->medicSchedules as $medicSchedule) {
                     if ($medicSchedule->id_specialty == $specialty->id_specialty) {
                         if ($medicSchedule->schedule && $medicSchedule->schedule->day) {
                             $dayName = $medicSchedule->schedule->day->name;
-                            $specialtyName = $specialty->name;
                             $timeRange = $medicSchedule->schedule->time_range;
-
-                            $this->medics[$medicName][$specialtyName][$dayName][] = $timeRange;
+                            $daySchedule[$dayName][] = $timeRange;
                         }
                     }
                 }
+
+                $specialtySchedules[$specialtyName] = $daySchedule;
             }
+
+            $this->medics[$medicName] = $specialtySchedules;
         }
     }
 
     public function render()
     {
-        return view('livewire.medic-specialty-schedule-list')->layout('layouts.app');
+        return view('admin.medics.schedules.index')->layout('layouts.app');
     }
 }
