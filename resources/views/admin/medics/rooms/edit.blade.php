@@ -2,7 +2,7 @@
 <div class="py-2">
     <div class="mx-auto sm:px-6 lg:px-2 pb-4 pt-3">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white h-[1.9rem]">
-            {{ __('Edit room medic') }}
+            {{ __("Edit medic's room") }}
         </h2>
     </div>
 
@@ -27,7 +27,7 @@
                                 <x-label for="selectedMedic" value="{{ __('Select Medic') }}" />
                                 <x-select id="selectedMedic" name="selectedMedic" class="block mt-1 w-full"
                                           :options="$medicsRoom" wire:model.live="selectedMedic"
-                                          placeholder="{{  __('Select a medic' )}}"/>
+                                          placeholder="{{  __('Select a medic' )}}" required/>
                                 @error('medics') <span class="text-red-600">{{ $message }}</span> @enderror
                             </div>
 
