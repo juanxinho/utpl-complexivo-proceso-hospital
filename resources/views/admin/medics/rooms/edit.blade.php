@@ -15,12 +15,12 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="mb-4">
                                 <x-label for="code" value="{{ __('Room Code') }}"/>
-                                <x-input id="code" type="text" class="mt-1 block w-full" wire:model="code"/>
+                                <x-input id="code" type="text" class="mt-1 block w-full cursor-not-allowed" value="{{ $code }}" disabled readonly />
                                 @error('code') <span class="text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-4">
                                 <x-label for="name" value="{{ __('Room Name') }}"/>
-                                <x-input id="name" type="text" class="mt-1 block w-full" wire:model="name"/>
+                                <x-input id="name" type="text" class="mt-1 block w-full cursor-not-allowed" value="{{ $name }}" disabled readonly />
                                 @error('name') <span class="text-red-600">{{ $message }}</span> @enderror
                             </div>
                             <div>

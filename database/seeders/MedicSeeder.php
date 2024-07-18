@@ -38,7 +38,10 @@ class MedicSeeder extends Seeder
             $userData = $response['results'][0];
 
             $name = $userData['name']['first'] . '.' . $userData['name']['last'];
-            $cleanedName = strtolower(preg_replace('/[^a-zA-Z0-9@.]/', '', $name));
+            $cleanedName = strtolower($name);
+            $cleanedName = preg_replace(['/á/', '/é/', '/í/', '/ó/', '/ú/', '/ñ/', '/Á/', '/É/', '/Í/', '/Ó/', '/Ú/', '/Ñ/'],
+                ['a', 'e', 'i', 'o', 'u', 'n', 'A', 'E', 'I', 'O', 'U', 'N'], $cleanedName);
+            $cleanedName = preg_replace('/\s+/', '', $cleanedName);
 
             // Download a random image and store it
             $imageUrl = $userData['picture']['large'];

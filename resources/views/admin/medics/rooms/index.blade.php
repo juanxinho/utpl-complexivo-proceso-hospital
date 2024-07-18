@@ -24,10 +24,10 @@
             <thead class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    <a href="#" wire:click.prevent="sortBy('code')">{{ __('Room Code') }}</a>
+                    <a href="#" wire:click.prevent="sortBy('code')">{{ __('Code') }}</a>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <a href="#" wire:click.prevent="sortBy('name')">{{ __('Room Name') }}</a>
+                    <a href="#" wire:click.prevent="sortBy('name')">{{ __('Name') }}</a>
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <a href="#" wire:click.prevent="sortBy('description')">{{ __('Description') }}</a>
@@ -60,7 +60,7 @@
                     <td class="px-6 py-4">{{ $room->description }}</td>
                     <td class="px-6 py-4">{{ $room->location }}</td>
                     <td class="px-6 py-4">{{ $room->first_name ? $room->first_name . ' ' . $room->last_name : '-' }}</td>
-                    <td class="px-6 py-4">{{ $room->specialty_name ?? '-' }}</td>
+                    <td class="px-6 py-4">{{ $room->specialties ?? '-' }}</td>
                     <td class="px-6 py-4">{{ $room->status == 1 ? __('Available') : __('Not Available') }}</td>
                     <td class="px-6 py-4">{{ $room->assigned_date ? \Carbon\Carbon::parse($room->assigned_date)->format('Y-m-d') : '-' }}</td>
                     <td class="px-6 py-4 text-center">
