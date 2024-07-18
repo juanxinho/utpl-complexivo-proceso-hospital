@@ -62,7 +62,7 @@ class AppointmentSeeder extends Seeder
             ]);
         }
 
-        // Create 3 future appointments for user ID 2 with medic user ID 3
+        // Create 3 future appointments for user ID 3 with medic user ID 2
         $futureDates = [
             $getRandomValidDate('now', '+1 week'),
             $getRandomValidDate('now', '+2 weeks'),
@@ -70,12 +70,12 @@ class AppointmentSeeder extends Seeder
         ];
 
         foreach ($futureDates as $date) {
-            $medicScheduleId = MedicSchedule::where('id_medic', 3)->first()->id_medic_schedule ?? null;
+            $medicScheduleId = MedicSchedule::where('id_medic', 2)->first()->id_medic_schedule ?? null;
             if ($medicScheduleId) {
                 Appointment::create([
                     'user_register' => 1,
                     'medic_schedule_id_medic_schedule' => $medicScheduleId,
-                    'id_patient' => 2,
+                    'id_patient' => 3,
                     'service_date' => $date,
                     'status' => 'scheduled',
                     'reason' => $faker->text,
@@ -93,12 +93,12 @@ class AppointmentSeeder extends Seeder
         ];
 
         foreach ($pastDates as $date) {
-            $medicScheduleId = MedicSchedule::where('id_medic', 3)->first()->id_medic_schedule ?? null;
+            $medicScheduleId = MedicSchedule::where('id_medic', 2)->first()->id_medic_schedule ?? null;
             if ($medicScheduleId) {
                 Appointment::create([
                     'user_register' => 1,
                     'medic_schedule_id_medic_schedule' => $medicScheduleId,
-                    'id_patient' => 2,
+                    'id_patient' => 3,
                     'service_date' => $date,
                     'status' => 'attended',
                     'reason' => $faker->text,

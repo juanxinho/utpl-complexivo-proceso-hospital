@@ -100,6 +100,6 @@ class User extends Authenticatable
 
     public function medicRooms()
     {
-        return $this->belongsToMany(Room::class, 'medic_room', 'user_id');
+        return $this->hasOne(MedicRoom::class, 'user_id', 'id');
     }
 }

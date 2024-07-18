@@ -25,6 +25,6 @@ class MedicRoom extends Model
 
     public function room()
     {
-        return $this->haso(Room::class, 'room_id');
+        return $this->hasOne(Room::class, 'id');
     }
 }
