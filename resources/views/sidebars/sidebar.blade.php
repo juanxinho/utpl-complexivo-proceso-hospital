@@ -116,6 +116,13 @@
                             {{ __('Schedules') }}
                         </x-nav-link>
                     </li>
+                    <li>
+                        <x-nav-link class="flex items-center w-full p-2 transition duration-75 pl-11"
+                                    href="{{ route('admin.medics.rooms.index') }}"
+                                    :active="request()->routeIs('admin.medics.rooms.index')">
+                            {{ __('Rooms') }}
+                        </x-nav-link>
+                    </li>
                 </ul>
             </li>
             @endhasanyrole

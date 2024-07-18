@@ -23,6 +23,7 @@ use App\Livewire\ScheduleAppointmentCreate;
 use App\Livewire\ScheduleAppointmentEdit;
 use App\Livewire\PatientHistory;
 use App\Livewire\AttendPatient;
+use App\Livewire\MedicsRooms;
 
 // Rutas públicas
 Route::get('/', function () {
@@ -125,6 +126,7 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
     Route::get('/admin/medics/specialties-schedules-list', MedicSpecialtyScheduleList::class)->name('admin.medics.manage-specialties-schedules-list');
     Route::get('/admin/medics/assign-rooms', MedicManagement::class)->name('admin.medics.assign-rooms');
     Route::get('/admin/rooms', RoomManagement::class)->name('admin.rooms.index');
+    Route::get('/admin/medics/rooms', MedicsRooms::class)->name('admin.medics.rooms.index');
 });
 
 Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function () {
