@@ -10,6 +10,11 @@
     </div>
     <div class="relative">
         <div class="flex items-center">
+            <x-select id="specialtyFilter" name="specialtyFilter" :options="$searchSpecialties" wire:model.live="selectedSpecialties" class="dark:text-gray-600" placeholder="{{ __('All specialties') }}"/>
+        </div>
+    </div>
+    <div class="relative">
+        <div class="flex items-center">
             <x-select id="statusFilter" name="statusFilter" :options="$searchStatuses" wire:model.live="selectedStatus" class="dark:text-gray-600" placeholder="{{  __('All statuses' )}}"/>
         </div>
     </div>

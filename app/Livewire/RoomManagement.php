@@ -18,13 +18,10 @@ class RoomManagement extends Component
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
-    public $rooms;
     public $medics;
     public $selectedRoom = null;
     public $selectedMedic = null;
     public $assignmentDate;
-    public $sortBy = 'code';
-    public $sortDirection = 'asc';
 
     protected $rules = [
         'code' => 'required|string|max:255',
@@ -34,22 +31,9 @@ class RoomManagement extends Component
         'status' => 'required|integer|in:0,1',
     ];
 
-    public function sortBy($field)
-    {
-        if ($this->sortBy === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortBy = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
     public function mount()
     {
-        $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
-        $this->specialties = Specialty::where('status', 1)->get();
         $this->searchStatuses = ['0' => __('Unavailable'), '1' => __('Available')];
-        $this->rooms = Room::all();
         $this->medics = User::role('medic')->get();
     }
 
@@ -57,38 +41,19 @@ class RoomManagement extends Component
     {
         $searchTerm = '%' . $this->searchTerm . '%';
 
-        $assigned_rooms = Room::leftJoin('medic_room', 'rooms.id', '=', 'medic_room.room_id')
-            ->leftJoin('users', 'medic_room.user_id', '=', 'users.id')
-            ->leftJoin('profile', 'users.id_profile', '=', 'profile.id_profile')
-            ->leftJoin('specialty_user', 'users.id', '=', 'specialty_user.id_user')
-            ->leftJoin('specialty', 'specialty_user.id_specialty', '=', 'specialty.id_specialty')
-            ->select('rooms.*', 'users.id as user_id', 'profile.first_name', 'profile.last_name', 'specialty.name as specialty_name', 'medic_room.assigned_date')
-            ->when(!empty($this->selectedSpecialties), function ($query) {
-                $query->whereIn('specialty.id_specialty', (array) $this->selectedSpecialties);
-            })
+        $rooms = Room::query()
             ->when($this->selectedStatus !== null && $this->selectedStatus !== '', function ($query) {
-                $query->where('rooms.status', $this->selectedStatus);
+                $query->where('status', $this->selectedStatus);
             })
             ->where(function($query) use ($searchTerm) {
-                $query->where('rooms.code', 'like', $searchTerm)
-                    ->orWhere('rooms.name', 'like', $searchTerm)
-                    ->orWhere('rooms.description', 'like', $searchTerm)
-                    ->orWhere('rooms.location', 'like', $searchTerm)
-                    ->orWhere('profile.first_name', 'like', $searchTerm)
-                    ->orWhere('profile.last_name', 'like', $searchTerm);
+                $query->where('code', 'like', $searchTerm)
+                    ->orWhere('name', 'like', $searchTerm)
+                    ->orWhere('description', 'like', $searchTerm)
+                    ->orWhere('location', 'like', $searchTerm);
             })
-            ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(10);
 
-        return view('admin.rooms.index', compact('assigned_rooms'))->layout('layouts.app');
-    }
-
-    public function updatedSelectedSpecialty() {
-        $this->render();
-    }
-
-    public function updatedSelectedStatus() {
-        $this->render();
+        return view('admin.rooms.index', compact('rooms'))->layout('layouts.app');
     }
 
     public function updatedSearchTerm() {
@@ -98,7 +63,6 @@ class RoomManagement extends Component
     public function clearFilters()
     {
         $this->searchTerm = '';
-        $this->searchSpecialties = null;
         $this->selectedStatus = null;
     }
 

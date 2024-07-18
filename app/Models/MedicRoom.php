@@ -10,6 +10,7 @@ class MedicRoom extends Model
     use HasFactory;
 
     protected $table = 'medic_room';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'user_id',
@@ -24,6 +25,6 @@ class MedicRoom extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'room_id');
+        return $this->haso(Room::class, 'room_id');
     }
 }
