@@ -19,8 +19,6 @@ class MedicsRooms extends Component
     public $isOpenCreate = false;
     public $isOpenEdit = false;
     public $searchTerm = '';
-    public $rooms;
-    public $medics;
     public $selectedRoom = null;
     public $selectedMedic = null;
     public $assignmentDate;
@@ -49,40 +47,13 @@ class MedicsRooms extends Component
 
     public function mount()
     {
-        $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
-        $this->specialties = Specialty::where('status', 1)->get();
+        $this->searchSpecialties = Specialty::where('status', 1)->pluck('name', 'id_specialty');
         $this->searchStatuses = ['0' => __('Unavailable'), '1' => __('Available')];
-        $this->rooms = Room::all();
-        $this->medics = User::role('medic')->get();
     }
 
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
-
-        /* $assigned_rooms = Room::leftJoin('medic_room', 'rooms.id', '=', 'medic_room.room_id')
-            ->leftJoin('users', 'medic_room.user_id', '=', 'users.id')
-            ->leftJoin('profile', 'users.id_profile', '=', 'profile.id_profile')
-            ->leftJoin('specialty_user', 'users.id', '=', 'specialty_user.id_user')
-            ->leftJoin('specialty', 'specialty_user.id_specialty', '=', 'specialty.id_specialty')
-            ->select('rooms.*', 'users.id as user_id', 'profile.first_name', 'profile.last_name', 'specialty.name as specialty_name', 'medic_room.assigned_date')
-            ->when(!empty($this->selectedSpecialties), function ($query) {
-                $query->whereIn('specialty.id_specialty', (array) $this->selectedSpecialties);
-            })
-            ->when($this->selectedStatus !== null && $this->selectedStatus !== '', function ($query) {
-                $query->where('rooms.status', $this->selectedStatus);
-            })
-            ->where(function($query) use ($searchTerm) {
-                $query->where('rooms.code', 'like', $searchTerm)
-                    ->orWhere('rooms.name', 'like', $searchTerm)
-                    ->orWhere('rooms.description', 'like', $searchTerm)
-                    ->orWhere('rooms.location', 'like', $searchTerm)
-                    ->orWhere('profile.first_name', 'like', $searchTerm)
-                    ->orWhere('profile.last_name', 'like', $searchTerm);
-            })
-            ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(10); */
-
 
         $assigned_rooms = Room::leftJoin('medic_room', 'rooms.id', '=', 'medic_room.room_id')
             ->leftJoin('users', 'medic_room.user_id', '=', 'users.id')
@@ -133,7 +104,7 @@ class MedicsRooms extends Component
     public function clearFilters()
     {
         $this->searchTerm = '';
-        $this->searchSpecialties = null;
+        $this->selectedSpecialties = null;
         $this->selectedStatus = null;
     }
 
@@ -158,7 +129,7 @@ class MedicsRooms extends Component
 
         //Obtener lista de consultorios que no  están asignados
         $this->availableRooms = Room::where('status', 1)->pluck('name', 'id');
-        
+
         //Obtener lista de médicos que no tienen consultorio asignado
         $medicRoomUserIds = MedicRoom::pluck('user_id');
         $this->medicsRoom = User::with('profile', 'medicRooms.room')
