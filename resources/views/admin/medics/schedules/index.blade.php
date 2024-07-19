@@ -22,6 +22,9 @@
                                 {{ $day }}
                             </th>
                         @endforeach
+                        {{--<th scope="col" class="px-6 py-3 text-center">
+                            {{ __('Actions') }}
+                        </th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -40,6 +43,10 @@
                                     @endif
                                 </td>
                             @endforeach
+                            {{--<td class="px-6 py-4 text-center">
+                                <button wire:click="edit({{ $medics->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
+                                <button wire:click="delete({{ $medics->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
+                            </td>--}}
                         </tr>
                     @endforeach
                     </tbody>

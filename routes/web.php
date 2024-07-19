@@ -2,7 +2,6 @@
 
 use App\Livewire\RoomManagement;
 use App\Livewire\MedicSpecialtySchedule;
-use App\Livewire\MedicSpecialtyScheduleList;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentPatientController;
@@ -122,8 +121,8 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
     ]);
 
     Route::get('admin/appointments/edit/{appointmentId}', ScheduleAppointmentEdit::class)->name('admin.appointments.edit');
-    Route::get('/admin/medics/schedules/assign', MedicSpecialtySchedule::class)->name('admin.medics.schedules.assign');
-    Route::get('/admin/medics/schedules', MedicSpecialtyScheduleList::class)->name('admin.medics.schedules.index');
+    //Route::get('/admin/medics/schedules/assign', MedicSpecialtySchedule::class)->name('admin.medics.schedules.assign');
+    Route::get('/admin/medics/schedules', MedicSpecialtySchedule::class)->name('admin.medics.schedules.index');
     Route::get('/admin/medics/assign-rooms', MedicManagement::class)->name('admin.medics.assign-rooms');
     Route::get('/admin/rooms', RoomManagement::class)->name('admin.rooms.index');
     Route::get('/admin/medics/rooms', MedicsRooms::class)->name('admin.medics.rooms.index');
