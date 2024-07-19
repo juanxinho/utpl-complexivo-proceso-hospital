@@ -19,7 +19,8 @@
                             <div class="flex mt-2">
                                 <x-select id="diagnosticIds.{{ $index }}" name="diagnosticIds.{{ $index }}"
                                           wire:model.defer="diagnosticIds.{{ $index }}" class="block w-full"
-                                          :options="$availableDiagnostics->pluck('description', 'id')" required/>
+                                          :options="$availableDiagnostics->pluck('description', 'id')" 
+                                          placeholder="{{  __('Select diagnostics' )}}" required/>
                                 <x-button wire:click.prevent="removeDiagnostic({{ $index }})"
                                           class="ml-2 bg-red-500 hover:bg-red-700 dark:bg-red-300 dark:hover:bg-red-500">{{ __('Remove') }}
                                 </x-button>
@@ -27,6 +28,8 @@
                         @endforeach
                         <x-button class="mt-2" wire:click.prevent="addDiagnostic">
                             + {{ __('Add Diagnostic') }}</x-button>
+                        @error('diagnosticIds') <span class="text-red-600">{{ $message }}</span> @enderror
+                            
                     </div>
                 </div>
             </div>
@@ -45,14 +48,16 @@
                             <div class="flex mt-2">
                                 <x-select id="medicalTestIds.{{ $index }}" name="medicalTestIds.{{ $index }}"
                                           wire:model.defer="medicalTestIds.{{ $index }}" class="block w-full"
-                                          :options="$availableMedicalTests->pluck('name', 'id')" required/>
+                                          :options="$availableMedicalTests->pluck('name', 'id')"
+                                          placeholder="{{  __('Select medical Tests' )}}" required/>
                                 <x-button wire:click.prevent="removeMedicalTest({{ $index }})"
                                           class="ml-2 bg-red-500 hover:bg-red-700 dark:bg-red-300 dark:hover:bg-red-500">{{ __('Remove') }}
                                 </x-button>
                             </div>
                         @endforeach
                         <x-button class="mt-2" wire:click.prevent="addMedicalTest">
-                            + {{ __('Add Medical Test') }}</x-button>
+                            + {{ __('Add Medical Test') }}</x-button>   
+                        @error('medicalTestIds') <span class="text-red-600">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </div>
@@ -72,7 +77,8 @@
                                 <x-select id="prescriptionItems.{{ $index }}.stock_id"
                                           name="prescriptionItems.{{ $index }}.stock_id"
                                           wire:model.defer="prescriptionItems.{{ $index }}.stock_id"
-                                          class="block w-full" :options="$stocks->pluck('item_name', 'id')" required/>
+                                          class="block w-full" :options="$stocks->pluck('item_name', 'id')" 
+                                          placeholder="{{  __('Select prescriptions' )}}" required/>
                                 <x-input wire:model.defer="prescriptionItems.{{ $index }}.quantity" type="number"
                                          class="ml-2 block w-20" min="1" required/>
                                 <x-button wire:click.prevent="removePrescriptionItem({{ $index }})"
@@ -81,6 +87,7 @@
                             </div>
                         @endforeach
                         <x-button wire:click.prevent="addPrescriptionItem" class="mt-2">+ {{ __('Add Item') }}</x-button>
+                        @error('prescriptionItems') <span class="text-red-600">{{ $message }}</span> @enderror
                         @error('prescriptionItems.*.stock_id') <span
                             class="text-red-500">{{ $message }}</span> @enderror
                         @error('prescriptionItems.*.quantity') <span
@@ -97,12 +104,14 @@
                         <x-label for="nextControlDate" value="{{ __('Next Control Date') }}"/>
                         <x-input id="nextControlDate" type="date" class="mt-1 block w-full"
                                  wire:model.defer="nextControlDate"/>
+                        @error('nextControlDate') <span class="text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="mt-4">
                         <x-label for="recommendations" value="{{ __('Recommendations') }}"/>
                         <textarea rows="3" id="recommendations" wire:model.defer="recommendations"
                                   class="dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:border-malachite-600 focus:ring-malachite-600 dark:focus:border-malachite-300 dark:focus:ring-malachite-300 rounded-md shadow-sm w-full"></textarea>
+                        @error('nextControlDate') <span class="text-red-600">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div

@@ -27,7 +27,6 @@ class AttendPatient extends Component
 
     protected $rules = [
         'diagnosticIds' => 'required|array|min:1',
-        'medicalTestIds' => 'required|array|min:1',
         'recommendations' => 'nullable|string',
         'prescriptionItems' => 'required|array|min:1',
     ];
@@ -73,7 +72,7 @@ class AttendPatient extends Component
 
     public function save()
     {
-        //$this->validate();
+        $this->validate();
         $clinicalHistory = $this->appointment->user->clinicalHistory;
         
         if (!$clinicalHistory) {
