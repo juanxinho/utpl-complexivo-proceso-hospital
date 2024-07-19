@@ -52,7 +52,12 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
             ->count();
 
         if ($appointmentCount >= 2) {
-            session()->flash('message', __('You have already scheduled two appointments for this day.'));
+            $this->dispatch('flashMessage', [
+                'bannerStyle' => 'warning',
+                'message' => __('You have already scheduled two appointments for this day.')
+            ]);
+            /*session()->now('flash.banner', __('You have already scheduled two appointments for this day.'));
+            session()->now('flash.bannerStyle', 'warning');*/
             return;
         }
 
@@ -67,9 +72,11 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
             'status' => 'scheduled',
         ]);
 
-        session()->flash('message', 'Appointment scheduled successfully!');
+        session()->flash('flash.banner', __('Appointment scheduled successfully!'));
+        session()->flash('flash.bannerStyle', 'success');
 
         $this->resetInputFields();
+        return redirect()->route('admin.appointments.index');
     }
 
     public function render()

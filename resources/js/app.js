@@ -14,3 +14,12 @@ window.themeSwitcher = function () {
         }
     }
 }
+
+document.addEventListener('livewire:load', function () {
+    Livewire.on('flashMessage', data => {
+        console.log('flash message funciona');
+        window.dispatchEvent(new CustomEvent('banner-message', {
+            detail: data
+        }));
+    });
+});

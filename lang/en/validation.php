@@ -13,7 +13,7 @@ return array (
   'ascii' => 'The :attribute field must only contain single-byte alphanumeric characters and symbols.',
   'before' => 'The :attribute field must be a date before :date.',
   'before_or_equal' => 'The :attribute field must be a date before or equal to :date.',
-  'between' => 
+  'between' =>
   array (
     'array' => 'The :attribute field must have between :min and :max items.',
     'file' => 'The :attribute field must be between :min and :max kilobytes.',
@@ -45,14 +45,14 @@ return array (
   'extensions' => 'The :attribute field must have one of the following extensions: :values.',
   'file' => 'The :attribute field must be a file.',
   'filled' => 'The :attribute field must have a value.',
-  'gt' => 
+  'gt' =>
   array (
     'array' => 'The :attribute field must have more than :value items.',
     'file' => 'The :attribute field must be greater than :value kilobytes.',
     'numeric' => 'The :attribute field must be greater than :value.',
     'string' => 'The :attribute field must be greater than :value characters.',
   ),
-  'gte' => 
+  'gte' =>
   array (
     'array' => 'The :attribute field must have :value items or more.',
     'file' => 'The :attribute field must be greater than or equal to :value kilobytes.',
@@ -70,14 +70,14 @@ return array (
   'json' => 'The :attribute field must be a valid JSON string.',
   'list' => 'The :attribute field must be a list.',
   'lowercase' => 'The :attribute field must be lowercase.',
-  'lt' => 
+  'lt' =>
   array (
     'array' => 'The :attribute field must have less than :value items.',
     'file' => 'The :attribute field must be less than :value kilobytes.',
     'numeric' => 'The :attribute field must be less than :value.',
     'string' => 'The :attribute field must be less than :value characters.',
   ),
-  'lte' => 
+  'lte' =>
   array (
     'array' => 'The :attribute field must not have more than :value items.',
     'file' => 'The :attribute field must be less than or equal to :value kilobytes.',
@@ -85,7 +85,7 @@ return array (
     'string' => 'The :attribute field must be less than or equal to :value characters.',
   ),
   'mac_address' => 'The :attribute field must be a valid MAC address.',
-  'max' => 
+  'max' =>
   array (
     'array' => 'The :attribute field must not have more than :max items.',
     'file' => 'The :attribute field must not be greater than :max kilobytes.',
@@ -95,7 +95,7 @@ return array (
   'max_digits' => 'The :attribute field must not have more than :max digits.',
   'mimes' => 'The :attribute field must be a file of type: :values.',
   'mimetypes' => 'The :attribute field must be a file of type: :values.',
-  'min' => 
+  'min' =>
   array (
     'array' => 'The :attribute field must have at least :min items.',
     'file' => 'The :attribute field must be at least :min kilobytes.',
@@ -112,7 +112,7 @@ return array (
   'not_in' => 'The selected :attribute is invalid.',
   'not_regex' => 'The :attribute field format is invalid.',
   'numeric' => 'The :attribute field must be a number.',
-  'password' => 
+  'password' =>
   array (
     'letters' => 'The :attribute field must contain at least one letter.',
     'mixed' => 'The :attribute field must contain at least one uppercase and one lowercase letter.',
@@ -141,7 +141,7 @@ return array (
   'required_without' => 'The :attribute field is required when :values is not present.',
   'required_without_all' => 'The :attribute field is required when none of :values are present.',
   'same' => 'The :attribute field must match :other.',
-  'size' => 
+  'size' =>
   array (
     'array' => 'The :attribute field must contain :size items.',
     'file' => 'The :attribute field must be :size kilobytes.',
@@ -157,11 +157,47 @@ return array (
   'url' => 'The :attribute field must be a valid URL.',
   'ulid' => 'The :attribute field must be a valid ULID.',
   'uuid' => 'The :attribute field must be a valid UUID.',
-  'custom' => 
+  'custom' =>
   array (
-    'attribute-name' => 
+    'attribute-name' =>
     array (
       'rule-name' => 'custom-message',
     ),
   ),
+    'attributes' => [
+        'name' => 'name',
+        'email' => 'email',
+        'password' => 'password',
+        'confirm_password' => 'confirm password',
+        'current_password' => 'current password',
+        'nid' => 'National ID',
+        'first_name' => 'first name',
+        'last_name' => 'last name',
+        'dob' => 'date of birth',
+        'address' => 'address',
+        'phone' => 'phone',
+        'country' => 'country',
+        'state' => 'state',
+        'city' => 'city',
+        'zip_code' => 'zip code',
+        'profile_picture' => 'profile picture',
+        'gender' => 'gender',
+        'status' => 'status',
+        'role' => 'role',
+        'specialty' => 'specialty',
+        'description' => 'description',
+        'location' => 'location',
+        'assigned_date' => 'assigned date',
+        'room_code' => 'room code',
+        'room_name' => 'room name',
+        'room_description' => 'room description',
+        'room_location' => 'room location',
+        'room_status' => 'room status',
+        'time_range' => 'time range',
+        'service_date' => 'service date',
+        'next_control_date' => 'next control date',
+        'rating' => 'rating',
+        'reason' => 'reason',
+        'day' => 'day',
+    ],
 );

@@ -9,9 +9,6 @@
 
         <x-slot name="description">
             {{ __('Schedule a new appointment with a doctor.') }}
-            @if (session()->has('message'))
-            <div>{{ session('message') }}</div>
-            @endif
         </x-slot>
 
         <x-slot name="form">
