@@ -21,7 +21,7 @@
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                             {{ $appointment->medicSchedule->specialty->name }}
                         </h2>
-                        {{--<p>{{ $appointment->medicSchedule->user->medicRooms->room->name }}</p>--}}
+                        <p>{{ $appointment->medicSchedule->user->medicRooms ? $appointment->medicSchedule->user->medicRooms->room->name : '-'}}</p>
                         <p>{{ ucfirst(\Carbon\Carbon::parse($appointment->service_date)->translatedFormat('l, j \d\e F \d\e Y')) }} | {{ $appointment->medicSchedule->schedule->time_range }}</p>
                         <p>Dr(a) {{ $appointment->medicSchedule->user->profile->first_name}} {{ $appointment->medicSchedule->user->profile->last_name }}</p>
                     </div>
