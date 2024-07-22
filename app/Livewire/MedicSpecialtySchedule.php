@@ -12,51 +12,71 @@ use App\Models\Schedule;
 class MedicSpecialtySchedule extends Component
 {
     public $medics = [];
-    public $days;
+    public $days; 
+    public $medic; 
+    public $id_schedules = []; 
+    public $specialty; 
     public $selectedMedic = null;
     public $specialties = [];
+    public $id_other_schedules = [];
     public $schedules = [];
     public $selectedSpecialty = null;
     public $selectedSchedules = [];
     public $medicSpecialties = [];
     public $specialtyDays = [];
     public $specialtySchedules = [];
+    public $timeRanges = [];
+    public $isOpenCreate = false;
+    public $isOpenEdit = false;
 
     public function mount()
     {
-        //$this->medics = User::role('medic')->with('specialties', 'medicSchedules.schedule')->get();
         $this->specialties = Specialty::all();
         $this->schedules = Schedule::all();
         $this->days = Day::orderBy('id')->pluck('name', 'id')->toArray();
     }
 
-    public function updatedSelectedMedic($medicId)
+    private function resetInputFields()
     {
-        $medic = User::with('specialties', 'medicSchedules.schedule')->find($medicId);
-        $this->medicSpecialties = $medic->specialties->pluck('id_specialty')->toArray();
+        $this->id_other_schedules = [];
+        $this->id_schedules = [];
+        $this->specialties = [];
+        $this->schedules = [];
+        $this->timeRanges = [];
+        $this->medic = null;
+        $this->specialty = null;
+    }
+      
+
+    public function closeModal()
+    {
+        $this->isOpenCreate = false;
+        $this->isOpenEdit = false;
     }
 
-    public function assignSpecialty()
+    public function assignMedicSchedule()
     {
-        $medic = User::find($this->selectedMedic);
-        $medic->specialties()->sync($this->medicSpecialties);
-        session()->flash('message', 'Specialties assigned successfully.');
-    }
+        //$this->validate();
 
-    public function assignSchedule($specialtyId)
-    {
-        foreach ($this->specialtyDays[$specialtyId] as $dayId) {
-            $scheduleIds = $this->specialtySchedules[$specialtyId][$dayId] ?? [];
-            foreach ($scheduleIds as $scheduleId) {
-                MedicSchedule::create([
-                    'id_medic' => $this->selectedMedic,
-                    'id_specialty' => $specialtyId,
-                    'id_schedule' => $scheduleId,
-                ]);
-            }
+        MedicSchedule::where('id_specialty', $this->specialty->id_specialty)
+            ->where('id_medic', $this->medic->id)
+            ->delete();
+        
+
+        foreach ($this->id_schedules as $id_schedule) {
+            MedicSchedule::create([
+                'id_specialty' => $this->specialty->id_specialty,
+                'id_medic' => $this->medic->id,
+                'id_schedule' => $id_schedule,
+            ]);
         }
-        session()->flash('message', 'Schedules assigned successfully.');
+
+        session()->flash('message', 'Schedules updated successfully.');
+
+        $this->resetInputFields();
+        $this->closeModal();
     }
+
 
     public function render()
     {
@@ -81,17 +101,55 @@ class MedicSpecialtySchedule extends Component
                         if ($medicSchedule->schedule && $medicSchedule->schedule->day) {
                             $dayName = $medicSchedule->schedule->day->name;
                             $timeRange = $medicSchedule->schedule->time_range;
-                            $daySchedule[$dayName][] = $timeRange;
+                            $daySchedule[$dayName][$medicSchedule->id_medic_schedule] = $timeRange;
                         }
                     }
                 }
 
-                $specialtySchedules[$specialtyName] = $daySchedule;
+                $specialtySchedules[$specialtyName] =
+                [
+                    'daySchedule' => $daySchedule,
+                    'user_id' => $medic->id,
+                    'specialty_id' => $specialty->id_specialty,
+                ]; 
             }
 
             $this->medics[$medicName] = $specialtySchedules;
         }
 
-        return view('admin.medics.schedules.index')->layout('layouts.app');
+        return view('admin.medics.schedules.index', compact('medics'))->layout('layouts.app');
+    }
+
+    public function edit($user_id, $specialty_id)
+    {
+        $this->medic = User::find($user_id);
+        $this->specialty = Specialty::find($specialty_id);
+        $this->loadSchedules();
+        $this->loadOtherSchedules();
+        $this->loadTimeRanges();
+        $this->isOpenEdit = true;
+    }
+
+    public function loadSchedules()
+    {
+        $this->id_schedules = MedicSchedule::where('id_specialty', $this->specialty->id_specialty)
+            ->where('id_medic', $this->medic->id)
+            ->get()
+            ->pluck('id_schedule')
+            ->toArray();
+    }
+
+    public function loadOtherSchedules()
+    {
+        $this->id_other_schedules = MedicSchedule::where('id_medic', $this->medic->id)
+            ->whereNotIn('id_specialty', [$this->specialty->id_specialty])
+            ->get()
+            ->pluck('id_schedule')
+            ->toArray();
+    }
+
+    public function loadTimeRanges()
+    {
+        $this->timeRanges = Schedule::with('day')->get();
     }
 }

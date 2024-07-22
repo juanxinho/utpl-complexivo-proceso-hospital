@@ -92,9 +92,8 @@
                                                 type="checkbox" wire:model.defer="id_specialties"
                                                 value="{{ $specialty->id_specialty }}"
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                                @foreach ($id_specialties as $id_specialty)
-                                                    @if(in_array($specialty->id_specialty, $id_specialties)) checked @endif
-                                                @endforeach
+                                                @if(in_array($specialty->id_specialty, $id_specialties)) checked @endif
+                                               
                                             />
                                             <label class="ms-3">{{ $specialty->name }}</label>
                                         </div>

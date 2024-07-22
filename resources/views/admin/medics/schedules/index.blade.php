@@ -1,8 +1,14 @@
-<!-- resources/views/admin/medics/schedules/index.blade.php-->
+@if($isOpenCreate)
+    @include('admin.medic.schedules.assign')
+@endif
+@if($isOpenEdit)
+    @include('admin.medics.schedules.edit')
+@endif
+
 <div>
     <x-slot name="header">
         <h1 class="font-semibold text-2xl text-gray-800 leading-tight dark:text-white">
-            {{ __('Medic Specialties and Schedules') }}
+            {{ __('Assign Specialties and Schedules to Medic') }}
         </h1>
     </x-slot>
     <div class="py-2">
@@ -22,36 +28,42 @@
                                 {{ $day }}
                             </th>
                         @endforeach
-                        {{--<th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="w-1/8 px-6 py-3 text-center">
                             {{ __('Actions') }}
-                        </th>--}}
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
+                    
                     @foreach ($specialties as $specialtyName => $specialtyDays)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="border px-6 py-4 text-center">{{ $medicName }}</td>
                             <td class="border px-6 py-4 text-center">{{ $specialtyName }}</td>
                             @foreach ($days as $day)
-                                <td class="border px-6 py-4 text-center">
-                                    @if (isset($specialtyDays[$day]))
+                                <td class="border px-6 py-4 text-center">  
+                                    @if (isset($specialtyDays['daySchedule'][$day]))
                                         <ul class="list-disc list-inside">
-                                            @foreach ($specialtyDays[$day] as $timeRange)
-                                                <li>{{ $timeRange }}</li>
+                                            @foreach ($specialtyDays['daySchedule'][$day] as $time_range)
+                                                    <li>{{ $time_range }}</li>
                                             @endforeach
                                         </ul>
                                     @endif
                                 </td>
                             @endforeach
-                            {{--<td class="px-6 py-4 text-center">
-                                <button wire:click="edit({{ $medics->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
-                                <button wire:click="delete({{ $medics->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
-                            </td>--}}
+                            <td class="border px-6 py-4 text-center">
+                            {{--@if ($specialtyDays['daySchedule'])--}}
+                                <button wire:click="edit({{ $specialtyDays['user_id']}}, {{$specialtyDays['specialty_id'] }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
+                            {{--@endif--}}
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
         @endforeach
+
+        <div class="mt-4">
+        
+        </div>
     </div>
 </div>
