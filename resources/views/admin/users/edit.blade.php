@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-span-2">
                                 <x-label for="id_roles" value="{{ __('Roles') }}:"/>
-                                <div class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1">
+                                <div class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1 mt-1">
                                     @foreach ($roles as $role)
                                         <div class="flex items-center m-2">
                                             <input

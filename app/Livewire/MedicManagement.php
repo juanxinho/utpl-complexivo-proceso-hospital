@@ -231,13 +231,6 @@ class MedicManagement extends Component
     public function edit($id)
     {
         $medic = User::with('profile', 'roles', 'specialties', 'medicSchedules.schedule', 'medicSchedules.schedule.day', 'medicRooms.room')->findOrFail($id);
-        /*
-        $this->medicSpecialties = $medic->specialties->pluck('id_specialty')->toArray();
-        $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');
-        $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
-        $this->medicSchedules = $medic->medicSchedules;*/
-        //dd($this->medicSchedules);
-
 
         $this->id = $id;
         $this->profile = $medic->profile->toArray();
@@ -245,7 +238,6 @@ class MedicManagement extends Component
         $this->roles = Role::where('name', 'medic')->get();
         $this->id_specialties = $medic->specialties()->pluck('specialty.id_specialty')->toArray();
         //$this->password = $user->password;
-        // Load states and cities for the selected country and state
         $this->loadStates();
         $this->loadCities();
         $this->isOpenEdit = true;

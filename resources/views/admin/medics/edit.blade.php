@@ -75,16 +75,10 @@
                                 <x-input id="profile.address" type="text" class="mt-1 block w-full"
                                          wire:model.defer="profile.address" autocomplete="address"/>
                             </div>
-
-                            {{--<div class="col-span-2 lg:col-span-1">
-                                <x-label for="room" value="{{ __('Room') }}"/>
-                                <x-select id="medicRooms.room" name="medicRooms.room" class="block mt-1 w-full" :options="$rooms"
-                                          wire:model.live="medicRooms.room" placeholder="{{  __('Select a room' )}}"/>
-                            </div>--}}
                             <div class="col-span-2">
                                 <x-label for="id_specialties" value="{{ __('Specialty') }}:"/>
                                 <div
-                                    class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1">
+                                    class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1 mt-1">
                                 @foreach ($specialties as $specialty)
                                         <div class="flex items-center m-2">
                                             <input
@@ -93,7 +87,7 @@
                                                 value="{{ $specialty->id_specialty }}"
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                                 @if(in_array($specialty->id_specialty, $id_specialties)) checked @endif
-                                               
+
                                             />
                                             <label class="ms-3">{{ $specialty->name }}</label>
                                         </div>
@@ -101,25 +95,6 @@
                                 </div>
                                 @error('id_specialties') <span>{{ $message }}</span> @enderror
                             </div>
-                            {{--@foreach ($medicSpecialties as $specialtyId)
-                                <div class="col-span-2">
-                                    <x-label
-                                        value="{{ __('Select Days for ') . $specialties->find($specialtyId)->name }}"/>
-                                    <x-select id="specialtyDays" name="specialtyDays"
-                                              wire:model.live="specialtyDays.{{ $specialtyId }}" :options="$days"
-                                              multiple class="form-multiselect mt-1 block w-full"/>
-                                </div>
-
-                                @foreach ($specialtyDays[$specialtyId] ?? [] as $dayId)
-                                    <div class="col-span-2">
-                                        <x-label value="{{ __('Select Schedules for ') . $days[$dayId] }}"/>
-                                        <x-select id="specialtySchedules" name="specialtySchedules"
-                                                  wire:model.live="specialtySchedules.{{ $specialtyId }}.{{ $dayId }}"
-                                                  :options="$schedules->pluck('time_range', 'id')" multiple
-                                                  class="form-multiselect mt-1 block w-full"/>
-                                    </div>
-                                @endforeach
-                            @endforeach--}}
                         </div>
                     </div>
                     <div

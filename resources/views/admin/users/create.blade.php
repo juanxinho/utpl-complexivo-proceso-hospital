@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-span-2">
                                 <x-label for="id_roles" value="{{ __('Roles') }}:"/>
-                                <div class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1">
+                                <div class="dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-1 mt-1">
                                     @foreach ($roles as $role)
                                         <div class="flex items-center m-2">
                                             <input class="rounded border-gray-300 text-malachite-600 dark:text-malachite-300 shadow-sm focus:ring-malachite-500" type="checkbox" wire:model.defer="id_roles"  value="{{ $role->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>

@@ -11,11 +11,13 @@ use App\Models\Schedule;
 
 class MedicSpecialtySchedule extends Component
 {
+    public $searchSpecialties, $selectedSpecialties = [], $searchStatuses, $selectedStatus;
+    public $searchTerm = '';
     public $medics = [];
-    public $days; 
-    public $medic; 
-    public $id_schedules = []; 
-    public $specialty; 
+    public $days;
+    public $medic;
+    public $id_schedules = [];
+    public $specialty;
     public $selectedMedic = null;
     public $specialties = [];
     public $id_other_schedules = [];
@@ -31,6 +33,7 @@ class MedicSpecialtySchedule extends Component
 
     public function mount()
     {
+        $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
         $this->specialties = Specialty::all();
         $this->schedules = Schedule::all();
         $this->days = Day::orderBy('id')->pluck('name', 'id')->toArray();
@@ -46,7 +49,7 @@ class MedicSpecialtySchedule extends Component
         $this->medic = null;
         $this->specialty = null;
     }
-      
+
 
     public function closeModal()
     {
@@ -61,7 +64,7 @@ class MedicSpecialtySchedule extends Component
         MedicSchedule::where('id_specialty', $this->specialty->id_specialty)
             ->where('id_medic', $this->medic->id)
             ->delete();
-        
+
 
         foreach ($this->id_schedules as $id_schedule) {
             MedicSchedule::create([
@@ -80,8 +83,21 @@ class MedicSpecialtySchedule extends Component
 
     public function render()
     {
+        $searchTerm = '%' . $this->searchTerm . '%';
+
         $medics = User::role('medic')
             ->with(['profile', 'specialties', 'medicSchedules.schedule.day'])
+            ->when(!empty($this->selectedSpecialties), function ($query) {
+                $query->whereHas('specialties', function ($query) {
+                    $query->whereIn('specialty.id_specialty', (array) $this->selectedSpecialties);
+                });
+            })
+            ->where(function($query) use ($searchTerm) {
+                $query->orWhereHas('profile', function($query) use ($searchTerm) {
+                        $query->where('first_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+            })
             ->get();
 
         // Get the distinct day ids from the schedule table
@@ -111,13 +127,27 @@ class MedicSpecialtySchedule extends Component
                     'daySchedule' => $daySchedule,
                     'user_id' => $medic->id,
                     'specialty_id' => $specialty->id_specialty,
-                ]; 
+                ];
             }
 
             $this->medics[$medicName] = $specialtySchedules;
         }
 
         return view('admin.medics.schedules.index', compact('medics'))->layout('layouts.app');
+    }
+
+    public function updatedSelectedSpecialty() {
+        $this->render();
+    }
+
+    public function updatedSearchTerm() {
+        $this->render();
+    }
+
+    public function clearFilters()
+    {
+        $this->searchTerm = '';
+        $this->selectedSpecialties = null;
     }
 
     public function edit($user_id, $specialty_id)
