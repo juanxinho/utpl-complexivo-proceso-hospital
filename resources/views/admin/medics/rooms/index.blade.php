@@ -61,7 +61,13 @@
                     <td class="px-6 py-4">{{ $room->location }}</td>
                     <td class="px-6 py-4">{{ $room->first_name ? $room->first_name . ' ' . $room->last_name : '-' }}</td>
                     <td class="px-6 py-4">{{ $room->specialties ?? '-' }}</td>
-                    <td class="px-6 py-4">{{ $room->status == 1 ? __('Available') : __('Not Available') }}</td>
+                    <td class="px-6 py-4">
+                        @if($room->status == 1 )
+                            <x-bordered-badge color="green" text="{{ __('Available') }}" />
+                        @else
+                            <x-bordered-badge color="red" text="{{ __('Available') }}" />
+                        @endif
+                    </td>
                     <td class="px-6 py-4">{{ $room->assigned_date ? \Carbon\Carbon::parse($room->assigned_date)->format('Y-m-d') : '-' }}</td>
                     <td class="px-6 py-4 text-center">
                     @if($room->first_name )

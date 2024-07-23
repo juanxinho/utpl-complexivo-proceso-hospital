@@ -82,7 +82,13 @@
                     <td class="px-6 py-4 text-center">{{ ucfirst($patient->profile->state->name) }}</td>
                     <td class="px-6 py-4 text-center">{{ ucfirst($patient->profile->city->name) }}</td>
                     <td class="px-6 py-4 text-center">{{ $patient->profile->address }}</td>
-                    <td class="px-6 py-4 text-center">{{ $patient->status_label }}</td>
+                    <td class="px-6 py-4 text-center">
+                        @if($patient->status == 1 )
+                            <x-bordered-badge color="green" text="{{ $patient->status_label }}" />
+                        @else
+                            <x-bordered-badge color="red" text="{{ $patient->status_label }}" />
+                        @endif
+                    </td>
                     <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $patient->id }})" class="text-gray-600 dark:text-gray-300">
                             <x-monoicon-edit-alt width="20" height="20" />

@@ -70,7 +70,13 @@
                     <td class="px-6 py-4 text-center">{{ $medic->profile->gender_name }}</td>
                     <td class="px-6 py-4 text-center">{{ implode(', ', $medic->specialties->pluck('name')->toArray()) }}</td>
                     <td class="px-6 py-4 text-center">{{ $medic->medicRooms ? $medic->medicRooms->room->name : '-' }}</td>
-                    <td class="px-6 py-4 text-center">{{ $medic->status_label }}</td>
+                    <td class="px-6 py-4 text-center">
+                        @if($medic->status == 1 )
+                            <x-bordered-badge color="green" text="{{ $medic->status_label }}" />
+                        @else
+                            <x-bordered-badge color="red" text="{{ $medic->status_label }}" />
+                        @endif
+                    </td>
                     <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $medic->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
                         <button wire:click="delete({{ $medic->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
