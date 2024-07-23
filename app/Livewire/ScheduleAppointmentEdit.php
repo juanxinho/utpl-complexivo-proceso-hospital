@@ -63,6 +63,7 @@ class ScheduleAppointmentEdit extends ScheduleAppointment
         $this->date = $appointment->service_date;
         $this->time = $appointment->medic_schedule_id_medic_schedule;
         $this->reason = $appointment->reason;
+        $this->today = Carbon::today()->toDateString();
 
         $this->loadSpecialtyId($this->specialty_id);
         $this->loadMedicId($this->medic_id);

@@ -39,7 +39,7 @@
 
             <div class="col-span-2 lg:col-span-1">
                 <x-label for="date" value="{{ __('Date') }}" />
-                <x-input id="date" type="date" wire:model.live="date" class="mt-1 block w-full" />
+                <x-input id="date" type="date" min="{{ $today }}" max="{{ $maxDate }}" wire:model.live="date" class="mt-1 block w-full" />
                 <x-input-error for="date" class="mt-2" />
             </div>
 

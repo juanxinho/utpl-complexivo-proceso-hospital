@@ -17,6 +17,8 @@ class ScheduleAppointment extends Component
     public $medic_id;
     public $date;
     public $time;
+    public $today;
+    public $maxDate;
     public $reason;
     public $appointmentId;
     public $specialties = [];
