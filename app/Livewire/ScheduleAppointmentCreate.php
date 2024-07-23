@@ -11,6 +11,8 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
 {
     public function mount($appointmentId = null)
     {
+        $this->today = Carbon::today()->toDateString();
+        $this->maxDate = Carbon::today()->addWeeks(2)->toDateString();
         $this->patient = Auth::user();
         $this->specialties = Specialty::pluck('name', 'id_specialty');
     }
