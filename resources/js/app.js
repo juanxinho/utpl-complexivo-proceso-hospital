@@ -15,11 +15,11 @@ window.themeSwitcher = function () {
     }
 }
 
-document.addEventListener('livewire:load', function () {
+document.addEventListener('livewire:initialized', function () {
     Livewire.on('flashMessage', data => {
-        console.log('flash message funciona');
         window.dispatchEvent(new CustomEvent('banner-message', {
             detail: data
         }));
     });
 });
+

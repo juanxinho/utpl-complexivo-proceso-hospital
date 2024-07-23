@@ -40,9 +40,6 @@ class MedicManagement extends Component
     public $selectedRoom;
     public $availableRooms = [];
     public $assignmentDate;
-    //public $days = [];
-    //public $medicSpecialties = [];
-    //public $medicSchedules = [];
 
     public function mount()
     {
@@ -221,8 +218,8 @@ class MedicManagement extends Component
 
         $user->specialties()->sync($this->id_specialties);
 
-        session()->flash('message',
-            $this->id ? __('Medic successfully updated.') : __('Medic successfully created.'));
+        session()->flash('flash.banner', $this->id ? __('Medic successfully updated.') : __('Medic successfully created.'));
+        session()->flash('flash.bannerStyle', 'success');
 
         $this->closeModal();
         $this->resetInputFields();
@@ -251,7 +248,8 @@ class MedicManagement extends Component
             $user->save(); // Save the change
         }
 
-        session()->flash('message', __('Medic successfully deactivated.'));
+        session()->flash('flash.banner', __('Medic successfully deactivated.'));
+        session()->flash('flash.bannerStyle', 'success');
     }
 
     public function assignRooms () {
@@ -290,7 +288,8 @@ class MedicManagement extends Component
 
         Room::where('id', $this->availableRooms)->update(['status' => 0]);
 
-        session()->flash('message', 'Room assigned successfully.');
+        session()->flash('flash.banner', __('Room assigned successfully.'));
+        session()->flash('flash.bannerStyle', 'success');
 
         $this->closeModal();
         $this->resetInputFields();

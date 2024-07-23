@@ -99,9 +99,11 @@ class RoomManagement extends Component
             'status' => 1,
         ]);
 
-        session()->flash('message', 'Room created successfully.');
+        session()->flash('flash.banner', __('Room created successfully.'));
+        session()->flash('flash.bannerStyle', 'success');
 
         $this->resetInputFields();
+        $this->isOpenCreate = false;
     }
 
     public function edit($id)
@@ -129,7 +131,8 @@ class RoomManagement extends Component
             'status' => $this->status,
         ]);
 
-        session()->flash('message', 'Room updated successfully.');
+        session()->flash('flash.banner', __('Room updated successfully.'));
+        session()->flash('flash.bannerStyle', 'success');
 
         $this->resetInputFields();
         $this->isOpenEdit = false;
@@ -140,6 +143,7 @@ class RoomManagement extends Component
         $room = Room::findOrFail($id);
         $room->delete();
 
-        session()->flash('message', 'Room deleted successfully.');
+        session()->flash('flash.banner', __('Room deleted successfully.'));
+        session()->flash('flash.bannerStyle', 'success');
     }
 }

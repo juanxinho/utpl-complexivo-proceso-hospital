@@ -74,13 +74,13 @@ class AttendPatient extends Component
     {
         $this->validate();
         $clinicalHistory = $this->appointment->user->clinicalHistory;
-        
+
         if (!$clinicalHistory) {
             $clinicalHistory = $this->appointment->user->clinicalHistory()->create([
                 'user_register' => Auth::id(),
             ]);
         }
-        
+
 
         // Guardar el diagnóstico
         $medicalDiagnostic = MedicalDiagnostic::create([
@@ -116,7 +116,8 @@ class AttendPatient extends Component
         $medicalDiagnostic->diagnostics()->attach(array_unique($this->diagnosticIds));
         $medicalDiagnostic->medicalTests()->attach(array_unique($this->medicalTestIds));
 
-        session()->flash('message', 'Patient attended successfully.');
+        session()->flash('flash.banner', __('Patient attended successfully.'));
+        session()->flash('flash.bannerStyle', 'success');
         return redirect()->route('medic.appointments.index');
     }
 

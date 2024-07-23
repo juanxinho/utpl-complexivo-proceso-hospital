@@ -20,13 +20,6 @@ class AppointmentController extends Controller
         $appointments = Appointment::paginate(10);
 
         $appointments = Appointment::query()
-            /*->when($search, function ($query) use ($search) {
-                return $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('abbreviation', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%');
-                });
-            })*/
             ->when($status !== null, function ($query) use ($status) {
                 return $query->where('status', $status);
             })
@@ -51,7 +44,9 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         $appointment->update(['status' => 'cancelled']);
-        return redirect()->route('admin.appointments.index')->with('success', 'Appointment cancelled successfully.');
+        session()->flash('flash.banner', __('Appointment cancelled successfully.'));
+        session()->flash('flash.bannerStyle', 'success');
+        return redirect()->route('admin.appointments.index');
     }
 
 }

@@ -98,8 +98,11 @@ class ScheduleAppointmentEdit extends ScheduleAppointment
             'status' => 'scheduled',
         ]);
 
-        session()->flash('message', 'Appointment rescheduled successfully!');
+        session()->flash('flash.banner', __('Appointment rescheduled successfully!'));
+        session()->flash('flash.bannerStyle', 'success');
+
         $this->resetInputFields();
+        return redirect()->route('admin.appointments.index');
     }
 
     public function render()

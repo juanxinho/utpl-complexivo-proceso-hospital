@@ -199,8 +199,9 @@ class UserManagement extends Component
         $user->syncRoles($roles);
 
 
-        session()->flash('message',
+        session()->flash('flash.banner',
             $this->id ? __('User successfully updated.') : __('User successfully created.'));
+        session()->flash('flash.bannerStyle', 'success');
 
         $this->closeModal();
         $this->resetInputFields();
@@ -229,7 +230,8 @@ class UserManagement extends Component
             $user->save(); // Save the change
         }
 
-        session()->flash('message', __('User successfully deactivated.'));
+        session()->flash('flash.banner', __('User successfully deactivated.'));
+        session()->flash('flash.bannerStyle', 'success');
     }
 }
 
