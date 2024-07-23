@@ -88,6 +88,7 @@ class ScheduleAppointment extends Component
         }
 
         $dayOfWeek = Carbon::parse($this->date)->dayOfWeekIso;
+        $currentTime = Carbon::now()->format('H:i');
 
         $query = MedicSchedule::where('id_medic', $this->medic_id)
             ->whereHas('schedule', function ($query) use ($dayOfWeek) {
@@ -109,6 +110,13 @@ class ScheduleAppointment extends Component
                     ->where('appointment.status', '=', 'scheduled')
                     ->where('appointment.service_date', '=', $this->date);
             });
+
+        // Filter out times that end before the current time if the selected date is today
+        if ($this->date === Carbon::today()->toDateString()) {
+            $query->whereHas('schedule', function ($query) use ($currentTime) {
+                $query->whereRaw("SUBSTRING_INDEX(time_range, ' - ', -1) > ?", [$currentTime]);
+            });
+        }
 
         $schedules = $query->get();
         $availableTimes = [];
