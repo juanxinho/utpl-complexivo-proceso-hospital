@@ -57,7 +57,15 @@
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->specialty->name }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->medicSchedule->user->profile->first_name }} {{ $appointment->medicSchedule->user->profile->last_name }}</td>
                         <td class="px-6 py-4 text-center">{{ $appointment->user->profile->first_name }} {{ $appointment->user->profile->last_name }}</td>
-                        <td class="px-6 py-4 text-center">{{ __(ucfirst($appointment->status)) }}</td>
+                        <td class="px-6 py-4 text-center">
+                            @if($appointment->status == 'scheduled' )
+                                <x-bordered-badge color="blue" text="{{ __(ucfirst($appointment->status)) }}" />
+                            @elseif($appointment->status == 'attended')
+                                <x-bordered-badge color="green" text="{{ __(ucfirst($appointment->status)) }}" />
+                            @else
+                                <x-bordered-badge color="red" text="{{ __(ucfirst($appointment->status)) }}" />
+                            @endif
+                            </td>
                         <td class="px-6 py-4 text-center">
                             <a href="{{ route('admin.appointments.edit', $appointment->id_appointment) }}"
                                class="inline-block text-gray-600 dark:text-gray-300">

@@ -59,7 +59,11 @@
                         {{ implode(', ', $user->getRoleNames()->toArray()) }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        {{ $user->status_label }}
+                        @if($user->status == 1 )
+                            <x-bordered-badge color="green" text="{{ $user->status_label }}" />
+                        @else
+                            <x-bordered-badge color="red" text="{{ $user->status_label }}" />
+                        @endif
                     </td>
                     <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $user->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>

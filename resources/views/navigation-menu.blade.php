@@ -35,7 +35,7 @@
 
                             <x-slot name="content">
                                 <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                <div class="block px-4 py-2 text-xs text-gray-400 dark:text-white">
                                     {{ __('Manage Account') }}
                                 </div>
 
@@ -49,7 +49,7 @@
                                     </x-dropdown-link>
                                 @endif
 
-                                <div class="border-t border-gray-200"></div>
+                                <div class="border-t border-gray-200 dark:border-gray-700"></div>
 
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}" x-data>

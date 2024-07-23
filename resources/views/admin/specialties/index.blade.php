@@ -41,7 +41,13 @@
                             <td class="px-6 py-4">{{ __($specialty->name) }}</td>
                             <td class="px-6 py-4 text-center">{{ $specialty->abbreviation }}</td>
                             <td class="px-6 py-4 text-center">{{ __($specialty->description) }}</td>
-                            <td class="px-6 py-4 text-center">{{ $specialty->status ? __('Active') : __('Inactive') }}</td>
+                            <td class="px-6 py-4 text-center">
+                                @if($specialty->status == 1 )
+                                    <x-bordered-badge color="green" text="{{ __('Active') }}" />
+                                @else
+                                    <x-bordered-badge color="red" text="{{ __('Inactive') }}" />
+                                @endif
+                            </td>
                             <td class="px-6 py-4 text-center">
                                 <a href="{{ route('admin.specialties.edit', $specialty->id_specialty) }}"
                                    class="inline-block text-gray-600 dark:text-gray-300">

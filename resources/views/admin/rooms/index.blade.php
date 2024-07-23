@@ -52,7 +52,13 @@
                     <td class="px-6 py-4">{{ $room->name }}</td>
                     <td class="px-6 py-4">{{ $room->description }}</td>
                     <td class="px-6 py-4">{{ $room->location }}</td>
-                    <td class="px-6 py-4">{{ $room->status == 1 ? __('Available') : __('Not Available') }}</td>
+                    <td class="px-6 py-4">
+                        @if($room->status == 1 )
+                            <x-bordered-badge color="green" text="{{ __('Available') }}" />
+                        @else
+                            <x-bordered-badge color="red" text="{{ __('Available') }}" />
+                        @endif
+                    </td>
                     <td class="px-6 py-4 text-center">
                         <button wire:click="edit({{ $room->id }})" class="text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></button>
                         <button wire:click="delete({{ $room->id }})" class="text-red-600 dark:text-red-500"><x-monoicon-delete-alt width="20" height="20" /></button>
