@@ -22,6 +22,15 @@ class ProfileUpdateForm extends Component
     public $states = [];
     public $cities = [];
 
+    /**
+     * Initialize the component with user data, countries, states, and cities.
+     *
+     * This function is called when the component is mounted and initializes
+     * the state with user data, and loads the list of countries. If the state
+     * has a country_id and state_id, it loads the corresponding states and cities.
+     *
+     * @return void
+     */
     public function mount()
     {
         $user = Auth::user();
@@ -39,6 +48,14 @@ class ProfileUpdateForm extends Component
         }
     }
 
+    /**
+     * Update the states when the country changes.
+     *
+     * This function is called when the country ID is updated in the state
+     * and it loads the corresponding states.
+     *
+     * @return void
+     */
     public function updatedstateCountryId()
     {
         $this->state['state_id'] = null;
@@ -46,8 +63,16 @@ class ProfileUpdateForm extends Component
         $this->state['city_id'] = null;
         $this->states = [];
         $this->loadStates();
-
     }
+
+    /**
+     * Update the cities when the state changes.
+     *
+     * This function is called when the state ID is updated in the state
+     * and it loads the corresponding cities.
+     *
+     * @return void
+     */
     public function updatedstateStateId()
     {
         $this->state['city_id'] = null;
@@ -55,6 +80,13 @@ class ProfileUpdateForm extends Component
         $this->loadCities();
     }
 
+    /**
+     * Load the states based on the selected country.
+     *
+     * This function retrieves and sets the states for the selected country.
+     *
+     * @return void
+     */
     protected function loadStates()
     {
         $this->states = State::where('country_id', $this->state['country_id'])
@@ -64,6 +96,13 @@ class ProfileUpdateForm extends Component
             });
     }
 
+    /**
+     * Load the cities based on the selected state.
+     *
+     * This function retrieves and sets the cities for the selected state.
+     *
+     * @return void
+     */
     protected function loadCities()
     {
         $this->cities = City::where('state_id', $this->state['state_id'])
@@ -73,6 +112,15 @@ class ProfileUpdateForm extends Component
             });
     }
 
+    /**
+     * Update the user's profile information.
+     *
+     * This function validates the state data and updates the user's profile information
+     * using the specified updater. It also updates the user's profile model.
+     *
+     * @param UpdatesUserProfileInformation $updater
+     * @return void
+     */
     public function updateProfileInformation(UpdatesUserProfileInformation $updater)
     {
         $user = Auth::user();
@@ -108,6 +156,16 @@ class ProfileUpdateForm extends Component
 
         $this->dispatch('saved');
     }
+
+    /**
+     * Update the user's verified profile information.
+     *
+     * This function updates the verified user's profile information
+     * using the specified updater. It also updates the user's profile model.
+     *
+     * @param UpdateUserProfileInformation $updater
+     * @return void
+     */
     protected function updateVerifiedProfileInformation(UpdateUserProfileInformation $updater)
     {
         $user = Auth::user();
@@ -130,6 +188,13 @@ class ProfileUpdateForm extends Component
         $this->dispatch('saved');
     }
 
+    /**
+     * Render the component view.
+     *
+     * This function retrieves the authenticated user and returns the view with the user data.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         $this->user = Auth::user();

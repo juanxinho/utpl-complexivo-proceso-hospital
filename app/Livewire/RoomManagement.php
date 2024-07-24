@@ -31,12 +31,28 @@ class RoomManagement extends Component
         'status' => 'required|integer|in:0,1',
     ];
 
+    /**
+     * Initialize the component with default values.
+     *
+     * This function is called when the component is mounted and initializes
+     * the list of medics and search statuses.
+     *
+     * @return void
+     */
     public function mount()
     {
         $this->searchStatuses = ['0' => __('Unavailable'), '1' => __('Available')];
         $this->medics = User::role('medic')->get();
     }
 
+    /**
+     * Render the component view.
+     *
+     * This function retrieves the rooms based on the search term and selected status,
+     * and returns the view for the component.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
@@ -56,22 +72,52 @@ class RoomManagement extends Component
         return view('admin.rooms.index', compact('rooms'))->layout('layouts.app');
     }
 
-    public function updatedSearchTerm() {
+    /**
+     * Update the search results when the search term is updated.
+     *
+     * This function is called when the search term is updated
+     * and re-renders the component with the new search results.
+     *
+     * @return void
+     */
+    public function updatedSearchTerm()
+    {
         $this->render();
     }
 
+    /**
+     * Clear all filters and reset the search term and selected status.
+     *
+     * This function clears the search term and selected status, effectively resetting the filters.
+     *
+     * @return void
+     */
     public function clearFilters()
     {
         $this->searchTerm = '';
         $this->selectedStatus = null;
     }
 
+    /**
+     * Close the modal dialogs for creating and editing rooms.
+     *
+     * This function closes the modals for creating and editing rooms.
+     *
+     * @return void
+     */
     public function closeModal()
     {
         $this->isOpenCreate = false;
         $this->isOpenEdit = false;
     }
 
+    /**
+     * Reset the input fields to their default values.
+     *
+     * This function resets the input fields for the room form to their default values.
+     *
+     * @return void
+     */
     private function resetInputFields()
     {
         $this->code = '';
@@ -81,12 +127,26 @@ class RoomManagement extends Component
         $this->status = 1;
     }
 
+    /**
+     * Open the modal for creating a new room.
+     *
+     * This function opens the modal for creating a new room and resets the input fields.
+     *
+     * @return void
+     */
     public function create()
     {
         $this->resetInputFields();
         $this->isOpenCreate = true;
     }
 
+    /**
+     * Store a new room in the database.
+     *
+     * This function validates the input data and creates a new room in the database.
+     *
+     * @return void
+     */
     public function store()
     {
         $this->validate();
@@ -106,6 +166,14 @@ class RoomManagement extends Component
         $this->isOpenCreate = false;
     }
 
+    /**
+     * Open the modal for editing an existing room.
+     *
+     * This function finds the room by its ID and populates the input fields with its data.
+     *
+     * @param int $id The ID of the room to be edited.
+     * @return void
+     */
     public function edit($id)
     {
         $room = Room::findOrFail($id);
@@ -118,6 +186,13 @@ class RoomManagement extends Component
         $this->isOpenEdit = true;
     }
 
+    /**
+     * Update an existing room in the database.
+     *
+     * This function validates the input data and updates the room in the database.
+     *
+     * @return void
+     */
     public function update()
     {
         $this->validate();
@@ -138,6 +213,14 @@ class RoomManagement extends Component
         $this->isOpenEdit = false;
     }
 
+    /**
+     * Delete an existing room from the database.
+     *
+     * This function finds the room by its ID and deletes it from the database.
+     *
+     * @param int $id The ID of the room to be deleted.
+     * @return void
+     */
     public function delete($id)
     {
         $room = Room::findOrFail($id);

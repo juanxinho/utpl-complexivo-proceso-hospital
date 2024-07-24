@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ScheduleAppointmentCreate extends ScheduleAppointment
 {
+    /**
+     * Initialize the component with default values.
+     *
+     * This function is called when the component is mounted.
+     * It sets the default values for the current date, maximum date, and patient information.
+     *
+     * @param int|null $appointmentId The ID of the appointment to be scheduled (optional).
+     * @return void
+     */
     public function mount($appointmentId = null)
     {
         $this->today = Carbon::today()->toDateString();
@@ -17,6 +26,15 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         $this->specialties = Specialty::pluck('name', 'id_specialty');
     }
 
+    /**
+     * Load medics based on the selected specialty and reset dependent fields.
+     *
+     * This function resets the medic, date, and time fields when the specialty is updated.
+     * It then calls the parent class method to load the medics.
+     *
+     * @param int $value The ID of the selected specialty.
+     * @return void
+     */
     public function updatedSpecialtyId($value)
     {
         $this->medic_id = '';
@@ -26,6 +44,15 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         parent::updatedSpecialtyId($value);
     }
 
+    /**
+     * Load available dates based on the selected medic and reset dependent fields.
+     *
+     * This function resets the date and time fields when the medic is updated.
+     * It then calls the parent class method to load the available dates.
+     *
+     * @param int $value The ID of the selected medic.
+     * @return void
+     */
     public function updatedMedicId($value)
     {
         $this->date = '';
@@ -34,6 +61,15 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         parent::updatedMedicId($value);
     }
 
+    /**
+     * Load available times based on the selected date and reset dependent fields.
+     *
+     * This function resets the time field when the date is updated.
+     * It then calls the parent class method to load the available times.
+     *
+     * @param string $value The selected date.
+     * @return void
+     */
     public function updatedDate($value)
     {
         $this->time = '';
@@ -41,6 +77,14 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         parent::updatedDate($value);
     }
 
+    /**
+     * Schedule an appointment for the patient.
+     *
+     * This function validates the input data and schedules a new appointment for the patient.
+     * It ensures that the patient does not exceed the limit of two appointments per day.
+     *
+     * @return void
+     */
     public function schedule()
     {
         $this->validate([
@@ -58,8 +102,6 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
                 'bannerStyle' => 'warning',
                 'message' => __('You have already scheduled two appointments for this day.')
             ]);
-            /*session()->now('flash.banner', __('You have already scheduled two appointments for this day.'));
-            session()->now('flash.bannerStyle', 'warning');*/
             return;
         }
 
@@ -81,6 +123,13 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         return redirect()->route('admin.appointments.index');
     }
 
+    /**
+     * Render the component view.
+     *
+     * This function returns the view for creating a new appointment.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         return view('livewire.schedule-appointment-create')->layout('layouts.app');

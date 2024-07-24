@@ -9,8 +9,18 @@ class Day extends Model
 {
     use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'days';
 
+    /**
+     * Get the schedules for the day.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function schedules()
     {
         return $this->hasMany(Schedule::class, 'day_id');

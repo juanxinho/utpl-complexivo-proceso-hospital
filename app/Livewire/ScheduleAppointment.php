@@ -30,12 +30,28 @@ class ScheduleAppointment extends Component
     public $selectedPatient = null;
     public $patients = [];
 
+    /**
+     * Initialize the component with default values.
+     *
+     * This function is called when the component is mounted.
+     * It initializes the specialties and days arrays.
+     *
+     * @param int|null $appointmentId The ID of the appointment to be scheduled (optional).
+     * @return void
+     */
     public function mount($appointmentId = null)
     {
         $this->specialties = Specialty::all()->pluck('name', 'id_specialty');
         $this->days = Day::orderBy('id')->pluck('name', 'id')->toArray();
     }
 
+    /**
+     * Reset the input fields to their default values.
+     *
+     * This function clears all input fields for scheduling an appointment.
+     *
+     * @return void
+     */
     public function resetInputFields()
     {
         $this->specialty_id = '';
@@ -47,6 +63,14 @@ class ScheduleAppointment extends Component
         $this->times = [];
     }
 
+    /**
+     * Load medics based on the selected specialty.
+     *
+     * This function retrieves medics for the selected specialty and updates the medics array.
+     *
+     * @param int $value The ID of the selected specialty.
+     * @return void
+     */
     public function updatedSpecialtyId($value)
     {
         $this->validate([
@@ -65,16 +89,40 @@ class ScheduleAppointment extends Component
         $this->medics = $query->pluck('name', 'users.id');
     }
 
+    /**
+     * Load available times based on the selected medic.
+     *
+     * This function loads the available times for the selected medic.
+     *
+     * @param int $value The ID of the selected medic.
+     * @return void
+     */
     public function updatedMedicId($value)
     {
         $this->loadAvailableTimes();
     }
 
+    /**
+     * Load available times based on the selected date.
+     *
+     * This function loads the available times for the selected date.
+     *
+     * @param string $value The selected date.
+     * @return void
+     */
     public function updatedDate($value)
     {
         $this->loadAvailableTimes();
     }
 
+    /**
+     * Load available times for the selected medic and date.
+     *
+     * This function retrieves the available times for the selected medic and date.
+     *
+     * @param int|null $selectedTimeId The ID of the selected time (optional).
+     * @return void
+     */
     protected function loadAvailableTimes($selectedTimeId = null)
     {
         $this->validate([
@@ -106,7 +154,7 @@ class ScheduleAppointment extends Component
                 }
             })
             ->whereDoesntHave('appointments', function ($query) {
-                $query->where('appointment.medic_schedule_id_medic_schedule', '!=', 'medic_shedule.id_medic_schedule')
+                $query->where('appointment.medic_schedule_id_medic_schedule', '!=', 'medic_schedule.id_medic_schedule')
                     ->where('appointment.status', '=', 'scheduled')
                     ->where('appointment.service_date', '=', $this->date);
             });
@@ -126,7 +174,13 @@ class ScheduleAppointment extends Component
         $this->times = $availableTimes;
     }
 
-
+    /**
+     * Load patients based on the search term.
+     *
+     * This function retrieves patients based on the search term and updates the patients array.
+     *
+     * @return void
+     */
     public function updatedSearchPatient()
     {
         $this->patients = User::role('patient')
@@ -142,6 +196,14 @@ class ScheduleAppointment extends Component
             ->get();
     }
 
+    /**
+     * Select a patient for scheduling an appointment.
+     *
+     * This function selects a patient based on their ID and updates the patient details.
+     *
+     * @param int $patientId The ID of the selected patient.
+     * @return void
+     */
     public function selectPatient($patientId)
     {
         $this->selectedPatient = User::with('profile')->find($patientId);
@@ -150,18 +212,43 @@ class ScheduleAppointment extends Component
         $this->patient = $this->selectedPatient;
     }
 
+    /**
+     * Remove the selected patient.
+     *
+     * This function clears the selected patient details.
+     *
+     * @return void
+     */
     public function removePatient()
     {
         $this->selectedPatient = null;
     }
 
+    /**
+     * Edit an existing appointment (to be overridden by derived classes).
+     *
+     * This function is intended to be overridden by derived classes to provide
+     * the functionality for editing an existing appointment.
+     *
+     * @param int $id The ID of the appointment to be edited.
+     * @return void
+     */
     public function edit($id)
     {
         // To be overridden by derived classes
     }
 
+    /**
+     * Render the component view (to be overridden by derived classes).
+     *
+     * This function is intended to be overridden by derived classes to provide
+     * the functionality for rendering the component view.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         // To be overridden by derived classes
     }
 }
+

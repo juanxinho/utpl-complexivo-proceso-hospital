@@ -31,6 +31,14 @@ class MedicSpecialtySchedule extends Component
     public $isOpenCreate = false;
     public $isOpenEdit = false;
 
+    /**
+     * Initialize the component.
+     *
+     * This function is called when the component is mounted and initializes
+     * the search specialties, specialties, schedules, and days.
+     *
+     * @return void
+     */
     public function mount()
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
@@ -39,6 +47,13 @@ class MedicSpecialtySchedule extends Component
         $this->days = Day::orderBy('id')->pluck('name', 'id')->toArray();
     }
 
+    /**
+     * Reset the input fields.
+     *
+     * This function resets all input fields to their default values.
+     *
+     * @return void
+     */
     private function resetInputFields()
     {
         $this->id_other_schedules = [];
@@ -50,21 +65,31 @@ class MedicSpecialtySchedule extends Component
         $this->specialty = null;
     }
 
-
+    /**
+     * Close the modal windows.
+     *
+     * This function sets the modal windows to be closed.
+     *
+     * @return void
+     */
     public function closeModal()
     {
         $this->isOpenCreate = false;
         $this->isOpenEdit = false;
     }
 
+    /**
+     * Assign schedules to the medic.
+     *
+     * This function validates the data and assigns schedules to the medic for the selected specialty.
+     *
+     * @return void
+     */
     public function assignMedicSchedule()
     {
-        //$this->validate();
-
         MedicSchedule::where('id_specialty', $this->specialty->id_specialty)
             ->where('id_medic', $this->medic->id)
             ->delete();
-
 
         foreach ($this->id_schedules as $id_schedule) {
             MedicSchedule::create([
@@ -80,7 +105,14 @@ class MedicSpecialtySchedule extends Component
         $this->closeModal();
     }
 
-
+    /**
+     * Render the component view.
+     *
+     * This function retrieves and filters the medics based on search term and selected specialties,
+     * then returns the view with the medics data.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
@@ -94,13 +126,12 @@ class MedicSpecialtySchedule extends Component
             })
             ->where(function($query) use ($searchTerm) {
                 $query->orWhereHas('profile', function($query) use ($searchTerm) {
-                        $query->where('first_name', 'like', $searchTerm)
-                            ->orWhere('last_name', 'like', $searchTerm);
-                    });
+                    $query->where('first_name', 'like', $searchTerm)
+                        ->orWhere('last_name', 'like', $searchTerm);
+                });
             })
             ->get();
 
-        // Get the distinct day ids from the schedule table
         $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');
         $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
 
@@ -122,8 +153,7 @@ class MedicSpecialtySchedule extends Component
                     }
                 }
 
-                $specialtySchedules[$specialtyName] =
-                [
+                $specialtySchedules[$specialtyName] = [
                     'daySchedule' => $daySchedule,
                     'user_id' => $medic->id,
                     'specialty_id' => $specialty->id_specialty,
@@ -136,20 +166,50 @@ class MedicSpecialtySchedule extends Component
         return view('admin.medics.schedules.index', compact('medics'))->layout('layouts.app');
     }
 
+    /**
+     * Handle updates to the selected specialty.
+     *
+     * This function re-renders the component when the selected specialty is updated.
+     *
+     * @return void
+     */
     public function updatedSelectedSpecialty() {
         $this->render();
     }
 
+    /**
+     * Handle updates to the search term.
+     *
+     * This function re-renders the component when the search term is updated.
+     *
+     * @return void
+     */
     public function updatedSearchTerm() {
         $this->render();
     }
 
+    /**
+     * Clear all filters.
+     *
+     * This function resets the search term and selected specialties.
+     *
+     * @return void
+     */
     public function clearFilters()
     {
         $this->searchTerm = '';
         $this->selectedSpecialties = null;
     }
 
+    /**
+     * Show the form for editing the schedules of a medic for a specialty.
+     *
+     * This function retrieves the medic and specialty details and loads the schedules, other schedules, and time ranges.
+     *
+     * @param int $user_id The ID of the medic.
+     * @param int $specialty_id The ID of the specialty.
+     * @return void
+     */
     public function edit($user_id, $specialty_id)
     {
         $this->medic = User::find($user_id);
@@ -160,6 +220,13 @@ class MedicSpecialtySchedule extends Component
         $this->isOpenEdit = true;
     }
 
+    /**
+     * Load schedules for the selected specialty and medic.
+     *
+     * This function retrieves and sets the schedules for the selected specialty and medic.
+     *
+     * @return void
+     */
     public function loadSchedules()
     {
         $this->id_schedules = MedicSchedule::where('id_specialty', $this->specialty->id_specialty)
@@ -169,6 +236,13 @@ class MedicSpecialtySchedule extends Component
             ->toArray();
     }
 
+    /**
+     * Load other schedules for the medic.
+     *
+     * This function retrieves and sets the schedules for the medic that are not related to the selected specialty.
+     *
+     * @return void
+     */
     public function loadOtherSchedules()
     {
         $this->id_other_schedules = MedicSchedule::where('id_medic', $this->medic->id)
@@ -178,6 +252,13 @@ class MedicSpecialtySchedule extends Component
             ->toArray();
     }
 
+    /**
+     * Load time ranges for schedules.
+     *
+     * This function retrieves and sets the time ranges for all schedules.
+     *
+     * @return void
+     */
     public function loadTimeRanges()
     {
         $this->timeRanges = Schedule::with('day')->get();

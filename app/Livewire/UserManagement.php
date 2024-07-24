@@ -28,6 +28,11 @@ class UserManagement extends Component
     public $states = [];
     public $cities = [];
 
+    /**
+     * Initializes the component with default values.
+     *
+     * @return void
+     */
     public function mount()
     {
         $this->searchRoles = Role::pluck('name', 'name');
@@ -46,6 +51,11 @@ class UserManagement extends Component
         }
     }
 
+    /**
+     * Updates the list of states when the country is changed.
+     *
+     * @return void
+     */
     public function updatedprofileCountryId()
     {
         $this->profile['state_id'] = null;
@@ -53,8 +63,13 @@ class UserManagement extends Component
         $this->profile['city_id'] = null;
         $this->states = [];
         $this->loadStates();
-
     }
+
+    /**
+     * Updates the list of cities when the state is changed.
+     *
+     * @return void
+     */
     public function updatedprofileStateId()
     {
         $this->profile['city_id'] = null;
@@ -62,6 +77,11 @@ class UserManagement extends Component
         $this->loadCities();
     }
 
+    /**
+     * Loads the states based on the selected country.
+     *
+     * @return void
+     */
     protected function loadStates()
     {
         $this->states = State::where('country_id', $this->profile['country_id'])
@@ -71,6 +91,11 @@ class UserManagement extends Component
             });
     }
 
+    /**
+     * Loads the cities based on the selected state.
+     *
+     * @return void
+     */
     protected function loadCities()
     {
         $this->cities = City::where('state_id', $this->profile['state_id'])
@@ -80,6 +105,11 @@ class UserManagement extends Component
             });
     }
 
+    /**
+     * Renders the component view.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
@@ -105,18 +135,41 @@ class UserManagement extends Component
         return view('admin.users.index', compact('users', 'roles'))->layout('layouts.app');
     }
 
-    public function updatedSelectedRole() {
+    /**
+     * Updates the user list when the selected role is changed.
+     *
+     * @return void
+     */
+    public function updatedSelectedRole()
+    {
         $this->render();
     }
 
-    public function updatedSelectedStatus() {
+    /**
+     * Updates the user list when the selected status is changed.
+     *
+     * @return void
+     */
+    public function updatedSelectedStatus()
+    {
         $this->render();
     }
 
-    public function updatedSearchTerm() {
+    /**
+     * Updates the user list when the search term is changed.
+     *
+     * @return void
+     */
+    public function updatedSearchTerm()
+    {
         $this->render();
     }
 
+    /**
+     * Clears the search filters.
+     *
+     * @return void
+     */
     public function clearFilters()
     {
         $this->searchTerm = '';
@@ -124,12 +177,22 @@ class UserManagement extends Component
         $this->selectedStatus = null;
     }
 
+    /**
+     * Closes the modal dialogs.
+     *
+     * @return void
+     */
     public function closeModal()
     {
         $this->isOpenCreate = false;
         $this->isOpenEdit = false;
     }
 
+    /**
+     * Resets the input fields to their default values.
+     *
+     * @return void
+     */
     private function resetInputFields()
     {
         $this->id = null;
@@ -148,15 +211,24 @@ class UserManagement extends Component
         $this->id_roles = [];
     }
 
+    /**
+     * Opens the create user modal dialog.
+     *
+     * @return void
+     */
     public function create()
     {
         $this->resetInputFields();
         $this->isOpenCreate = true;
     }
 
+    /**
+     * Stores a new user or updates an existing user in the database.
+     *
+     * @return void
+     */
     public function store()
     {
-
         $validatedData = $this->validate([
             'email' => 'required|email|unique:users,email,' . $this->id,
             //'password' => $this->passwordRules(),
@@ -194,10 +266,8 @@ class UserManagement extends Component
             'user_register' => auth()->user()->id,
         ]);
 
-
         $roles = Role::whereIn('id',  $this->id_roles)->get();
         $user->syncRoles($roles);
-
 
         session()->flash('flash.banner',
             $this->id ? __('User successfully updated.') : __('User successfully created.'));
@@ -207,6 +277,12 @@ class UserManagement extends Component
         $this->resetInputFields();
     }
 
+    /**
+     * Opens the edit user modal dialog and loads the user details.
+     *
+     * @param int $id The ID of the user to be edited.
+     * @return void
+     */
     public function edit($id)
     {
         $user = User::with('profile', 'roles')->findOrFail($id);
@@ -222,6 +298,12 @@ class UserManagement extends Component
         $this->isOpenEdit = true;
     }
 
+    /**
+     * Deactivates a user by setting their status to inactive.
+     *
+     * @param int $id The ID of the user to be deactivated.
+     * @return void
+     */
     public function delete($id)
     {
         $user = User::find($id);

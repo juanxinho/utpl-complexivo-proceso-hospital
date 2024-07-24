@@ -41,11 +41,18 @@ class MedicManagement extends Component
     public $availableRooms = [];
     public $assignmentDate;
 
+    /**
+     * Initialize component data.
+     *
+     * This function is called when the component is mounted and initializes
+     * the search specialties, specialties, search statuses, and countries.
+     *
+     * @return void
+     */
     public function mount()
     {
         $this->searchSpecialties = Specialty::pluck('name', 'id_specialty');
         $this->specialties = Specialty::where('status', 1)->get();
-        //$this->rooms = Room::where('status', 1)->get();
         $this->searchStatuses = ['0' => __('Inactive'), '1' => __('Active')];
         $this->countries = Country::pluck('name', 'id')->map(function ($name) {
             return ucfirst($name);
@@ -59,6 +66,15 @@ class MedicManagement extends Component
             $this->loadCities();
         }
     }
+
+    /**
+     * Handle updated country ID in profile.
+     *
+     * This function resets state and city data and loads states
+     * when the country ID in the profile is updated.
+     *
+     * @return void
+     */
     public function updatedprofileCountryId()
     {
         $this->profile['state_id'] = null;
@@ -66,8 +82,16 @@ class MedicManagement extends Component
         $this->profile['city_id'] = null;
         $this->states = [];
         $this->loadStates();
-
     }
+
+    /**
+     * Handle updated state ID in profile.
+     *
+     * This function resets city data and loads cities
+     * when the state ID in the profile is updated.
+     *
+     * @return void
+     */
     public function updatedprofileStateId()
     {
         $this->profile['city_id'] = null;
@@ -75,6 +99,14 @@ class MedicManagement extends Component
         $this->loadCities();
     }
 
+    /**
+     * Load states based on the selected country.
+     *
+     * This function retrieves and sets the states associated with
+     * the selected country ID in the profile.
+     *
+     * @return void
+     */
     protected function loadStates()
     {
         $this->states = State::where('country_id', $this->profile['country_id'])
@@ -84,6 +116,14 @@ class MedicManagement extends Component
             });
     }
 
+    /**
+     * Load cities based on the selected state.
+     *
+     * This function retrieves and sets the cities associated with
+     * the selected state ID in the profile.
+     *
+     * @return void
+     */
     protected function loadCities()
     {
         $this->cities = City::where('state_id', $this->profile['state_id'])
@@ -92,6 +132,15 @@ class MedicManagement extends Component
                 return ucfirst($name);
             });
     }
+
+    /**
+     * Render the component view.
+     *
+     * This function retrieves and paginates the medics based on search term,
+     * selected specialties, and selected status, then returns the view.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
@@ -120,18 +169,46 @@ class MedicManagement extends Component
         return view('admin.medics.index', compact('medics', 'specialties'))->layout('layouts.app');
     }
 
+    /**
+     * Handle updated selected specialty.
+     *
+     * This function re-renders the component when the selected specialty is updated.
+     *
+     * @return void
+     */
     public function updatedSelectedSpecialty() {
         $this->render();
     }
 
+    /**
+     * Handle updated selected status.
+     *
+     * This function re-renders the component when the selected status is updated.
+     *
+     * @return void
+     */
     public function updatedSelectedStatus() {
         $this->render();
     }
 
+    /**
+     * Handle updated search term.
+     *
+     * This function re-renders the component when the search term is updated.
+     *
+     * @return void
+     */
     public function updatedSearchTerm() {
         $this->render();
     }
 
+    /**
+     * Clear all filters.
+     *
+     * This function resets the search term, selected specialties, and selected status.
+     *
+     * @return void
+     */
     public function clearFilters()
     {
         $this->searchTerm = '';
@@ -139,6 +216,13 @@ class MedicManagement extends Component
         $this->selectedStatus = null;
     }
 
+    /**
+     * Close the modal windows.
+     *
+     * This function sets the modal windows to be closed.
+     *
+     * @return void
+     */
     public function closeModal()
     {
         $this->isOpenCreate = false;
@@ -146,6 +230,13 @@ class MedicManagement extends Component
         $this->isOpenAssign = false;
     }
 
+    /**
+     * Reset input fields.
+     *
+     * This function resets all input fields to their default values.
+     *
+     * @return void
+     */
     private function resetInputFields()
     {
         $this->id = null;
@@ -168,6 +259,13 @@ class MedicManagement extends Component
         $this->assignmentDate = null;
     }
 
+    /**
+     * Show the form for creating a new medic.
+     *
+     * This function resets input fields and sets the modal window for creation to be open.
+     *
+     * @return void
+     */
     public function create()
     {
         $this->resetInputFields();
@@ -175,6 +273,13 @@ class MedicManagement extends Component
         $this->isOpenCreate = true;
     }
 
+    /**
+     * Store a newly created medic in storage.
+     *
+     * This function validates and stores a new medic in the database.
+     *
+     * @return void
+     */
     public function store()
     {
         $validatedData = $this->validate([
@@ -225,6 +330,14 @@ class MedicManagement extends Component
         $this->resetInputFields();
     }
 
+    /**
+     * Show the form for editing the specified medic.
+     *
+     * This function retrieves the medic details and sets the modal window for editing to be open.
+     *
+     * @param int $id The ID of the medic to edit.
+     * @return void
+     */
     public function edit($id)
     {
         $medic = User::with('profile', 'roles', 'specialties', 'medicSchedules.schedule', 'medicSchedules.schedule.day', 'medicRooms.room')->findOrFail($id);
@@ -234,12 +347,19 @@ class MedicManagement extends Component
         $this->email = $medic->email;
         $this->roles = Role::where('name', 'medic')->get();
         $this->id_specialties = $medic->specialties()->pluck('specialty.id_specialty')->toArray();
-        //$this->password = $user->password;
         $this->loadStates();
         $this->loadCities();
         $this->isOpenEdit = true;
     }
 
+    /**
+     * Deactivate the specified medic.
+     *
+     * This function sets the status of the medic to inactive.
+     *
+     * @param int $id The ID of the medic to deactivate.
+     * @return void
+     */
     public function delete($id)
     {
         $user = User::find($id);
@@ -252,7 +372,15 @@ class MedicManagement extends Component
         session()->flash('flash.bannerStyle', 'success');
     }
 
-    public function assignRooms () {
+    /**
+     * Show the form for assigning rooms to medics.
+     *
+     * This function resets input fields and sets the modal window for room assignment to be open.
+     *
+     * @return void
+     */
+    public function assignRooms()
+    {
         $this->resetInputFields();
         $this->medicsRoom = User::with('profile', 'medicRooms.room')
             ->where('status', 1)
@@ -266,6 +394,14 @@ class MedicManagement extends Component
         $this->isOpenAssign = true;
     }
 
+    /**
+     * Handle updated selected medic.
+     *
+     * This function updates the available rooms when the selected medic is updated.
+     *
+     * @param int $medicId The ID of the selected medic.
+     * @return void
+     */
     public function updatedSelectedMedic($medicId)
     {
         $this->selectedRoom = MedicRoom::where('user_id', $medicId)->value('room_id');
@@ -274,7 +410,15 @@ class MedicManagement extends Component
             ->pluck('name', 'id');
     }
 
-    public function storeAssignRoom() {
+    /**
+     * Store the assigned room for the medic.
+     *
+     * This function validates and stores the room assignment for the selected medic.
+     *
+     * @return void
+     */
+    public function storeAssignRoom()
+    {
         $this->validate([
             'availableRooms' => 'required|exists:rooms,id',
             'selectedMedic' => 'required|exists:users,id',

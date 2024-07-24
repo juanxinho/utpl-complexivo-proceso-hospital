@@ -8,11 +8,25 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * This function specifies whether the user is authorized to make the request.
+     *
+     * @return bool Always returns true, indicating that the request is authorized.
+     */
     public function authorize()
     {
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * This function specifies the validation rules for the request data.
+     *
+     * @return array The array of validation rules.
+     */
     public function rules()
     {
         return [

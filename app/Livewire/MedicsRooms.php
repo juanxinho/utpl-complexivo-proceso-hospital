@@ -35,6 +35,15 @@ class MedicsRooms extends Component
         'status' => 'required|integer|in:0,1',
     ];
 
+    /**
+     * Sort the records by a specified field.
+     *
+     * This function toggles the sorting direction if the field is the same,
+     * otherwise, it sets the sorting field and direction to ascending.
+     *
+     * @param string $field The field to sort by.
+     * @return void
+     */
     public function sortBy($field)
     {
         if ($this->sortBy === $field) {
@@ -45,12 +54,28 @@ class MedicsRooms extends Component
         }
     }
 
+    /**
+     * Initialize the component.
+     *
+     * This function is called when the component is mounted and initializes
+     * the search specialties and search statuses.
+     *
+     * @return void
+     */
     public function mount()
     {
         $this->searchSpecialties = Specialty::where('status', 1)->pluck('name', 'id_specialty');
         $this->searchStatuses = ['0' => __('Unavailable'), '1' => __('Available')];
     }
 
+    /**
+     * Render the component view.
+     *
+     * This function retrieves and filters the rooms based on search term, selected specialties, and selected status,
+     * then returns the view with the rooms data.
+     *
+     * @return \Illuminate\View\View The view to be rendered.
+     */
     public function render()
     {
         $searchTerm = '%' . $this->searchTerm . '%';
@@ -89,18 +114,46 @@ class MedicsRooms extends Component
         return view('admin.medics.rooms.index', compact('assigned_rooms'))->layout('layouts.app');
     }
 
+    /**
+     * Handle updates to the selected specialty.
+     *
+     * This function re-renders the component when the selected specialty is updated.
+     *
+     * @return void
+     */
     public function updatedSelectedSpecialty() {
         $this->render();
     }
 
+    /**
+     * Handle updates to the selected status.
+     *
+     * This function re-renders the component when the selected status is updated.
+     *
+     * @return void
+     */
     public function updatedSelectedStatus() {
         $this->render();
     }
 
+    /**
+     * Handle updates to the search term.
+     *
+     * This function re-renders the component when the search term is updated.
+     *
+     * @return void
+     */
     public function updatedSearchTerm() {
         $this->render();
     }
 
+    /**
+     * Clear all filters.
+     *
+     * This function resets the search term, selected specialties, and selected status.
+     *
+     * @return void
+     */
     public function clearFilters()
     {
         $this->searchTerm = '';
@@ -108,12 +161,26 @@ class MedicsRooms extends Component
         $this->selectedStatus = null;
     }
 
+    /**
+     * Close the modal windows.
+     *
+     * This function sets the modal windows to be closed.
+     *
+     * @return void
+     */
     public function closeModal()
     {
         $this->isOpenCreate = false;
         $this->isOpenEdit = false;
     }
 
+    /**
+     * Reset input fields.
+     *
+     * This function resets all input fields to their default values.
+     *
+     * @return void
+     */
     private function resetInputFields()
     {
         $this->code = '';
@@ -123,14 +190,20 @@ class MedicsRooms extends Component
         $this->status = 1;
     }
 
+    /**
+     * Show the form for creating a new room assignment.
+     *
+     * This function resets input fields, retrieves available rooms and medics without assignments,
+     * and sets the modal window for creation to be open.
+     *
+     * @return void
+     */
     public function create()
     {
         $this->resetInputFields();
 
-        //Obtener lista de consultorios que no  están asignados
         $this->availableRooms = Room::where('status', 1)->pluck('name', 'id');
 
-        //Obtener lista de médicos que no tienen consultorio asignado
         $medicRoomUserIds = MedicRoom::pluck('user_id');
         $this->medicsRoom = User::with('profile', 'medicRooms.room')
             ->where('status', 1)
@@ -140,20 +213,24 @@ class MedicsRooms extends Component
             ->pluck('full_name', 'id');
 
         $this->isOpenCreate = true;
-
     }
 
+    /**
+     * Store a newly created room assignment.
+     *
+     * This function validates and stores a new room assignment in the database,
+     * updates the room status to unavailable, and resets the input fields.
+     *
+     * @return void
+     */
     public function store()
     {
-        //$this->validate();
-
         MedicRoom::create([
             'user_id' => $this->selectedMedic,
             'room_id' => $this->selectedRoom,
             'assigned_date' => now(),
         ]);
 
-        //Actualizando el estado del consultario a no disponible
         $room = Room::findOrFail($this->selectedRoom);
         $room->update([
             'status' => 0,
@@ -165,6 +242,14 @@ class MedicsRooms extends Component
         $this->isOpenCreate = false;
     }
 
+    /**
+     * Show the form for editing the specified room assignment.
+     *
+     * This function retrieves the room and assignment details and sets the modal window for editing to be open.
+     *
+     * @param int $id The ID of the room assignment to edit.
+     * @return void
+     */
     public function edit($id)
     {
         $room = Room::findOrFail($id);
@@ -174,9 +259,8 @@ class MedicsRooms extends Component
         $this->code = $room->code;
         $this->name = $room->name;
         $this->status = $room->status;
-        $this->selectedMedic= $medicroom->user_id;
+        $this->selectedMedic = $medicroom->user_id;
 
-        //Obtener lista de médicos que no tienen consultorio asignado
         $this->medicsRoom = User::with('profile', 'medicRooms.room')
             ->where('status', 1)
             ->role('medic')
@@ -185,12 +269,18 @@ class MedicsRooms extends Component
             ->pluck('full_name', 'id');
 
         $this->isOpenEdit = true;
-
     }
 
+    /**
+     * Update the specified room assignment.
+     *
+     * This function validates and updates the room assignment in the database,
+     * and resets the input fields.
+     *
+     * @return void
+     */
     public function update()
     {
-        //$this->validate();
         $medicroom = MedicRoom::findOrFail($this->idMedicRoom);
         $medicroom->update([
             'user_id' => $this->selectedMedic,
@@ -203,12 +293,19 @@ class MedicsRooms extends Component
         $this->isOpenEdit = false;
     }
 
+    /**
+     * Delete the specified room assignment.
+     *
+     * This function deletes the room assignment from the database and updates the room status to available.
+     *
+     * @param int $id The ID of the room assignment to delete.
+     * @return void
+     */
     public function delete($id)
     {
         $medicroom = MedicRoom::where('room_id', $id)->first();
         $medicroom->delete();
 
-        //Actualizando el estado del consultario a disponible
         $room = Room::findOrFail($id);
         $room->update([
             'status' => 1,

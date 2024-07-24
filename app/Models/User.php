@@ -13,12 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
-    use HasRoles;
+    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -35,10 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
+        'password', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret',
     ];
 
     /**
@@ -54,6 +46,11 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Get the default profile photo URL.
+     *
+     * @return string
+     */
     public function defaultProfilePhotoUrl()
     {
         $name = trim(collect(explode(' ', $this->profile->first_name))->map(function ($segment) {
@@ -63,41 +60,81 @@ class User extends Authenticatable
         return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=0ac60a&background=effbef';
     }
 
+    /**
+     * Get the status label attribute.
+     *
+     * @return string
+     */
     public function getStatusLabelAttribute()
     {
         return $this->status ? __('Active') : __('Inactive');
     }
 
+    /**
+     * Get the profile associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function profile()
     {
         return $this->belongsTo(Profile::class, 'id_profile', 'id_profile');
     }
 
+    /**
+     * Get the full name attribute.
+     *
+     * @return string
+     */
     public function getFullNameAttribute()
     {
         return $this->profile->first_name . ' ' . $this->profile->last_name;
     }
 
+    /**
+     * Get the specialties associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function specialties()
     {
-        return $this->belongsToMany(Specialty::class, 'specialty_user','id_user', 'id_specialty');
+        return $this->belongsToMany(Specialty::class, 'specialty_user', 'id_user', 'id_specialty');
     }
 
+    /**
+     * Get the medic schedules associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function medicSchedules()
     {
         return $this->hasMany(MedicSchedule::class, 'id_medic', 'id');
     }
 
+    /**
+     * Get the appointments associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'id_patient', 'id');
     }
 
+    /**
+     * Get the clinical history associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function clinicalHistory()
     {
         return $this->hasOne(ClinicalHistory::class, 'patient_id', 'id');
     }
 
+    /**
+     * Get the medic rooms associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function medicRooms()
     {
         return $this->hasOne(MedicRoom::class, 'user_id', 'id');

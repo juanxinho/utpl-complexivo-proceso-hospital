@@ -4,28 +4,49 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Profile;
-use App\Models\Specialty;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserService
 {
+    /**
+     * Retrieve all users with their roles and profiles.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getAllUsers()
     {
         return User::with('roles', 'profile')->get();
     }
 
+    /**
+     * Retrieve a user by their ID with roles and profile.
+     *
+     * @param int $id
+     * @return \App\Models\User
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
     public function getUserById($id)
     {
         return User::with('roles', 'profile')->findOrFail($id);
     }
 
+    /**
+     * Retrieve all roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getAllRoles()
     {
         return Role::all();
     }
 
+    /**
+     * Create a new user along with their profile and assign roles.
+     *
+     * @param array $data
+     * @return \App\Models\User
+     */
     public function createUser(array $data)
     {
         $profile = Profile::create($data['profile']);
@@ -43,6 +64,13 @@ class UserService
         return $user;
     }
 
+    /**
+     * Update an existing user along with their profile and roles.
+     *
+     * @param \App\Models\User $user
+     * @param array $data
+     * @return \App\Models\User
+     */
     public function updateUser(User $user, array $data)
     {
         $user->profile->update($data['profile']);
@@ -57,6 +85,12 @@ class UserService
         return $user;
     }
 
+    /**
+     * Delete a user.
+     *
+     * @param \App\Models\User $user
+     * @return void
+     */
     public function deleteUser(User $user)
     {
         $user->delete();
