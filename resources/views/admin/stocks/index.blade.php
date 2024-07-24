@@ -24,9 +24,7 @@
                 <thead
                     class="text-xs text-malachite-600 uppercase bg-malachite-100 dark:bg-malachite-300 dark:text-gray-800">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('ID') }}
-                    </th>
+                    <th scope="col" class="px-6 py-3">{{ __('ID') }}</th>
                     <th scope="col" class="px-6 py-3">{{ __('Item Name') }}</th>
                     <th scope="col" class="px-6 py-3 text-center">{{ __('Quantity') }}</th>
                     <th scope="col" class="px-6 py-3 text-center">{{ __('Price') }}</th>
@@ -36,18 +34,10 @@
                 <tbody>
                 @foreach($stocks as $stock)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $stock->id }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ __($stock->item_name) }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                            {{ $stock->quantity }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                            ${{ number_format($stock->price, 2) }}
-                        </th>
+                        <td class="px-6 py-4">{{ $stock->id }}</td>
+                        <td class="px-6 py-4">{{ __($stock->item_name) }}</td>
+                        <td class="px-6 py-4 text-center">{{ $stock->quantity }}</td>
+                        <td class="px-6 py-4 text-center">${{ number_format($stock->price, 2) }}</td>
                         <td class="px-6 py-4 text-center">
                             <a href="{{ route('admin.stocks.edit', $stock) }}"
                                class="inline-block text-gray-600 dark:text-gray-300">

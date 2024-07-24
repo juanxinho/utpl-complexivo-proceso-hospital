@@ -56,7 +56,7 @@
                         @if($room->status == 1 )
                             <x-bordered-badge color="green" text="{{ __('Available') }}" />
                         @else
-                            <x-bordered-badge color="red" text="{{ __('Available') }}" />
+                            <x-bordered-badge color="red" text="{{ __('Unavailable') }}" />
                         @endif
                     </td>
                     <td class="px-6 py-4 text-center">

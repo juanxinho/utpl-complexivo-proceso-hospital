@@ -31,12 +31,8 @@
                 <tbody>
                 @foreach($schedules as $schedule)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ __($schedule->day->name) }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                            {{ $schedule->time_range }}
-                        </th>
+                        <td class="px-6 py-4">{{ ucfirst(\Carbon\Carbon::parse($schedule->day->name)->translatedFormat('l')) }}</td>
+                        <td class="px-6 py-4 text-center">{{ $schedule->time_range }}</td>
                         <td class="px-6 py-4 text-center">
                             <a href="{{ route('admin.schedules.edit', $schedule) }}" class="inline-block text-gray-600 dark:text-gray-300"><x-monoicon-edit-alt width="20" height="20" /></a>
                             <form action="{{ route('admin.schedules.destroy', $schedule) }}" method="POST" class="inline">
