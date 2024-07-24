@@ -145,6 +145,7 @@ Route::middleware(['auth', 'role:patient|admin|super-admin'])->group(function ()
 });
 
 Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {
+    Route::get('medic/appointments/attended', [AppointmentMedicController::class, 'attended'])->name('front.medic.appointments.attended');
     Route::resource('medic/appointments', AppointmentMedicController::class)->names([
         'index' => 'medic.appointments.index',
         'create' => 'medic.appointments.create',

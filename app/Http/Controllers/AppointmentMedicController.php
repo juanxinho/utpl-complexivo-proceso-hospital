@@ -24,7 +24,7 @@ class AppointmentMedicController extends Controller
     public function index()
     {
         $appointments = Appointment::whereMonth('service_date', now()->month)
-            ->whereNotIn('status', ['attended','cancelled'])
+            ->whereNotIn('status', ['attended', 'cancelled'])
             ->whereHas('medicSchedule', function ($query) {
                 $query->where('medic_schedule.id_medic', Auth::id());
             })
@@ -37,5 +37,29 @@ class AppointmentMedicController extends Controller
 
         return view('front.medic.appointments.index', compact('appointments'));
     }
-}
 
+    /**
+     * Display a listing of the attended appointments for the authenticated medic.
+     *
+     * This function retrieves and displays a paginated list of attended appointments,
+     * including only those associated with the authenticated medic. The appointments
+     * are ordered by service date and time range.
+     *
+     * @return \Illuminate\View\View The view displaying the list of attended appointments.
+     */
+    public function attended()
+    {
+        $appointments = Appointment::whereIn('status', ['attended'])
+            ->whereHas('medicSchedule', function ($query) {
+                $query->where('medic_schedule.id_medic', Auth::id());
+            })
+            ->join('medic_schedule', 'appointment.medic_schedule_id_medic_schedule', '=', 'medic_schedule.id_medic_schedule')
+            ->join('schedule', 'medic_schedule.id_schedule', '=', 'schedule.id_schedule')
+            ->select('appointment.*', 'schedule.time_range')
+            ->orderBy('service_date', 'desc')
+            ->orderBy('schedule.time_range', 'asc')
+            ->paginate(10);
+
+        return view('front.medic.appointments.attended', compact('appointments'));
+    }
+}
