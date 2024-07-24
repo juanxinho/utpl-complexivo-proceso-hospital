@@ -8,7 +8,13 @@
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                     </svg>
                 </button>
-                <h1 class="text-2xl text-malachite-600 dark:text-malachite-300 font-bold">Hospital Isidro Ayora</h1>
+                <!-- Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-mark class="block w-auto pe-1" />
+                    </a>
+                </div>
+                <p class="text-md md:text-xl text-malachite-600 dark:text-malachite-300 font-bold">{{ config('app.name') }}</p>
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ms-3">

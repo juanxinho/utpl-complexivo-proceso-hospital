@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'SG - Hospital Isidro Ayora'),
+    'name' => env('APP_NAME', 'Hospital Isidro Ayora'),
 
     /*
     |--------------------------------------------------------------------------
