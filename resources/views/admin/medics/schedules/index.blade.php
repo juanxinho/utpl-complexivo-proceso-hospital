@@ -12,7 +12,7 @@
 
         @include('admin.medics.schedules.actions')
 
-        @foreach ($medics as $medicName => $specialties)
+        @foreach ($usermedics as $medic)
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
                     <thead
@@ -36,29 +36,29 @@
                     </thead>
                     <tbody>
 
-                    @foreach ($specialties as $specialtyName => $specialtyDays)
+                    @foreach ($medic->specialties as $specialty)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="border px-6 py-4 text-center">{{ $medicName }}</td>
-                            <td class="border px-6 py-4 text-center">{{ $specialtyName }}</td>
-                            @foreach ($days as $day)
+                            <td class="border px-6 py-4 text-center">{{ $medic->profile->first_name }} {{ $medic->profile->last_name }}</td>
+                            <td class="border px-6 py-4 text-center">{{ $specialty->name }}</td>
+                            @foreach ($days as $day_id => $day)
                                 <td class="border px-6 py-4 text-center">
-                                    @if (isset($specialtyDays['daySchedule'][$day]))
-                                        <ul class="list-disc list-inside">
-                                            @foreach ($specialtyDays['daySchedule'][$day] as $time_range)
-                                                <li>{{ $time_range }}</li>
-                                            @endforeach
-                                        </ul>
+                                @foreach ($medic->medicSchedules as $medicSchedule)
+                                    @if ($medicSchedule->id_specialty == $specialty->id_specialty)
+                                        @if ($medicSchedule->schedule->day->id==$day_id)
+                                            <ul class="list-disc list-inside">
+                                                <li>{{ $medicSchedule->schedule->time_range }}</li>
+                                            </ul>
+                                        @endif
                                     @endif
+                                @endforeach
                                 </td>
                             @endforeach
                             <td class="border px-6 py-4 text-center">
-                                {{--@if ($specialtyDays['daySchedule'])--}}
                                 <button
-                                    wire:click="edit({{ $specialtyDays['user_id']}}, {{$specialtyDays['specialty_id'] }})"
+                                    wire:click="edit({{ $medic->id}}, {{$specialty->id_specialty}})"
                                     class="text-gray-600 dark:text-gray-300">
                                     <x-monoicon-edit-alt width="20" height="20"/>
                                 </button>
-                                {{--@endif--}}
                             </td>
                         </tr>
                     @endforeach
@@ -67,9 +67,9 @@
             </div>
         @endforeach
 
-        {{--<div class="mt-4">
-            {{ $medics->links() }}
-        </div>--}}
+        <div class="mt-4">
+            {{ $usermedics->links() }}
+        </div>
 
     </div>
 </div>

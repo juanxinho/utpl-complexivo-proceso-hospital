@@ -8,9 +8,12 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\Day;
 use App\Models\Schedule;
+use Livewire\WithPagination;
 
 class MedicSpecialtySchedule extends Component
 {
+    use WithPagination;
+
     public $searchSpecialties, $selectedSpecialties = [], $searchStatuses, $selectedStatus;
     public $searchTerm = '';
     public $medics = [];
@@ -115,9 +118,11 @@ class MedicSpecialtySchedule extends Component
      */
     public function render()
     {
+        $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');
+        $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
         $searchTerm = '%' . $this->searchTerm . '%';
 
-        $medics = User::role('medic')
+        $usermedics = User::role('medic')
             ->with(['profile', 'specialties', 'medicSchedules.schedule.day'])
             ->when(!empty($this->selectedSpecialties), function ($query) {
                 $query->whereHas('specialties', function ($query) {
@@ -130,40 +135,9 @@ class MedicSpecialtySchedule extends Component
                         ->orWhere('last_name', 'like', $searchTerm);
                 });
             })
-            ->get();
+            ->paginate(10);
 
-        $dayIds = Schedule::select('day_id')->distinct()->pluck('day_id');
-        $this->days = Day::whereIn('id', $dayIds)->orderBy('id')->pluck('name', 'id')->toArray();
-
-        foreach ($medics as $medic) {
-            $medicName = $medic->profile->first_name . ' ' . $medic->profile->last_name;
-            $specialtySchedules = [];
-
-            foreach ($medic->specialties as $specialty) {
-                $specialtyName = $specialty->name;
-                $daySchedule = [];
-
-                foreach ($medic->medicSchedules as $medicSchedule) {
-                    if ($medicSchedule->id_specialty == $specialty->id_specialty) {
-                        if ($medicSchedule->schedule && $medicSchedule->schedule->day) {
-                            $dayName = $medicSchedule->schedule->day->name;
-                            $timeRange = $medicSchedule->schedule->time_range;
-                            $daySchedule[$dayName][$medicSchedule->id_medic_schedule] = $timeRange;
-                        }
-                    }
-                }
-
-                $specialtySchedules[$specialtyName] = [
-                    'daySchedule' => $daySchedule,
-                    'user_id' => $medic->id,
-                    'specialty_id' => $specialty->id_specialty,
-                ];
-            }
-
-            $this->medics[$medicName] = $specialtySchedules;
-        }
-
-        return view('admin.medics.schedules.index', compact('medics'))->layout('layouts.app');
+        return view('admin.medics.schedules.index', compact('usermedics'))->layout('layouts.app');
     }
 
     /**
