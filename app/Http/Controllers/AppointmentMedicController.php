@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class AppointmentMedicController extends Controller
 {
     /**
-    * Obtiene la vista de consultas citas del mes actual
+    * Obtiene la vista de citas agendadas del mes actual
     *
     * @return view front.medic.appointments.index
     */
@@ -31,6 +31,28 @@ class AppointmentMedicController extends Controller
                         ->paginate(10);
 
         return view('front.medic.appointments.index', compact('appointments'));
+    }
+
+
+    /**
+    * Obtiene la vista de citas atendidas
+    *
+    * @return view front.medic.appointments.attended
+    */
+    public function attended()
+    {
+        $appointments = Appointment::whereIn('status', ['attended'])
+                        ->whereHas('medicSchedule', function ($query) {
+                            $query->where('medic_schedule.id_medic', Auth::id());
+                        })
+                        ->join('medic_schedule', 'appointment.medic_schedule_id_medic_schedule', '=', 'medic_schedule.id_medic_schedule')
+                        ->join('schedule', 'medic_schedule.id_schedule', '=', 'schedule.id_schedule')
+                        ->select('appointment.*', 'schedule.time_range')
+                        ->orderBy('service_date', 'desc')
+                        ->orderBy('schedule.time_range', 'asc')
+                        ->paginate(10);
+
+        return view('front.medic.appointments.attended', compact('appointments'));
     }
 
 }
