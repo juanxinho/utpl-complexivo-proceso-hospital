@@ -21,7 +21,7 @@
                 <x-nav-link href="{{ route('front.medic.appointments.attended') }}"
                             :active="request()->routeIs('front.medic.appointments.attended')">
                     <x-monoicon-calendar width="20" height="20"/>
-                    <span class="ms-3">{{ __('View appointments attended') }}</span>
+                    <span class="ms-3">{{ __('View attended appointments') }}</span>
                 </x-nav-link>
             </li>
             @endhasanyrole

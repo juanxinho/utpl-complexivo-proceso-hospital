@@ -13,7 +13,7 @@
                         {{ __('View Details') }}
                     </a>
                 @else
-                    <p class="mb-3 font-normal text-gray-700">{{ __('No upcoming appointment') }}</p>
+                    <p class="mb-3 font-normal text-gray-700">{{ __('No upcoming appointments') }}</p>
                 @endif
             </div>
         </div>

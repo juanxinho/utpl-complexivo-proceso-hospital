@@ -120,7 +120,11 @@ class ScheduleAppointmentCreate extends ScheduleAppointment
         session()->flash('flash.bannerStyle', 'success');
 
         $this->resetInputFields();
-        return redirect()->route('admin.appointments.index');
+        if (Auth::user()->hasRole('patient')) {
+            return redirect()->route('patient.appointments.next'); // Redirige a una ruta distinta para pacientes
+        } else {
+            return redirect()->route('admin.appointments.index');
+        }
     }
 
     /**
