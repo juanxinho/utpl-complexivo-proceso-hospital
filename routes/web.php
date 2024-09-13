@@ -15,6 +15,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\DiagnosticsController;
+use App\Http\Controllers\TriageController;
 use App\Livewire\MedicManagement;
 use App\Livewire\PatientManagement;
 use App\Livewire\UserManagement;
@@ -54,8 +55,25 @@ Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
     Route::get('/admin/users', UserManagement::class)->name('users');
 });
 
+// Rutas protegidas para roles específicos
+Route::middleware(['auth', 'role:medic|admin|super-admin'])->group(function () {
+    Route::resource('admin/triage', TriageController::class)->names([
+        'index' => 'admin.triage.index',
+        'create' => 'admin.triage.create',
+        'store' => 'admin.triage.store',
+        'show' => 'admin.triage.show',
+        'edit' => 'admin.triage.edit',
+        'update' => 'admin.triage.update',
+        'destroy' => 'admin.triage.destroy',
+    ]);
+
+});
+
 // Rutas protegidas por autenticación (menos restrictivas)
 Route::middleware(['auth', 'role:admin|super-admin'])->group(function () {
+
+
+
     Route::resource('admin/appointments', AppointmentController::class)->names([
         'index' => 'admin.appointments.index',
         'create' => 'admin.appointments.create',
