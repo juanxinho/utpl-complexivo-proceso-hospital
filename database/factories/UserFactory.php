@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Helpers\EcuadorianIdGenerator;
+use App\Models\Profile;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,6 +21,21 @@ class UserFactory extends Factory
      */
     protected static ?string $password;
 
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            if ($user->id_profile) {
+                return;
+            }
+
+            $profile = Profile::create($this->profileAttributes());
+
+            $user->forceFill([
+                'id_profile' => $profile->getKey(),
+            ])->save();
+        });
+    }
+
     /**
      * Define the model's default state.
      *
@@ -27,12 +44,6 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'nid' => $this->faker->unique()->numerify('##########'),
-            'phone' => $this->faker->phoneNumber,
-            'gender' => $this->faker->randomElement(['M', 'F']),
-            'dob' => $this->faker->date,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -40,7 +51,10 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
-            'current_team_id' => null,
+            'status' => 1,
+            'user_register' => 0,
+            'user_modification' => null,
+            'id_profile' => null,
         ];
     }
 
@@ -78,17 +92,21 @@ class UserFactory extends Factory
     public function withProfileFields()
     {
         return $this->state(function (array $attributes) {
-            return [
-                'first_name' => $this->faker->firstName,
-                'last_name' => $this->faker->lastName,
-                'nid' => $this->faker->unique()->numerify('##########'),
-                'phone' => $this->faker->phoneNumber,
-                'gender' => $this->faker->randomElement(['M', 'F']),
-                'dob' => $this->faker->date,
-                'status' => 1,
-                'user_register' => 0,
-                'user_modification' => null,
-            ];
+            return $this->definition();
         });
+    }
+
+    private function profileAttributes(): array
+    {
+        return [
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'nid' => EcuadorianIdGenerator::generateId(),
+            'phone' => $this->faker->numerify('09########'),
+            'gender' => $this->faker->randomElement(['M', 'F']),
+            'dob' => $this->faker->date,
+            'user_register' => 0,
+            'user_modification' => null,
+        ];
     }
 }
