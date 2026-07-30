@@ -9,10 +9,10 @@
         "barryvdh/laravel-translation-manager": "^0.6.6",
         "blade-ui-kit/blade-icons": "^1.6",
         "codeat3/blade-mono-icons": "^1.4",
-        "laravel/framework": "^11.9",
+        "laravel/framework": "^12.61",
         "laravel/jetstream": "^5.1",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
+        "laravel/tinker": "^3.0",
         "livewire/livewire": "^3.0",
         "spatie/laravel-permission": "^6.9",
         "tanmuhittin/laravel-google-translate": "^2.3"
@@ -67,6 +67,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "php": "8.2.0"
         }
     },
     "minimum-stability": "stable",

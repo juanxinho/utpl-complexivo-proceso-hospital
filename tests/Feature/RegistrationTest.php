@@ -39,8 +39,19 @@ class RegistrationTest extends TestCase
             $this->markTestSkipped('Registration support is not enabled.');
         }
 
+        $location = $this->locationPayload();
+
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'nid' => $this->validEcuadorianId(),
+            'phone' => '0995767405',
+            'gender' => 'M',
+            'dob' => '1986-05-04',
+            'country_id' => $location['country_id'],
+            'state_id' => $location['state_id'],
+            'city_id' => $location['city_id'],
+            'address' => 'Avenida Universitaria',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
